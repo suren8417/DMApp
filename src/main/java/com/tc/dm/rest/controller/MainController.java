@@ -1,15 +1,15 @@
-package com.samsra.dm;
+package com.tc.dm.rest.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
- * Created by sg40304 on 7/9/15.
+ * Created by sg40304 on 7/15/15.
  */
 @Controller
-public class TestController {
+public class MainController {
 
-    @RequestMapping("/test")
+    @RequestMapping("/")
     public String test() {
         return "view";
     }
