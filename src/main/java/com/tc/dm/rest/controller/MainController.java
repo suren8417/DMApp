@@ -11,6 +11,6 @@ public class MainController {
 
     @RequestMapping("/")
     public String test() {
-        return "view";
+        return "dashBoard";
     }
 }
