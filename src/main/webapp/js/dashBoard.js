@@ -1,8 +1,9 @@
-angular.module('tchaApp', ['ui.bootstrap']);
+angular.module('tchaApp', ['ui.bootstrap','ui.grid','ui.grid.selection']);
 
 angular.module('tchaApp').controller('dashBordController', function ($scope) {
 
     $scope.subjects = ['Search', 'Recent Additions', 'Add New Item', 'Validate', 'Users'];
+
     $scope.selectedItem;
     $scope.searchUI = false;
     $scope.recentAdditionsUI = false;
@@ -37,7 +38,7 @@ angular.module('tchaApp').controller('dashBordController', function ($scope) {
              $scope.addNewItemUI = false;
              $scope.userUI = false;}
          if(item == "Users"){
-         $scope.userUI = true;
+             $scope.userUI = true;
              $scope.searchUI = false;
              $scope.recentAdditionsUI = false;
              $scope.addNewItemUI = false;
@@ -45,8 +46,6 @@ angular.module('tchaApp').controller('dashBordController', function ($scope) {
             }
 
     };
-
-
 
   $scope.clear = function () {
     $scope.dt = null;

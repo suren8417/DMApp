@@ -5,11 +5,14 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <link rel="stylesheet" href="css/bootstrap.min.css">
+      <link rel="stylesheet" href="css/ui-grid.min.css">
       <script src="js/angular.js"></script>
       <script src="js/ui-bootstrap-tpls-0.13.0.js"></script>
       <script src="js/dashBoard.js"></script>
+        <script src="js/user.js"></script>
       <script src="js/jquery-1.11.3.js"></script>
       <script src="js/bootstrap.min.js"></script>
+       <script src="js/ui-grid.min.js"></script
    </head>
    <body>
       <div ng-controller="dashBordController">
@@ -41,9 +44,10 @@
          </nav>
          <jsp:include page="search.jsp" />
          <jsp:include page="addNewItem.jsp" />
-         <jsp:include page="recentAdditions.jsp" />
-         <jsp:include page="user.jsp" />
+         <jsp:include page="recentAdditions.jsp"/>
          <jsp:include page="validate.jsp" />
+         <jsp:include page="user.jsp" />
+
       </div>
    </body>
 </html>
