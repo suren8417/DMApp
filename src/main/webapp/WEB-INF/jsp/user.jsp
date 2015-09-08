@@ -47,7 +47,7 @@
             </form>
          </div>
          <div class="col-md-6">
-          <div  style=" width: 350px; height: 600px;margin-left: 25px;margin-top: 25px;">
+          <div  style=" width: 350px; height: 400px;margin-left: 25px;margin-top: 25px;">
                <div id="grid1" ui-grid="gridOptions" ui-grid-selection class="grid"></div>
              </div>
          </div>
