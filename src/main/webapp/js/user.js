@@ -1,19 +1,31 @@
 
 angular.module('tchaApp').controller('userGrid', function ($scope) {
 
-    $scope.columns = [{ field: 'name' ,width: 200 }, { field: 'Designation',width: 150 },{ field: 'Username',width: 200 },{ field: 'Role',width: 100 }];
+$scope.UserName ;
+    $scope.selectedItemvalue ;
+    $scope.selectables = [
+         { label: 'Viewer', value: 'Viewer'},
+         { label:'DataEntry', value: 'DataEntry'},
+         { label: 'Curator', value: 'Curator'},
+         { label: 'Administrator', value: 'Administrator'}
+     ];
+
+    $scope.columns = [{ field: 'Username',width: 200 },{ field: 'Role',width: 100 }];
       $scope.gridOptions = {
-        enableFullRowSelection : true,
-        columnDefs: $scope.columns,
-        onRegisterApi: function( gridApi ) {
+      enableFullRowSelection : true,
+      multiSelect: false,
+      columnDefs: $scope.columns,
+          onRegisterApi: function (gridApi) {
               $scope.gridApi = gridApi;
-              var cellTemplate = 'ui-grid/selectionRowHeader';
-              $scope.gridApi.core.addRowHeaderColumn( { name: 'rowHeaderCol', displayName: '', width: 25, cellTemplate: cellTemplate} );
-        }
+                gridApi.selection.on.rowSelectionChanged($scope, function (row) {
+                $scope.UserName =row.entity.Username;
+                $scope.selectedItemvalue = row.entity.Role;;
+              });
+          }
     };
 
+    $scope.gridOptions.data=[{"Username": "Carney","Role": "DataEntry"},{"Username": "Ase","Role": "Viewer"},{"Username": "Bdd","Role": "Administrator"}]
 
-    $scope.gridOptions.data=[{"name": "Cox","Designation": "Carney","Username": "Carney","Role": "Carney"},{"name": "Cox","Designation": "Carney","Username": "Carney","Role": "Carney"},{"name": "Cox","Designation": "Carney","Username": "Carney","Role": "Carney"}]
 
 });
 
