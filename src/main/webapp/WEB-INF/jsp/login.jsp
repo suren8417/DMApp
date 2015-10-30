@@ -15,7 +15,7 @@
                               </div>
                            </div>
 
-                           <div style="margin-top: 10px;">
+                           <div style="margin-top: 5px;">
                               <p>Password</p>
                               <div class="controls">
                                  <input type="password" id="password" name="password" ng-model="password" placeholder="" class="form-control">

@@ -1,0 +1,93 @@
+
+li {
+    list-style:none;
+    display:inline-block;
+}
+
+
+ul{
+    padding:0;
+    margin:0;
+    white-space:nowrap;
+}
+
+
+.thumbnail {
+    height:50px;
+    padding:2px;
+}
+
+.large {
+    width:950px;
+/*    height:700px;*/
+}
+
+.mainimageshell {
+    background-color:#fff;
+    float:left;
+    width:970px;
+    height:700px;
+    padding:10px;
+}
+
+.viewwindow {
+    width:950px;
+    height:725px;
+    overflow-x: hidden;
+    position:relative;
+}
+
+.fullsizelist{
+    position:absolute;
+    top:0;
+    left:0;
+    transition:  left .8s ease;
+    -ms-transition:  left .8s ease;
+    -o-transition:  left .8s ease;
+    -webkit-transition:  left .8s ease;
+    -moz-transition:  left .8s ease;
+}
+
+.bg {
+    background-color:#F2F2F2;
+    padding:10px;
+    /*float:left;*/
+}
+
+
+.thumbsshell {
+    background-color:#fff;
+   /* width:600px;*/
+    padding:10px;
+   /* float:left;*/
+}
+
+.thumbswrapper {
+    overflow-x: scroll;
+ /*   width:594px;
+    height:60px;*/
+    margin:20px auto;
+}
+
+.thumbwrapper {
+    float:left;
+    height:60px;
+}
+
+.captionshell {
+    margin:0 0 10px 5px;
+    background-color:#fff;
+    width:407px;
+    height:725px;
+    padding:0 10px;
+    float:left;
+}
+
+.logoshell {
+    margin:0 0 0 5px;
+    text-align:center;
+    background-color:#fff;
+    width:175px;
+    padding:9px 10px;
+    float:left;
+}

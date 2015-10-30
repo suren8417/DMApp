@@ -6,13 +6,17 @@
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <link rel="stylesheet" href="css/bootstrap.min.css">
       <link rel="stylesheet" href="css/ui-grid.min.css">
+      <link rel="stylesheet" href="css/image-gallery.css">
       <script src="js/angular.js"></script>
       <script src="js/ui-bootstrap-tpls-0.13.0.js"></script>
       <script src="js/dashBoard.js"></script>
+      <script src="js/search.js"></script>
       <script src="js/user.js"></script>
+      <script src="js/addNewItem.js"></script>
+      <script src="js/collection.js"></script>
       <script src="js/jquery-1.11.3.js"></script>
       <script src="js/bootstrap.min.js"></script>
-      <script src="js/ui-grid.min.js"></script
+      <script src="js/ui-grid.min.js"></script>
    </head>
 
    <body>
@@ -29,11 +33,11 @@
                   <a class="navbar-brand" href="#"> <span class="glyphicon glyphicon-home"></span> Trinity College Historical Archive </a>
                </div>
                <div class="collapse navbar-collapse" id="myNavbar"  >
-                  <ul class="nav navbar-nav">
+                  <ul class="nav navbar-nav" >
                      <li class="active dropdown" ng-show="userTask">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#"> <span class="glyphicon glyphicon-wrench"></span> Actions <span class="caret"></span></a>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                           <li ng-repeat="a in subjects"><a href="#" ng-click="dropboxitemselected(a)">{{a}}</a></li>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1" >
+                           <li ng-repeat="a in subjects" ><a href="#" ng-click="dropboxitemselected(a)">{{a}}</a></li>
                         </ul>
                      </li>
                   </ul>
@@ -44,12 +48,13 @@
                </div>
             </div>
          </nav>
-          <jsp:include page="login.jsp" />
+         <jsp:include page="login.jsp" />
          <jsp:include page="search.jsp" />
          <jsp:include page="addNewItem.jsp" />
          <jsp:include page="recentAdditions.jsp"/>
          <jsp:include page="validate.jsp" />
          <jsp:include page="user.jsp" />
+         <jsp:include page="collection.jsp" />
       </div>
 
    </body>
