@@ -1,14 +1,12 @@
 package com.tc.dm.rest.dto;
 
-import com.tc.dm.core.entities.Account;
+import com.tc.dm.core.entities.User;
 
-/**
- * Created by sg40304 on 7/14/15.
- */
-public class AccountDto {
+public class UserDto {
 
     private String name;
     private String password;
+    private Long roleId;
 
     public void setName(String name) {
         this.name = name;
@@ -26,10 +24,15 @@ public class AccountDto {
         return password;
     }
 
-    public Account toAccount() {
-        Account account = new Account();
-        account.setName(name);
-        account.setPassword(password);
-        return account;
+    public Long getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(Long roleId) {
+        this.roleId = roleId;
+    }
+
+    public User toUser() {
+        return User.getInstance(name, password, roleId);
     }
 }
