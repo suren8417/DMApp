@@ -47,10 +47,11 @@ public class UserServiceImplTest {
         }
         Assert.isTrue(isUserFound, "Created user not return for findAll");
 
+        Long lastUserId = user.getId();
         this.userService.deleteUser(user);
         isUserFound = false;
         for (User aUser : this.userService.findAll()){
-            if(aUser.getId().equals(user.getId())){
+            if(aUser.getId().equals(lastUserId)){
                 isUserFound = true;
                 break;
             }
