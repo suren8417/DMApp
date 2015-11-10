@@ -3,21 +3,21 @@ package com.tc.dm.core.entities;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "USER")
+@Table(name = "user")
 public class User {
 
     @Id
-    @Column(name = "ID")
+    @Column(name = "id")
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "USER_NAME")
+    @Column(name = "user_name")
     private String name;
 
-    @Column(name = "PASSWORD")
+    @Column(name = "password")
     private String password;
 
-    @Column(name = "ROLE_ID")
+    @Column(name = "role_id")
     private Long roleId;
 
     public void setId(Long id) {

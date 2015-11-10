@@ -3,7 +3,7 @@ package com.tc.dm.core.entities;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "ITEM_TYPE")
+@Table(name = "item_type")
 public class ItemType {
 
     @Id

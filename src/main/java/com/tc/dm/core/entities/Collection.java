@@ -4,7 +4,7 @@ package com.tc.dm.core.entities;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "COLLECTION")
+@Table(name = "collection")
 public class Collection {
 
     @Id

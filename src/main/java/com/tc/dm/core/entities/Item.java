@@ -4,44 +4,44 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "ITEM")
+@Table(name = "item")
 public class Item {
     @Id
-    @Column(name = "ID")
+    @Column(name = "id")
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "TYPE_ID")
+    @Column(name = "type_id")
     private Long typeId;
 
-    @Column(name = "TITLE")
+    @Column(name = "title")
     private String title;
 
-    @Column(name = "COLLECTION_ID")
+    @Column(name = "collection_id")
     private Long collectionId;
 
-    @Column(name = "DATE_OF_ORIGIN")
+    @Column(name = "date_of_origin")
     private Date dateOfOrigin;
 
-    @Column(name = "DATE_ADDED")
+    @Column(name = "date_added")
     private Date dateAdded;
 
-    @Column(name = "DATE_VALIDATE")
+    @Column(name = "date_validate")
     private Date dateValidated;
 
-    @Column(name = "DONOR")
+    @Column(name = "donor")
     private String donor;
 
-    @Column(name = "DESCRIPTION")
+    @Column(name = "description")
     private String description;
 
-    @Column(name = "KEY_WORD_ID")
+    @Column(name = "key_word_id")
     private Long keyWordId;
 
-    @Column(name = "STATUS")
+    @Column(name = "status")
     private String status;
 
-    @Column(name = "CONTENT_PATH")
+    @Column(name = "content_path")
     private String contentPath;
 
     public String getContentPath() {

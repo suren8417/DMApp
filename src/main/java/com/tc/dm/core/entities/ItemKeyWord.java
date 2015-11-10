@@ -6,17 +6,17 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "KEY_WORD")
+@Table(name = "key_word")
 public class ItemKeyWord {
 
     @Id
-    @Column(name = "ID")
+    @Column(name = "id")
     private Long id;
 
-    @Column(name = "ITEM_ID")
+    @Column(name = "item_id")
     private Long itemId;
 
-    @Column(name = "KEY_WORD")
+    @Column(name = "key_word")
     private String keyWord;
 
     public Long getId() {
