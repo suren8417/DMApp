@@ -79,7 +79,7 @@
                 </div>
                 <div class="col-md-6">
                     <div style=" width: 950px; height:625px;margin-left: 25px;margin-top: 25px;">
-                        <div id="grid1" ui-grid="itemGrid" ui-grid-selection class="grid"style=" width: 950px; height: 625px;" ></div>
+                        <div id="grid1" ui-grid="itemGrid" ui-grid-selection class="grid" style=" width: 950px; height: 625px;" ></div>
                     </div>
                 </div>
             </div>

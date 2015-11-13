@@ -6,49 +6,54 @@
         <div class="container" style=" margin-left: 50px;margin-top: 30px;margin-bottom: 30px;">
             <div class="row" ng-controller="userGrid">
                 <div class="col-md-5">
-                    <form class="form-horizontal" action="" method="POST">
+                     <div>
+                       <p style="color:green" ng-show="successMessage"><span class="glyphicon glyphicon-ok"></span> Successfully save</p>
+                        <p style="color:green" ng-show="deleteMessage"><span class="glyphicon glyphicon-ok"></span> Successfully remove</p>
+                    </div>
+                  <form name="userForm">
                         <div>
                             <p>Username</p>
                             <div class="controls">
-                                <input type="text" id="username" name="username" placeholder="" class="form-control" ng-model="UserName">
-                                <p class="help-block">Username can contain any letters or numbers, without spaces</p>
+                                <input type="text" id="username" name="username" placeholder="" class="form-control" ng-model="userName" maxlength="10" >
+                                <p style="color:red" ng-show="userNameRequired"><span class="glyphicon glyphicon-exclamation-sign"></span> Please enter username</p>
                             </div>
                         </div>
                         <div>
-                            <p>Password</p>
+                            <p style="margin-top: 10px;">Password</p>
                             <div class="controls">
-                                <input type="password" id="password" name="password" placeholder="" class="form-control">
-                                <p class="help-block">Password should be at least 6 characters</p>
+                                <input type="password" id="password1" name="password1" placeholder="" class="form-control" ng-model="password" maxlength="10" >
+                                <p style="color:red" ng-show="passwordRequired"><span class="glyphicon glyphicon-exclamation-sign"></span> Please enter password</p>
                             </div>
                         </div>
                         <div>
-                            <p>Password (Confirm)</p>
+                            <p style="margin-top: 10px;">Password (Confirm)</p>
                             <div class="controls">
-                                <input type="password" id="password_confirm" name="password_confirm" placeholder="" class="form-control">
-                                <p class="help-block">Please confirm password</p>
+                                <input type="password" id="password_confirm" name="password_confirm" placeholder="" class="form-control" ng-model="rePassword" maxlength="10" >
+                                 <p style="color:red" ng-show="rePasswordRequired"><span class="glyphicon glyphicon-exclamation-sign"></span> Please confirm password</p>
+                                 <p style="color:red" ng-show="reCorrectPasswordRequired"><span class="glyphicon glyphicon-exclamation-sign"></span> Password not match</p>
                             </div>
                         </div>
-                        <div>
-                            <p> Roles </p>
+                        <div >
+                            <p style="margin-top: 10px;"> Roles </p>
                             <div class="controls">
 
-                                <select ng-model="selectedItemvalue" class="form-control" style="width: 30%;">
-                                    <option ng-repeat="sel in selectables" value="{{sel.value}}">{{sel.label}}</option>
+                                <select ng-model="selectedItemvalue" class="form-control" style="width: 30%;" required>
+                                    <option ng-repeat="sel in selectables" >{{sel.label}}</option>
                                 </select>
-                                <p class="help-block">Please select role</p>
+                                 <p style="color:red" ng-show="roleRequired"><span class="glyphicon glyphicon-exclamation-sign"></span> Please select role</p>
                             </div>
                         </div>
                         <div class="controls">
-                            <button class="btn" style=" margin-top:15px;">Add</button>
-                            <button class="btn" style=" margin-top:15px;">Remove</button>
-                            <button class="btn" style=" margin-top:15px;">Clear</button>
+                            <button class="btn" style=" margin-top:15px;" ng-click="createOrUpdateUser()">Save</button>
+                            <button class="btn" style=" margin-top:15px;" ng-click="removeUser()">Remove</button>
+                            <button class="btn" style=" margin-top:15px;" ng-click="formClear()">Clear</button>
                         </div>
 
-                    </form>
+                  </form>
                 </div>
                 <div class="col-md-6">
-                    <div style=" width: 350px; height: 400px;margin-left: 25px;margin-top: 25px;">
-                        <div id="grid1" ui-grid="gridOptions" ui-grid-selection class="grid"></div>
+                    <div style=" width: 350px; height: 325px;margin-left: 25px;margin-top: 25px;">
+                        <div id="grid1" ui-grid="gridOptions" ui-grid-selection class="grid" style="height: 310px;" ></div>
                     </div>
                 </div>
             </div>

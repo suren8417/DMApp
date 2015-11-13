@@ -17,8 +17,8 @@ public class User {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "role_id")
-    private Long roleId;
+    @ManyToOne
+    private Role role;
 
     public void setId(Long id) {
         this.id = id;
@@ -44,12 +44,12 @@ public class User {
         return password;
     }
 
-    public Long getRoleId() {
-        return roleId;
+    public Role getRole() {
+        return role;
     }
 
-    public void setRoleId(Long roleId) {
-        this.roleId = roleId;
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     @Override
@@ -62,7 +62,7 @@ public class User {
         if (id != null ? !id.equals(user.id) : user.id != null) return false;
         if (name != null ? !name.equals(user.name) : user.name != null) return false;
         if (password != null ? !password.equals(user.password) : user.password != null) return false;
-        return !(roleId != null ? !roleId.equals(user.roleId) : user.roleId != null);
+        return !(role.getId() != null ? !role.getId() .equals(user.role.getId() ) : user.role.getId()  != null);
 
     }
 
@@ -71,7 +71,7 @@ public class User {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (password != null ? password.hashCode() : 0);
-        result = 31 * result + (roleId != null ? roleId.hashCode() : 0);
+        result = 31 * result + (role.getId()  != null ? role.getId() .hashCode() : 0);
         return result;
     }
 
@@ -81,15 +81,19 @@ public class User {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", password='" + password + '\'' +
-                ", roleId=" + roleId +
+                ", roleId=" + role.getId()  +
                 '}';
     }
 
-    public static User getInstance(String name, String password, Long roleId) {
+    public static User getInstance(Long id,String name, String password,Long roleId,String roleName) {
         User user = new User();
+        user.setId(id);
         user.setName(name);
         user.setPassword(password);
-        user.setRoleId(roleId);
+        Role role = new Role();
+        role.setId(roleId);
+        role.setName(roleName);
+        user.setRole(role);
         return user;
     }
 
