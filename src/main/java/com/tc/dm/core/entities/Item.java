@@ -1,7 +1,11 @@
 package com.tc.dm.core.entities;
 
+import com.tc.dm.rest.dto.ItemContent;
+
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "item")
@@ -11,21 +15,26 @@ public class Item {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "type_id")
-    private Long typeId;
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "type_id")
+    private ItemType itemType;
 
     @Column(name = "title")
     private String title;
 
-    @Column(name = "collection_id")
-    private Long collectionId;
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
+    @JoinTable(name = "item_collection", joinColumns = @JoinColumn(name = "item_id"), inverseJoinColumns = @JoinColumn(name = "collection_id"))
+    private Set<Collection> collections;
 
+    @Temporal(TemporalType.DATE)
     @Column(name = "date_of_origin")
     private Date dateOfOrigin;
 
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "date_added")
     private Date dateAdded;
 
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "date_validate")
     private Date dateValidated;
 
@@ -35,8 +44,9 @@ public class Item {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "key_word_id")
-    private Long keyWordId;
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "item_keyword", joinColumns = @JoinColumn(name = "item_id"),inverseJoinColumns = @JoinColumn(name = "keyword_id"))
+    private Set<KeyWord> keyWords;
 
     @Column(name = "status")
     private String status;
@@ -44,21 +54,16 @@ public class Item {
     @Column(name = "content_path")
     private String contentPath;
 
-    public String getContentPath() {
-        return contentPath;
+    @Transient
+    private ItemContent content;
+
+    public ItemContent getContent() {
+        return content;
     }
 
-    public void setContentPath(String contentPath) {
-        this.contentPath = contentPath;
+    public void setContent(ItemContent content) {
+        this.content = content;
     }
-
-    private Item() {
-    }
-
-    public static Item createItem() {
-        return new Item();
-    }
-
 
     public Long getId() {
         return id;
@@ -68,12 +73,12 @@ public class Item {
         this.id = id;
     }
 
-    public Long getTypeId() {
-        return typeId;
+    public ItemType getItemType() {
+        return itemType;
     }
 
-    public void setTypeId(Long typeId) {
-        this.typeId = typeId;
+    public void setItemType(ItemType itemType) {
+        this.itemType = itemType;
     }
 
     public String getTitle() {
@@ -84,12 +89,12 @@ public class Item {
         this.title = title;
     }
 
-    public Long getCollectionId() {
-        return collectionId;
+    public Set<Collection> getCollections() {
+        return collections;
     }
 
-    public void setCollectionId(Long collectionId) {
-        this.collectionId = collectionId;
+    public void setCollections(Set<Collection> collections) {
+        this.collections = collections;
     }
 
     public Date getDateOfOrigin() {
@@ -132,12 +137,12 @@ public class Item {
         this.description = description;
     }
 
-    public Long getKeyWordId() {
-        return keyWordId;
+    public Set<KeyWord> getKeyWords() {
+        return keyWords;
     }
 
-    public void setKeyWordId(Long keyWordId) {
-        this.keyWordId = keyWordId;
+    public void setKeyWords(Set<KeyWord> keyWords) {
+        this.keyWords = keyWords;
     }
 
     public String getStatus() {
@@ -148,6 +153,18 @@ public class Item {
         this.status = status;
     }
 
+    public String getContentPath() {
+        return contentPath;
+    }
+
+    public void setContentPath(String contentPath) {
+        this.contentPath = contentPath;
+    }
+
+    public static Item getInstance(){
+        return new Item();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -155,36 +172,36 @@ public class Item {
 
         Item item = (Item) o;
 
-        if (!id.equals(item.id)) return false;
-        if (!typeId.equals(item.typeId)) return false;
-        if (!title.equals(item.title)) return false;
-        if (!collectionId.equals(item.collectionId)) return false;
-        if (!dateOfOrigin.equals(item.dateOfOrigin)) return false;
+        if (id != null ? !id.equals(item.id) : item.id != null) return false;
+        if (itemType != null ? !itemType.equals(item.itemType) : item.itemType != null) return false;
+        if (title != null ? !title.equals(item.title) : item.title != null) return false;
+        if (collections != null ? !collections.equals(item.collections) : item.collections != null) return false;
+        if (dateOfOrigin != null ? !dateOfOrigin.equals(item.dateOfOrigin) : item.dateOfOrigin != null) return false;
         if (dateAdded != null ? !dateAdded.equals(item.dateAdded) : item.dateAdded != null) return false;
         if (dateValidated != null ? !dateValidated.equals(item.dateValidated) : item.dateValidated != null)
             return false;
-        if (!donor.equals(item.donor)) return false;
-        if (!description.equals(item.description)) return false;
-        if (!keyWordId.equals(item.keyWordId)) return false;
-        if (!status.equals(item.status)) return false;
-        return contentPath.equals(item.contentPath);
+        if (donor != null ? !donor.equals(item.donor) : item.donor != null) return false;
+        if (description != null ? !description.equals(item.description) : item.description != null) return false;
+        if (keyWords != null ? !keyWords.equals(item.keyWords) : item.keyWords != null) return false;
+        if (status != null ? !status.equals(item.status) : item.status != null) return false;
+        return !(contentPath != null ? !contentPath.equals(item.contentPath) : item.contentPath != null);
 
     }
 
     @Override
     public int hashCode() {
-        int result = id.hashCode();
-        result = 31 * result + typeId.hashCode();
-        result = 31 * result + title.hashCode();
-        result = 31 * result + collectionId.hashCode();
-        result = 31 * result + dateOfOrigin.hashCode();
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (itemType != null ? itemType.hashCode() : 0);
+        result = 31 * result + (title != null ? title.hashCode() : 0);
+        result = 31 * result + (collections != null ? collections.hashCode() : 0);
+        result = 31 * result + (dateOfOrigin != null ? dateOfOrigin.hashCode() : 0);
         result = 31 * result + (dateAdded != null ? dateAdded.hashCode() : 0);
         result = 31 * result + (dateValidated != null ? dateValidated.hashCode() : 0);
-        result = 31 * result + donor.hashCode();
-        result = 31 * result + description.hashCode();
-        result = 31 * result + keyWordId.hashCode();
-        result = 31 * result + status.hashCode();
-        result = 31 * result + contentPath.hashCode();
+        result = 31 * result + (donor != null ? donor.hashCode() : 0);
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (keyWords != null ? keyWords.hashCode() : 0);
+        result = 31 * result + (status != null ? status.hashCode() : 0);
+        result = 31 * result + (contentPath != null ? contentPath.hashCode() : 0);
         return result;
     }
 
@@ -192,17 +209,43 @@ public class Item {
     public String toString() {
         return "Item{" +
                 "id=" + id +
-                ", typeId=" + typeId +
+                ", itemType=" + itemType +
                 ", title='" + title + '\'' +
-                ", collectionId=" + collectionId +
+                ", collections=" + collections +
                 ", dateOfOrigin=" + dateOfOrigin +
                 ", dateAdded=" + dateAdded +
                 ", dateValidated=" + dateValidated +
                 ", donor='" + donor + '\'' +
                 ", description='" + description + '\'' +
-                ", keyWordId=" + keyWordId +
+                ", keyWords=" + keyWords +
                 ", status='" + status + '\'' +
                 ", contentPath='" + contentPath + '\'' +
                 '}';
+    }
+
+    public Item preDelete() {
+       for(Collection collection : new HashSet<>(this.getCollections())) {
+           removeCollection(collection);
+       }
+       for(KeyWord keyWord : new HashSet<>(this.getKeyWords())) {
+           removeKeyWord(keyWord);
+       }
+        this.setItemType(null);
+        return this;
+    }
+
+    public void removeCollection(Collection collection) {
+        this.getCollections().remove(collection);
+        collection.getItems().remove(this);
+    }
+
+    public void removeKeyWord(KeyWord keyWord) {
+        this.getKeyWords().remove(keyWord);
+        keyWord.getItems().remove(this);
+    }
+
+    public Item() {
+        this.collections = new HashSet<Collection>();
+        this.keyWords = new HashSet<KeyWord>();
     }
 }
