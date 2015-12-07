@@ -1,7 +1,7 @@
- <div ng-show="searchUI"  style="margin:65px 0px 0px 170px;" >
+ <div style="margin:65px 0px 0px 170px;" >
    <p>Search</p>
  </div>
- <div ng-show="searchUI"  ng-controller="searchController"  style="margin:0px 170px 0px 170px; background-color: #ffffff; border:1px solid #e7e7e7;height:100%;">
+ <div ng-controller="searchController"  style="margin:0px 170px 0px 170px; background-color: #ffffff; border:1px solid #e7e7e7;height:100%;">
             <div class="row" style="margin-top:40px">
                <div class="col-md-2"></div>
                <div class="col-md-8">
@@ -72,7 +72,7 @@
                 <table ng-repeat="item in searchData.items">
                 <tr style="margin:0px 0px 5px 0px;">
                     <td>
-                        <a href="#" style=" font-size:18px;margin:0px 0px 0px 0px;" ng-click="showSearchInDetail()" >{{ item.title }}</a>
+                        <a style=" font-size:18px;margin:0px 0px 0px 0px;" ng-click="showSearchInDetail()" >{{ item.title }}</a>
                         <p style="margin:0px 0px 0px 0px;">{{ item.description }}</p>
                         <p>More .....</p>
                     </td>

@@ -1,4 +1,4 @@
-angular.module('tchaApp').controller('userGrid', function($scope,$http) {
+angular.module('tchaApp').controller('userController', function($scope,$http) {
 
     var deployedAt = window.location.href.substring(0, window.location.href);
 

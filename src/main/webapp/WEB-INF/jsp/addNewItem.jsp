@@ -1,11 +1,11 @@
-<div ng-show="addNewItemUI" style="margin:65px 0px 0px 170px;">
+<div  style="margin:65px 0px 0px 170px;">
     <p>Add New Item</p>
 </div>
-<div ng-show="addNewItemUI" style="margin:0px 170px 0px 170px; background-color: #ffffff; border:1px solid #e7e7e7;height:100%;">
+<div  style="margin:0px 170px 0px 170px; background-color: #ffffff; border:1px solid #e7e7e7;height:100%;">
     <div class="row">
-        <div class="container" style=" margin-left: 50px;margin-top: 30px;margin-bottom: 30px;">
+        <div  style=" margin-left: 50px; margin-right: 50px;margin-top: 30px;margin-bottom: 30px;">
             <div class="row" ng-controller="newItemGrid">
-                <div class="col-md-5">
+                <div class="col-md-4">
                     <form class="form-horizontal" action="" method="POST">
                         <div>
                             <p>Item Type</p>
@@ -77,9 +77,9 @@
 
                     </form>
                 </div>
-                <div class="col-md-6">
-                    <div style=" width: 950px; height:625px;margin-left: 25px;margin-top: 25px;">
-                        <div id="grid1" ui-grid="itemGrid" ui-grid-selection class="grid" style=" width: 950px; height: 625px;" ></div>
+                <div class="col-md-8">
+                    <div style=" width: 100%; height:625px;margin-top: 25px;">
+                        <div id="grid1" ui-grid="itemGrid" ui-grid-selection class="grid" style="height: 625px;" ></div>
                     </div>
                 </div>
             </div>

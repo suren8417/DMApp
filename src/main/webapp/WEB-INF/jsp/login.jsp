@@ -1,7 +1,7 @@
- <div ng-show="loginUI"  style="margin:65px 0px 0px 170px;" >
+ <div style="margin:65px 0px 0px 170px;" >
   <p>User Login</p>
  </div>
- <div ng-show="loginUI" style="margin:0px 170px 0px 170px; background-color: #ffffff; border:1px solid #e7e7e7;height:100%;"  >
+ <div style="margin:0px 170px 0px 170px; background-color: #ffffff; border:1px solid #e7e7e7;height:100%;"  >
 
 <div class="row">
              <div class="container" style=" margin-left: 50px;margin-top: 30px;margin-bottom: 30px;">

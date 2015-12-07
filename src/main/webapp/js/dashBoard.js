@@ -1,100 +1,43 @@
-angular.module('tchaApp', ['ui.bootstrap', 'ui.grid', 'ui.grid.selection']);
+angular.module('Authentication', []);
 
-angular.module('tchaApp').controller('dashBordController', function($scope) {
+angular.module('tchaApp',[
+    'Authentication',
+    'ngRoute',
+    'ngCookies',
+    'ui.bootstrap',
+    'ui.grid',
+    'ui.grid.selection'
+]).config(['$routeProvider', function ($routeProvider) {
 
-    $scope.loginError;
-    $scope.showModal = false;
-    $scope.loginUI = true;
-    $scope.searchUI = false;
-    $scope.recentAdditionsUI = false;
-    $scope.addNewItemUI = false;
-    $scope.validateUI = false;
-    $scope.userUI = false;
-    $scope.collectionUI = false;
-    $scope.userTask = false;
-    $scope.userType = "";
-    $scope.subjects ;
+    $routeProvider
+        .when('/login', {
+            controller: 'LoginController',
+            templateUrl: '/TCHA/login',
+        })
 
-    $scope.login = function (username, password) {
-
-        if ( username === 'admin' && password === '1234') {
-         $scope.subjects = ['Search', 'New Item', 'Manage Collection','Validate Item', 'Users'];
-         $scope.searchUI = true;
-         $scope.userTask = true;
-         $scope.loginUI = false;
-         $scope.userType=" Admin";
-        } else if(username === 'dataentry' && password === '1234'){
-         $scope.subjects = ['Search', 'New Item','Manage Collection'];
-                 $scope.searchUI = true;
-                 $scope.userTask = true;
-                 $scope.loginUI = false;
-                 $scope.userType=" DataEntry";
+        .when('/user', {
+            controller: 'userController',
+            templateUrl: '/TCHA/user',
+        })
+ 
+        .when('/search', {
+            controller: 'searchController',
+            templateUrl: '/TCHA/search',
+        })
+ 
+        .otherwise({ redirectTo: '/login' });
+}]).run(['$rootScope', '$location', '$cookieStore', '$http',
+    function ($rootScope, $location, $cookieStore, $http) {
+        // keep user logged in after page refresh
+        $rootScope.globals = $cookieStore.get('globals') || {};
+        if ($rootScope.globals.currentUser) {
+            $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata; // jshint ignore:line
         }
-
-        else {
-            $scope.loginError = "Invalid username/password combination";
-        }
-    };
-
-
-    $scope.dropboxitemselected = function(item) {
-
-        if (item == "Search") {
-            $scope.searchUI = true;
-            $scope.recentAdditionsUI = false;
-            $scope.addNewItemUI = false;
-            $scope.validateUI = false;
-            $scope.userUI = false;
-            $scope.loginUI = false;
-            $scope.collectionUI = false;
-        }
-        if (item == "Recent Additions") {
-            $scope.recentAdditionsUI = true;
-            $scope.searchUI = false;
-            $scope.addNewItemUI = false;
-            $scope.validateUI = false;
-            $scope.userUI = false;
-            $scope.loginUI = false;
-            $scope.collectionUI = false;
-        }
-        if (item == "New Item") {
-            $scope.addNewItemUI = true;
-            $scope.searchUI = false;
-            $scope.recentAdditionsUI = false;
-            $scope.validateUI = false;
-            $scope.userUI = false;
-            $scope.loginUI = false;
-            $scope.collectionUI = false;
-        }
-        if (item == "Validate Item") {
-            $scope.validateUI = true;
-            $scope.searchUI = false;
-            $scope.recentAdditionsUI = false;
-            $scope.addNewItemUI = false;
-            $scope.userUI = false;
-            $scope.loginUI = false;
-            $scope.collectionUI = false;
-        }
-        if (item == "Users") {
-            $scope.userUI = true;
-            $scope.searchUI = false;
-            $scope.recentAdditionsUI = false;
-            $scope.addNewItemUI = false;
-            $scope.validateUI = false;
-            $scope.loginUI = false;
-            $scope.collectionUI = false;
-        }
-        if (item == "Manage Collection") {
-            $scope.collectionUI = true;
-            $scope.userUI = false;
-            $scope.searchUI = false;
-            $scope.recentAdditionsUI = false;
-            $scope.addNewItemUI = false;
-            $scope.validateUI = false;
-            $scope.loginUI = false;
-        }
-
-    };
-
-});
-
+ 
+        $rootScope.$on('$locationChangeStart', function (event, next, current) {
+            // redirect to login page if not logged in
+            if ($location.path() !== '/login' && !$rootScope.globals.currentUser) {
+                $location.path('/login');
+            }
+        });
+    }]);

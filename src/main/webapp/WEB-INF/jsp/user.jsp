@@ -1,10 +1,10 @@
-<div ng-show="userUI" style="margin:65px 0px 0px 170px;">
+<div style="margin:65px 0px 0px 170px;">
     <p>User Registration</p>
 </div>
-<div ng-show="userUI" style="margin:0px 170px 0px 170px; background-color: #ffffff; border:1px solid #e7e7e7;height:100%;">
+<div style="margin:0px 170px 0px 170px; background-color: #ffffff; border:1px solid #e7e7e7;height:100%;">
     <div class="row">
         <div class="container" style=" margin-left: 50px;margin-top: 30px;margin-bottom: 30px;">
-            <div class="row" ng-controller="userGrid">
+            <div class="row" ng-controller="userController">
                 <div class="col-md-5">
                      <div>
                        <p style="color:green" ng-show="successMessage"><span class="glyphicon glyphicon-ok"></span> Successfully save</p>

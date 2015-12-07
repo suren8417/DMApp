@@ -1,4 +1,4 @@
-angular.module('tchaApp').controller('validateItem', function($scope) {
+angular.module('tchaApp').controller('validateItemController', function($scope) {
 
     $scope.validateItemGridColumns = [{
             field: 'Type',
@@ -31,7 +31,7 @@ angular.module('tchaApp').controller('validateItem', function($scope) {
     $scope.validateItemGrid = {
         enableFullRowSelection: true,
         multiSelect: true,
-        columnDefs: $scope.itemGridColumns,
+        columnDefs: $scope.validateItemGridColumns,
         onRegisterApi: function(gridApi) {
             $scope.gridApi = gridApi;
             gridApi.selection.on.rowSelectionChanged($scope, function(row) {

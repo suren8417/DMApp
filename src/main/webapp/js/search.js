@@ -15,7 +15,7 @@ angular.module('tchaApp').controller('searchController', function($scope) {
  $scope.search = function(searchText,image,document,audio,video,collection,startDate,endDate){
  $scope.searchSummary= true;
  $scope.searchInDetail= false;
-  $scope.searchData = {"items":
+ $scope.searchData = {"items":
          [
                  {
                     "title":"2005 Cricket team - Image ",
