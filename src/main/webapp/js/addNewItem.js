@@ -1,4 +1,4 @@
-angular.module('tchaApp').controller('newItemGrid', function($scope) {
+angular.module('tchaApp').controller('newItemController', function($scope) {
 
   $scope.dateOfOrigin;
   $scope.dateOfAdd;

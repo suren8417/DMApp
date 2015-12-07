@@ -8,7 +8,7 @@ angular.module('tchaApp')
 
             /* Dummy authentication for testing, uses $timeout to simulate api call
              ----------------------------------------------*/
-            $timeout(function(){
+   /*         $timeout(function(){
                 var response = { success: username === 'test' && password === 'test' };
                 if(!response.success) {
                     response.message = 'Username or password is incorrect';
@@ -16,6 +16,12 @@ angular.module('tchaApp')
                 callback(response);
             }, 1000);
 
+*/
+        var deployedAt = window.location.href.substring(0, window.location.href);
+        $http.get(deployedAt+"/TCHA/accounts/account?userName="+ username+"&password="+password)
+                .success(function (response) {
+                    callback(response);
+                });
 
             /* Use this for real authentication
              ----------------------------------------------*/
@@ -26,13 +32,14 @@ angular.module('tchaApp')
 
         };
 
-        service.SetCredentials = function (username, password) {
+        service.SetCredentials = function (username, password, response) {
             var authdata = Base64.encode(username + ':' + password);
 
             $rootScope.globals = {
                 currentUser: {
                     username: username,
-                    authdata: authdata
+                    authdata: authdata,
+                    response:response
                 }
             };
 

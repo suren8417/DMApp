@@ -5,9 +5,13 @@
 
 <div class="row">
              <div class="container" style=" margin-left: 50px;margin-top: 30px;margin-bottom: 30px;">
-                  <div class="row" >
+                  <div class="row" ng-controller="LoginController">
+
                      <div class="col-md-5">
                         <form class="form-horizontal">
+                           <div class="controls">
+                                               <p style="color:red" ng-show="loginError"><span class="glyphicon glyphicon-exclamation-sign"></span>Invalid Username or Password</p>
+                                             </div>
                            <div>
                               <p>Username</p>
                               <div class="controls">
@@ -24,11 +28,12 @@
 
 
                            <div class="controls" >
-                                 <button class="btn" style=" margin-top:15px;" ng-click="login(username, password)" >Login</button>
-                                 <button class="btn" style=" margin-top:15px;">Clear</button>
+                                 <button class="btn" style=" margin-top:15px; width: 100px;" ng-click="login(username, password)" >Login</button>
+
                            </div>
 
-                        </form>
+                        </form
+
                      </div>
                   </div>
              </div>

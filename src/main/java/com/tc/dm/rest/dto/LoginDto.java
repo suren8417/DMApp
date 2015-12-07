@@ -8,13 +8,13 @@ import java.util.List;
 public class LoginDto {
 
     private String userType;
-    private List<String> privilegeTasks;
+    private List<PrivilegeDto> privilegeTasks;
 
     public String getUserType() {
         return userType;
     }
 
-    public List<String> getPrivilegeTasks() {
+    public List<PrivilegeDto> getPrivilegeTasks() {
         return privilegeTasks;
     }
 
@@ -22,7 +22,7 @@ public class LoginDto {
         this.userType = userType;
     }
 
-    public void setPrivilegeTasks(List<String> privilegeTasks) {
+    public void setPrivilegeTasks(List<PrivilegeDto> privilegeTasks) {
         this.privilegeTasks = privilegeTasks;
     }
 }

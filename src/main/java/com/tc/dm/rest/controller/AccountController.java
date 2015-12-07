@@ -1,7 +1,9 @@
 package com.tc.dm.rest.controller;
 
+import com.tc.dm.core.entities.User;
 import com.tc.dm.core.services.UserService;
 import com.tc.dm.rest.dto.LoginDto;
+import com.tc.dm.rest.dto.PrivilegeDto;
 import com.tc.dm.rest.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -77,17 +79,51 @@ public class AccountController {
         }
     }
 
-    @RequestMapping(value = "/account" ,method = RequestMethod.GET)
-    public ResponseEntity<LoginDto>getAccount(@RequestParam("userName") String userName,@RequestParam("password") String password) {
+    @RequestMapping(value = "/account", method = RequestMethod.GET)
+    public ResponseEntity<LoginDto> getAccount(@RequestParam("userName") String userName, @RequestParam("password") String password) {
         try {
             LoginDto loginDto = new LoginDto();
-            loginDto.setUserType("Administrator");
-            List<String> privileges = new ArrayList<String>();
-            privileges.add("Search");
-            privileges.add("New Item");
-            privileges.add("Manage Collection");
-            privileges.add("Validate Item");
-            privileges.add("Users");
+            List<PrivilegeDto> privileges = new ArrayList<PrivilegeDto>();
+            List<User> users = userService.findByName(userName);
+            User correctUser = null;
+            for (User user : users) {
+                if (user.getPassword().equals(password)) {
+                    correctUser = user;
+                    loginDto.setUserType(correctUser.getRole().getName());
+
+                    PrivilegeDto privilegeDto = new PrivilegeDto();
+                    privilegeDto.setDisplayText("Search");
+                    privilegeDto.setRout("search");
+                    privileges.add(privilegeDto);
+
+                    if ("Administrator".equals(correctUser.getRole().getName()) | "Curator".equals(correctUser.getRole().getName()) | "DataEntry".equals(correctUser.getRole().getName())) {
+                        PrivilegeDto privilegeDto1 = new PrivilegeDto();
+                        privilegeDto1.setDisplayText("New Item");
+                        privilegeDto1.setRout("newItem");
+                        privileges.add(privilegeDto1);
+
+                        PrivilegeDto privilegeDto2 = new PrivilegeDto();
+                        privilegeDto2.setDisplayText("Manage Collection");
+                        privilegeDto2.setRout("manageCollection");
+                        privileges.add(privilegeDto2);
+                    }
+                    if ("Administrator".equals(correctUser.getRole().getName()) | "Curator".equals(correctUser.getRole().getName())) {
+                        PrivilegeDto privilegeDto3 = new PrivilegeDto();
+                        privilegeDto3.setDisplayText("Validate Item");
+                        privilegeDto3.setRout("validateItem");
+                        privileges.add(privilegeDto3);
+                    }
+                    if ("Administrator".equals(correctUser.getRole().getName())) {
+
+                        PrivilegeDto privilegeDto4 = new PrivilegeDto();
+                        privilegeDto4.setDisplayText("Users");
+                        privilegeDto4.setRout("users");
+                        privileges.add(privilegeDto4);
+                    }
+                    break;
+                }
+            }
+
             loginDto.setPrivilegeTasks(privileges);
             return new ResponseEntity<LoginDto>(loginDto, HttpStatus.OK);
         } catch (Exception exception) {

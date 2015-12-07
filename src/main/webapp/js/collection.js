@@ -1,4 +1,4 @@
-angular.module('tchaApp').controller('manageCollection', function($scope) {
+angular.module('tchaApp').controller('collectionController', function($scope) {
 
     $scope.collectionName;
     $scope.collectionDescription;

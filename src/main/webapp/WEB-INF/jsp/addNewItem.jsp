@@ -4,7 +4,7 @@
 <div  style="margin:0px 170px 0px 170px; background-color: #ffffff; border:1px solid #e7e7e7;height:100%;">
     <div class="row">
         <div  style=" margin-left: 50px; margin-right: 50px;margin-top: 30px;margin-bottom: 30px;">
-            <div class="row" ng-controller="newItemGrid">
+            <div class="row" ng-controller="newItemController">
                 <div class="col-md-4">
                     <form class="form-horizontal" action="" method="POST">
                         <div>

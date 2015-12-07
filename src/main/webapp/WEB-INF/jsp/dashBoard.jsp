@@ -19,6 +19,9 @@
       <script src="js/login.js"></script>
       <script src="js/search.js"></script>
       <script src="js/user.js"></script>
+      <script src="js/addNewItem.js"></script>
+      <script src="js/collection.js"></script>
+      <script src="js/validate.js"></script>
    </head>
 
    <body>
@@ -36,20 +39,16 @@
                </div>
                <div class="collapse navbar-collapse" id="myNavbar"  >
                   <ul class="nav navbar-nav" >
-                     <li class="active dropdown" >
+                     <li class="active dropdown" ng-show="userTask">
                         <a class="dropdown-toggle" data-toggle="dropdown" > <span class="glyphicon glyphicon-cog"></span> Actions <span class="caret"></span></a>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenu1" >
-                             <li><a href="#/search"><i ></i>Search</a></li>
-                             <li><a href="#/addNewItem"><i ></i>New Item</a></li>
-                             <li><a href="#/validate"><i ></i>Validate Item</a></li>
-                             <li><a href="#/manageCollection"><i ></i>Manage Collection</a></li>
-                             <li><a href="#/user"><i ></i>Users</a></li>
+                              <li ng-repeat="a in subjects" ><a href={{'#/'+a.rout}} >{{a.displayText}}</a></li>
                         </ul>
                      </li>
                   </ul>
                   <ul class="nav navbar-nav navbar-right" style="padding-right: 150px;" ng-show="userTask">
-                     <li><a href="#"><span class="glyphicon glyphicon-user"><span ng-bind="userType"></span></a></li>
-                     <li><a href="#" ng-click="sineOut()"><span class="glyphicon glyphicon-log-in" ></span> Sign Out</a></li>
+                     <li><a><span class="glyphicon glyphicon-user" ><span ng-bind="userType" style=" margin-left: 8px;"></span></a></li>
+                     <li><a href="#/login" ><span class="glyphicon glyphicon-log-in" ></span> Sign Out</a></li>
                   </ul>
                </div>
             </div>
