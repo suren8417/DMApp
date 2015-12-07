@@ -1,11 +1,9 @@
 package com.tc.dm.rest.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.tc.dm.core.entities.User;
 import com.tc.dm.core.services.UserService;
+import com.tc.dm.rest.dto.LoginDto;
 import com.tc.dm.rest.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -74,6 +72,24 @@ public class AccountController {
             UserDto userDto = new UserDto();
             List<UserDto> userDtos = userDto.toUserDtos(userService.findAll());
             return new ResponseEntity<List<UserDto>>(userDtos, HttpStatus.OK);
+        } catch (Exception exception) {
+            throw exception;
+        }
+    }
+
+    @RequestMapping(value = "/account" ,method = RequestMethod.GET)
+    public ResponseEntity<LoginDto>getAccount(@RequestParam("userName") String userName,@RequestParam("password") String password) {
+        try {
+            LoginDto loginDto = new LoginDto();
+            loginDto.setUserType("Administrator");
+            List<String> privileges = new ArrayList<String>();
+            privileges.add("Search");
+            privileges.add("New Item");
+            privileges.add("Manage Collection");
+            privileges.add("Validate Item");
+            privileges.add("Users");
+            loginDto.setPrivilegeTasks(privileges);
+            return new ResponseEntity<LoginDto>(loginDto, HttpStatus.OK);
         } catch (Exception exception) {
             throw exception;
         }
