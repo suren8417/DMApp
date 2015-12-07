@@ -1,7 +1,5 @@
-angular.module('Authentication', []);
 
 angular.module('tchaApp',[
-    'Authentication',
     'ngRoute',
     'ngCookies',
     'ui.bootstrap',

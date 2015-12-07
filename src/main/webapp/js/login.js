@@ -1,5 +1,5 @@
 
-angular.module('Authentication').controller('LoginController',
+angular.module('tchaApp').controller('LoginController',
     ['$scope', '$rootScope', '$location', 'AuthenticationService',
     function ($scope, $rootScope, $location, AuthenticationService) {
         // reset login status

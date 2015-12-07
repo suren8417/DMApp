@@ -12,37 +12,37 @@ public class MainController {
 
 
     @RequestMapping(value = { "/", "/home" }, method = RequestMethod.GET)
-    public String test() {
+    public String dashBoard() {
         return "dashBoard";
     }
 
    @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String test31() {
+    public String login() {
     return "login";
 }
 
     @RequestMapping(value = "/search", method = RequestMethod.GET)
-    public String test1() {
+    public String search() {
         return "search";
     }
 
     @RequestMapping(value = "/addNewItem", method = RequestMethod.GET)
-    public String test2() {
+    public String addNewItem() {
         return "addNewItem";
     }
 
     @RequestMapping(value = "/manageCollection", method = RequestMethod.GET)
-    public String test3() {
+    public String collection() {
         return "collection";
     }
 
     @RequestMapping(value = "/user", method = RequestMethod.GET)
-    public String test4() {
+    public String user() {
         return "user";
     }
 
     @RequestMapping(value = "/validate", method = RequestMethod.GET)
-    public String test5() {
+    public String validate() {
         return "validate";
     }
 }

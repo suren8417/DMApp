@@ -1,4 +1,4 @@
-angular.module('Authentication')
+angular.module('tchaApp')
 .factory('AuthenticationService',
     ['Base64', '$http', '$cookieStore', '$rootScope', '$timeout',
     function (Base64, $http, $cookieStore, $rootScope, $timeout) {
