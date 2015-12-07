@@ -2,6 +2,7 @@ package com.tc.dm.core.entities;
 
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "collection")
@@ -18,6 +19,8 @@ public class Collection {
     @Column(name = "description")
     private String description;
 
+    @ManyToMany(mappedBy = "collections", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+    private Set<Item> items;
 
     public Long getId() {
         return id;
@@ -43,33 +46,39 @@ public class Collection {
         this.description = description;
     }
 
+    public Set<Item> getItems() {
+        return items;
+    }
+
+    public void setItems(Set<Item> items) {
+        this.items = items;
+    }
+
+    public static Collection getInstance(String name, String description) {
+        Collection collection = new Collection();
+        collection.setName(name);
+        collection.setDescription(description);
+        return collection;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Collection)) return false;
 
-        Collection collection = (Collection) o;
+        Collection that = (Collection) o;
 
-        if (!id.equals(collection.id)) return false;
-        if (!name.equals(collection.name)) return false;
-        return !(description != null ? !description.equals(collection.description) : collection.description != null);
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
+        return !(description != null ? !description.equals(that.description) : that.description != null);
 
     }
 
     @Override
     public int hashCode() {
-        int result = id.hashCode();
-        result = 31 * result + name.hashCode();
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
         return result;
-    }
-
-    @Override
-    public String toString() {
-        return "Collection{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                '}';
     }
 }

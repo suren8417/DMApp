@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
+import java.util.ArrayList;
 import java.util.List;
 
 public class GenericDaoJpaImpl<K extends Serializable, E> implements GenericDao<K, E> {
@@ -54,6 +55,7 @@ public class GenericDaoJpaImpl<K extends Serializable, E> implements GenericDao<
     @Override
     public List<E> findAll() {
         String query = "Select t from " + persistentClass.getSimpleName() + " t";
-        return em.createQuery(query).getResultList();
+        List<E> results = em.createQuery(query).getResultList();
+        return (results==null)?new ArrayList<E>():results;
     }
 }

@@ -1,6 +1,7 @@
 package com.tc.dm.core.entities;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "item_type")
@@ -17,6 +18,8 @@ public class ItemType {
     @Column(name = "description")
     private String description;
 
+//    @OneToMany(fetch = FetchType.EAGER, mappedBy = "itemType", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private Set<Item> items;
 
     public Long getId() {
         return id;
@@ -42,6 +45,21 @@ public class ItemType {
         this.description = description;
     }
 
+//    public Set<Item> getItems() {
+//        return items;
+//    }
+//
+//    public void setItems(Set<Item> items) {
+//        this.items = items;
+//    }
+
+    public static ItemType getInstance(String name, String description) {
+        ItemType itemType = new ItemType();
+        itemType.setName(name);
+        itemType.setDescription(description);
+        return itemType;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -49,16 +67,16 @@ public class ItemType {
 
         ItemType itemType = (ItemType) o;
 
-        if (!id.equals(itemType.id)) return false;
-        if (!name.equals(itemType.name)) return false;
+        if (id != null ? !id.equals(itemType.id) : itemType.id != null) return false;
+        if (name != null ? !name.equals(itemType.name) : itemType.name != null) return false;
         return !(description != null ? !description.equals(itemType.description) : itemType.description != null);
 
     }
 
     @Override
     public int hashCode() {
-        int result = id.hashCode();
-        result = 31 * result + name.hashCode();
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
         return result;
     }
