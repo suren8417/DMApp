@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
+
 @Transactional
 @Service
 public class CollectionServiceImpl implements CollectionService {
@@ -21,15 +23,12 @@ public class CollectionServiceImpl implements CollectionService {
 
     @Override
     public Collection createCollection(Collection collection) {
-//        HashSet<Item> items = new HashSet<>();
-//        for(Item item : collection.getItems()){
-//            item = item.getId()==null?item:itemDao.find(Item.class, item.getId());
-//            items.add(item);
-//        }
-//        collection.setItems(items);
-        Item itemTemp = Item.getInstance();
-        itemTemp.setId(2L);
-        collection.getItems().add(itemTemp);
+        HashSet<Item> items = new HashSet<>();
+        for(Item item : collection.getItems()){
+            item = item.getId()==null?item:itemDao.find(Item.class, item.getId());
+            items.add(item);
+        }
+        collection.setItems(items);
         return collectionDao.create(collection);
     }
 
