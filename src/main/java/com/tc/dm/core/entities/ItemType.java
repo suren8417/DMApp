@@ -1,7 +1,6 @@
 package com.tc.dm.core.entities;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 @Table(name = "item_type")
@@ -53,8 +52,9 @@ public class ItemType {
 //        this.items = items;
 //    }
 
-    public static ItemType getInstance(String name, String description) {
+    public static ItemType getInstance(Long id, String name, String description) {
         ItemType itemType = new ItemType();
+        itemType.setId(id);
         itemType.setName(name);
         itemType.setDescription(description);
         return itemType;

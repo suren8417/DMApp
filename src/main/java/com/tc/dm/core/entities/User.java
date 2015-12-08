@@ -18,6 +18,7 @@ public class User {
     private String password;
 
     @ManyToOne
+    @JoinColumn(name = "role_id")
     private Role role;
 
     public void setId(Long id) {
@@ -62,7 +63,7 @@ public class User {
         if (id != null ? !id.equals(user.id) : user.id != null) return false;
         if (name != null ? !name.equals(user.name) : user.name != null) return false;
         if (password != null ? !password.equals(user.password) : user.password != null) return false;
-        return !(role.getId() != null ? !role.getId() .equals(user.role.getId() ) : user.role.getId()  != null);
+        return !(role.getId() != null ? !role.getId() .equals(user.role.getId()) : user.role.getId()  != null);
 
     }
 

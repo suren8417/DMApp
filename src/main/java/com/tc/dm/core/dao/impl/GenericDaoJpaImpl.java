@@ -4,21 +4,33 @@ import com.tc.dm.core.dao.GenericDao;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.*;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class GenericDaoJpaImpl<K extends Serializable, E> implements GenericDao<K, E> {
 
-    private Class<E> persistentClass;
+    protected Class<E> persistentClass;
 
     @PersistenceContext
-    private EntityManager em;
+    protected EntityManager em;
+
+//    protected FullTextEntityManager ftem;
 
     public GenericDaoJpaImpl() {
         ParameterizedType genericSuperclass = (ParameterizedType) getClass().getGenericSuperclass();
         this.persistentClass = (Class<E>) genericSuperclass.getActualTypeArguments()[1];
+
+//        ftem = Search.getFullTextEntityManager(em);
+//        try {
+//            ftem.createIndexer().startAndWait();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
     }
 
 
@@ -48,8 +60,10 @@ public class GenericDaoJpaImpl<K extends Serializable, E> implements GenericDao<
     }
 
     @Override
-    public List<E> findPage(int pageIndex, int pageSize) {
-        return null;
+    public List<E> findPage(int startIndex, int pageSize) {
+        String query = "Select t from " + persistentClass.getSimpleName() + " t order by t.id";
+        List<E> results = em.createQuery(query).setFirstResult(startIndex).setMaxResults(pageSize).getResultList();
+        return (results==null)?new ArrayList<E>():results;
     }
 
     @Override
@@ -57,5 +71,25 @@ public class GenericDaoJpaImpl<K extends Serializable, E> implements GenericDao<
         String query = "Select t from " + persistentClass.getSimpleName() + " t";
         List<E> results = em.createQuery(query).getResultList();
         return (results==null)?new ArrayList<E>():results;
+    }
+
+    @Override
+    public List<E> search(Map<String, String> params) {
+        List<E> results = null;
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<E> cq = cb.createQuery(this.persistentClass);
+        Root<E> entityRoot = cq.from(this.persistentClass);
+
+        List<Predicate> predicates = new ArrayList<Predicate>();
+        for(String attr : params.keySet()) {
+            if(entityRoot.get(attr) != null){
+                predicates.add(cb.like((Expression) entityRoot.get(attr), "%" + params.get(attr) + "%" ));
+            }
+        }
+        cq.where(predicates.toArray(new Predicate[]{}));
+        TypedQuery<E> q = em.createQuery(cq);
+
+        results = q.getResultList();
+        return results==null?new ArrayList<E>():results;
     }
 }

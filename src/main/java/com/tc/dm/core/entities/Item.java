@@ -9,17 +9,29 @@ import java.util.Set;
 
 @Entity
 @Table(name = "item")
+//@Indexed
+//@AnalyzerDef(name = "customanalyzer",
+//        tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class),
+//        filters = {
+//                @TokenFilterDef(factory = LowerCaseFilterFactory.class),
+//                @TokenFilterDef(factory = SnowballPorterFilterFactory.class, params = {
+//                        @org.hibernate.search.annotations.Parameter(name = "language", value = "English")
+//                })
+//        })
 public class Item {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy=GenerationType.AUTO)
+//    @DocumentId
     private Long id;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "type_id")
-    private ItemType itemType;
+//    @ManyToOne(fetch = FetchType.EAGER)
+//    @JoinColumn(name = "type_id")
+    @Column(name = "type")
+    private String type;
 
     @Column(name = "title")
+//    @Analyzer(definition = "customanalyzer")
     private String title;
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
@@ -42,11 +54,15 @@ public class Item {
     private String donor;
 
     @Column(name = "description")
+//    @Analyzer(definition = "customanalyzer")
     private String description;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(name = "item_keyword", joinColumns = @JoinColumn(name = "item_id"),inverseJoinColumns = @JoinColumn(name = "keyword_id"))
-    private Set<KeyWord> keyWords;
+//    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
+//    @JoinTable(name = "item_keyword", joinColumns = @JoinColumn(name = "item_id"),inverseJoinColumns = @JoinColumn(name = "keyword_id"))
+//    private Set<KeyWord> keyWords;
+
+    @Column(name = "keywords")
+    private String keywords;
 
     @Column(name = "status")
     private String status;
@@ -73,12 +89,12 @@ public class Item {
         this.id = id;
     }
 
-    public ItemType getItemType() {
-        return itemType;
+    public String getType() {
+        return type;
     }
 
-    public void setItemType(ItemType itemType) {
-        this.itemType = itemType;
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getTitle() {
@@ -137,12 +153,12 @@ public class Item {
         this.description = description;
     }
 
-    public Set<KeyWord> getKeyWords() {
-        return keyWords;
+    public String getKeywords() {
+        return keywords;
     }
 
-    public void setKeyWords(Set<KeyWord> keyWords) {
-        this.keyWords = keyWords;
+    public void setKeywords(String keywords) {
+        this.keywords = keywords;
     }
 
     public String getStatus() {
@@ -165,6 +181,10 @@ public class Item {
         return new Item();
     }
 
+    public Item() {
+        this.collections = new HashSet<Collection>();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -173,7 +193,7 @@ public class Item {
         Item item = (Item) o;
 
         if (id != null ? !id.equals(item.id) : item.id != null) return false;
-        if (itemType != null ? !itemType.equals(item.itemType) : item.itemType != null) return false;
+        if (type != null ? !type.equals(item.type) : item.type != null) return false;
         if (title != null ? !title.equals(item.title) : item.title != null) return false;
         if (collections != null ? !collections.equals(item.collections) : item.collections != null) return false;
         if (dateOfOrigin != null ? !dateOfOrigin.equals(item.dateOfOrigin) : item.dateOfOrigin != null) return false;
@@ -182,7 +202,7 @@ public class Item {
             return false;
         if (donor != null ? !donor.equals(item.donor) : item.donor != null) return false;
         if (description != null ? !description.equals(item.description) : item.description != null) return false;
-        if (keyWords != null ? !keyWords.equals(item.keyWords) : item.keyWords != null) return false;
+        if (keywords != null ? !keywords.equals(item.keywords) : item.keywords != null) return false;
         if (status != null ? !status.equals(item.status) : item.status != null) return false;
         return !(contentPath != null ? !contentPath.equals(item.contentPath) : item.contentPath != null);
 
@@ -191,7 +211,7 @@ public class Item {
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (itemType != null ? itemType.hashCode() : 0);
+        result = 31 * result + (type != null ? type.hashCode() : 0);
         result = 31 * result + (title != null ? title.hashCode() : 0);
         result = 31 * result + (collections != null ? collections.hashCode() : 0);
         result = 31 * result + (dateOfOrigin != null ? dateOfOrigin.hashCode() : 0);
@@ -199,7 +219,7 @@ public class Item {
         result = 31 * result + (dateValidated != null ? dateValidated.hashCode() : 0);
         result = 31 * result + (donor != null ? donor.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + (keyWords != null ? keyWords.hashCode() : 0);
+        result = 31 * result + (keywords != null ? keywords.hashCode() : 0);
         result = 31 * result + (status != null ? status.hashCode() : 0);
         result = 31 * result + (contentPath != null ? contentPath.hashCode() : 0);
         return result;
@@ -209,7 +229,7 @@ public class Item {
     public String toString() {
         return "Item{" +
                 "id=" + id +
-                ", itemType=" + itemType +
+                ", type='" + type + '\'' +
                 ", title='" + title + '\'' +
                 ", collections=" + collections +
                 ", dateOfOrigin=" + dateOfOrigin +
@@ -217,7 +237,7 @@ public class Item {
                 ", dateValidated=" + dateValidated +
                 ", donor='" + donor + '\'' +
                 ", description='" + description + '\'' +
-                ", keyWords=" + keyWords +
+                ", keywords='" + keywords + '\'' +
                 ", status='" + status + '\'' +
                 ", contentPath='" + contentPath + '\'' +
                 '}';
@@ -227,25 +247,11 @@ public class Item {
        for(Collection collection : new HashSet<>(this.getCollections())) {
            removeCollection(collection);
        }
-       for(KeyWord keyWord : new HashSet<>(this.getKeyWords())) {
-           removeKeyWord(keyWord);
-       }
-        this.setItemType(null);
         return this;
     }
 
     public void removeCollection(Collection collection) {
         this.getCollections().remove(collection);
         collection.getItems().remove(this);
-    }
-
-    public void removeKeyWord(KeyWord keyWord) {
-        this.getKeyWords().remove(keyWord);
-        keyWord.getItems().remove(this);
-    }
-
-    public Item() {
-        this.collections = new HashSet<Collection>();
-        this.keyWords = new HashSet<KeyWord>();
     }
 }

@@ -2,6 +2,7 @@ package com.tc.dm.core.entities;
 
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -54,11 +55,16 @@ public class Collection {
         this.items = items;
     }
 
-    public static Collection getInstance(String name, String description) {
+    public static Collection getInstance(Long id, String name, String description) {
         Collection collection = new Collection();
+        collection.setId(id);
         collection.setName(name);
         collection.setDescription(description);
         return collection;
+    }
+
+    public Collection() {
+        this.items = new HashSet<Item>();
     }
 
     @Override
@@ -80,5 +86,17 @@ public class Collection {
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
         return result;
+    }
+
+    public Collection preDelete() {
+        for(Item item : new HashSet<Item>(this.getItems())) {
+            removeItem(item);
+        }
+        return this;
+    }
+
+    public void removeItem(Item item) {
+        this.getItems().remove(item);
+        item.getCollections().remove(this);
     }
 }

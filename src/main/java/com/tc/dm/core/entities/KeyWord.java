@@ -1,6 +1,7 @@
 package com.tc.dm.core.entities;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -15,8 +16,8 @@ public class KeyWord {
     @Column(name = "key_word")
     private String keyWord;
 
-    @ManyToMany(mappedBy = "keyWords", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
-    private Set<Item> items;
+//    @ManyToMany(mappedBy = "keyWords", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+//    private Set<Item> items;
 
     public Long getId() {
         return id;
@@ -34,18 +35,23 @@ public class KeyWord {
         this.keyWord = keyWord;
     }
 
-    public Set<Item> getItems() {
-        return items;
-    }
+//    public Set<Item> getItems() {
+//        return items;
+//    }
+//
+//    public void setItems(Set<Item> items) {
+//        this.items = items;
+//    }
 
-    public void setItems(Set<Item> items) {
-        this.items = items;
-    }
-
-    public static KeyWord getInstance(String keyWordStr) {
+    public static KeyWord getInstance(Long id, String keyWordStr) {
         KeyWord keyWord = new KeyWord();
+        keyWord.setId(id);
         keyWord.setKeyWord(keyWordStr);
         return keyWord;
+    }
+
+    public KeyWord() {
+//        this.items = new HashSet<Item>();
     }
 
     @Override

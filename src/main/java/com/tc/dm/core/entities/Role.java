@@ -1,6 +1,7 @@
 package com.tc.dm.core.entities;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "role")
@@ -16,6 +17,9 @@ public class Role {
 
     @Column(name = "description")
     private String description;
+
+    @OneToMany(mappedBy = "role", cascade = CascadeType.ALL)
+    private Set<User> users;
 
 
     public Long getId() {
@@ -42,6 +46,14 @@ public class Role {
         this.description = description;
     }
 
+    public Set<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -49,17 +61,19 @@ public class Role {
 
         Role role = (Role) o;
 
-        if (!id.equals(role.id)) return false;
-        if (!name.equals(role.name)) return false;
-        return !(description != null ? !description.equals(role.description) : role.description != null);
+        if (id != null ? !id.equals(role.id) : role.id != null) return false;
+        if (name != null ? !name.equals(role.name) : role.name != null) return false;
+        if (description != null ? !description.equals(role.description) : role.description != null) return false;
+        return !(users != null ? !users.equals(role.users) : role.users != null);
 
     }
 
     @Override
     public int hashCode() {
-        int result = id.hashCode();
-        result = 31 * result + name.hashCode();
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (users != null ? users.hashCode() : 0);
         return result;
     }
 
@@ -69,6 +83,7 @@ public class Role {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
+                ", users=" + users +
                 '}';
     }
 }

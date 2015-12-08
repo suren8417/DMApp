@@ -1,11 +1,10 @@
 package com.tc.dm.core.services.impl;
 
 import com.tc.dm.core.dao.impl.ItemDaoImpl;
+import com.tc.dm.core.dao.impl.ItemKeyWordDaoImpl;
 import com.tc.dm.core.dao.impl.ItemTypeDaoImpl;
-import com.tc.dm.core.entities.Collection;
 import com.tc.dm.core.entities.Item;
 import com.tc.dm.core.entities.ItemType;
-import com.tc.dm.core.entities.KeyWord;
 import com.tc.dm.core.services.FileService;
 import com.tc.dm.core.services.ItemService;
 import com.tc.dm.rest.dto.ItemContent;
@@ -15,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Transactional
+@Transactional(rollbackFor=Exception.class)
 @Service
 public class ItemServiceImpl implements ItemService {
 
@@ -26,15 +25,15 @@ public class ItemServiceImpl implements ItemService {
     ItemTypeDaoImpl itemTypeDao;
 
     @Autowired
+    ItemKeyWordDaoImpl keyWordDao;
+
+    @Autowired
     FileService fileService;
 
     @Override
     public Item createItem(Item item) {
         final String contentPath = fileService.storeFile(item.getContent());
         item.setContentPath(contentPath);
-        final Long typeId = item.getItemType().getId();
-        final ItemType itemType = typeId!=null?itemTypeDao.find(ItemType.class, typeId):itemTypeDao.create(item.getItemType());
-        item.setItemType(itemType);
         return itemDao.create(item);
     }
 
@@ -47,12 +46,13 @@ public class ItemServiceImpl implements ItemService {
     public void deleteItem(Item item) {
         item = itemDao.find(Item.class, item.getId());
         item.preDelete();
+        final String filePath = item.getContentPath();
         itemDao.delete(item);
-        fileService.deleteFile(item.getContentPath());
+        fileService.deleteFile(filePath);
     }
 
     @Override
-    public Item findById(Long itemId) {
+    public Item findItemById(Long itemId) {
         final Item item = itemDao.find(Item.class, itemId);
         if(null != item) {
             item.setContent(fileService.getFile(item.getContentPath()));
@@ -62,7 +62,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public ItemContent getItemContent(Long itemId) {
-        return findById(itemId).getContent();
+        return findItemById(itemId).getContent();
     }
 
     @Override
@@ -77,12 +77,42 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public List<Item> findPageOfItems(int pageIndex, int pageSize, boolean withContent) {
-        List<Item> items = itemDao.findPage(pageIndex, pageSize);
+        List<Item> items = itemDao.findPage(pageIndex*pageSize-pageSize, pageSize);
         if(withContent){
             return populateItemContent(items);
         } else {
             return items;
         }
+    }
+
+    @Override
+    public ItemType createItemType(ItemType itemType) {
+        return itemTypeDao.create(itemType);
+    }
+
+    @Override
+    public void updateItemType(ItemType itemType) {
+        itemTypeDao.update(itemType);
+    }
+
+    @Override
+    public void deleteItemType(ItemType itemType) {
+        itemTypeDao.delete(itemTypeDao.find(ItemType.class, itemType.getId()));
+    }
+
+    @Override
+    public ItemType findItemTypeById(Long itemTypeId) {
+        return itemTypeDao.find(ItemType.class, itemTypeId);
+    }
+
+    @Override
+    public ItemType findItemTypeByName(String itemTypeName) {
+        for(ItemType itemType : itemTypeDao.findAll()) {
+            if(itemType.getName().equals(itemTypeName)) {
+                return itemType;
+            }
+        }
+        return null;
     }
 
     private List<Item> populateItemContent(List<Item> items) {
