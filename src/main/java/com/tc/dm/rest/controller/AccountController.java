@@ -35,9 +35,14 @@ public class AccountController {
     @RequestMapping(value = "/account", method = RequestMethod.POST)
     public ResponseEntity createAccount(@RequestBody UserDto userDto) {
         try {
-            userService.createUser(userDto.toUser());
-            List<UserDto> userDtos = userDto.toUserDtos(userService.findAll());
-            return new ResponseEntity<List<UserDto>>(userDtos, HttpStatus.CREATED);
+            List<User> users = userService.findByName(userDto.getName());
+            if (users.size() == 0 ) {
+                userService.createUser(userDto.toUser());
+                List<UserDto> userDtos = userDto.toUserDtos(userService.findAll());
+                return new ResponseEntity<List<UserDto>>(userDtos, HttpStatus.CREATED);
+            }else{
+                return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+            }
         } catch (Exception exception) {
             throw exception;
         }

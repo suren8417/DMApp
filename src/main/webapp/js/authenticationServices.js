@@ -17,8 +17,8 @@ angular.module('tchaApp')
             }, 1000);
 
 */
-        var deployedAt = window.location.href.substring(0, window.location.href);
-        $http.get(deployedAt+"/TCHA/accounts/account?userName="+ username+"&password="+password)
+        //var deployedAt = window.location.href.substring(0, window.location.href);
+        $http.get("/TCHA/accounts/account?userName="+ username+"&password="+password)
                 .success(function (response) {
                     callback(response);
                 });

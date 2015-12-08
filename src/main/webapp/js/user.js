@@ -15,6 +15,7 @@ angular.module('tchaApp').controller('userController', function($scope,$http) {
     $scope.roleRequired=false;
     $scope.successMessage=false;
     $scope.deleteMessage=false;
+    $scope.userNameExist=false;
 
     $scope.selectables = [{
         label: 'Viewer',
@@ -115,6 +116,7 @@ angular.module('tchaApp').controller('userController', function($scope,$http) {
      $scope.clearUser();
      $scope.successMessage=false;
      $scope.deleteMessage=false;
+     $scope.userNameExist=false;
     };
 
     $scope.clearUser = function() {
@@ -134,6 +136,7 @@ angular.module('tchaApp').controller('userController', function($scope,$http) {
 
 
     $scope.removeUser = function() {
+    if($scope.userId !== null){
      var  selectedRoleId = selectRoleId($scope.selectedItemvalue);
        	var dataObj = {id:$scope.userId,name : $scope.userName, password : $scope.rePassword, roleId : selectedRoleId, roleName:$scope.selectedItemvalue};
        	var res = $http.delete(deployedAt+"/TCHA/accounts/account?deleteUser="+ $scope.userId);
@@ -141,11 +144,12 @@ angular.module('tchaApp').controller('userController', function($scope,$http) {
        		  $scope.gridOptions.data = data;
        		  $scope.successMessage=false;
        		  $scope.deleteMessage=true;
+       		   $scope.clearUser();
        	});
        	res.error(function(data, status, headers, config) {
        			alert( "failure message: " + JSON.stringify({data: data}));
        	});
-
+     }
     };
 
     $scope.createOrUpdateUser = function() {
@@ -155,9 +159,10 @@ angular.module('tchaApp').controller('userController', function($scope,$http) {
         else{
          $scope.updateUser();
         }
-         $scope.successMessage=true;
         }
        $scope.deleteMessage=false;
+       $scope.userNameExist=false;
+
     };
 
     $scope.updateUser = function() {
@@ -167,6 +172,7 @@ angular.module('tchaApp').controller('userController', function($scope,$http) {
 
       	res.success(function(data, status, headers, config) {
       	        $scope.gridOptions.data = data;
+      	        $scope.successMessage=true;
       	});
       	res.error(function(data, status, headers, config) {
       			alert( "failure message: " + JSON.stringify({data: data}));
@@ -179,9 +185,11 @@ angular.module('tchaApp').controller('userController', function($scope,$http) {
       	var res = $http.post(deployedAt+"/TCHA/accounts/account", dataObj);
       	res.success(function(data, status, headers, config) {
       	 $scope.gridOptions.data = data;
+      	 $scope.successMessage=true;
       	});
       	res.error(function(data, status, headers, config) {
-      			alert( "failure message: " + JSON.stringify({data: data}));
+      	$scope.userNameExist=true;
+      	//alert( "failure message: " + JSON.stringify({data: data}));
       	});
     };
 

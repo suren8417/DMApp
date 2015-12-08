@@ -16,6 +16,7 @@
                             <div class="controls">
                                 <input type="text" id="username" name="username" placeholder="" class="form-control" ng-model="userName" maxlength="10" >
                                 <p style="color:red" ng-show="userNameRequired"><span class="glyphicon glyphicon-exclamation-sign"></span> Please enter username</p>
+                                <p style="color:red" ng-show="userNameExist"><span class="glyphicon glyphicon-exclamation-sign"></span> Username Exists</p>
                             </div>
                         </div>
                         <div>

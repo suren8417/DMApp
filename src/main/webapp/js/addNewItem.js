@@ -1,10 +1,14 @@
-angular.module('tchaApp').controller('newItemController', function($scope) {
+angular.module('tchaApp').controller('newItemController', function($scope,$http) {
 
-  $scope.dateOfOrigin;
-  $scope.dateOfAdd;
-  $scope.dateOfValidate;
-    $scope.UserName;
-    $scope.selectedType;
+  $scope.itemsSelectedType;
+  $scope.itemTitle;
+  $scope.itemDonor;
+  $scope.itemDescription;
+  $scope.itemKeyWords;
+  $scope.itemStartDate;
+  $scope.uploadItem;
+
+
     $scope.itemType = [{
         label: 'Image',
         value: 'Image'
@@ -15,8 +19,8 @@ angular.module('tchaApp').controller('newItemController', function($scope) {
         label: 'Audio',
         value: 'Audio'
     }, {
-        label: 'Vedeo',
-        value: 'Vedeo'
+        label: 'Video',
+        value: 'Video'
     }
     ];
 
@@ -118,4 +122,37 @@ angular.module('tchaApp').controller('newItemController', function($scope) {
     $scope.format = $scope.formats[1];
 
 
+
+   $scope.createItem = function() {
+   //itemStartDate:$scope.itemStartDate,uploadItem:$scope.uploadItem
+            var dataObj = {id : 123, itemsSelectedType :  $scope.itemsSelectedType, itemTitle : $scope.itemTitle, itemDonor:$scope.itemDonor,itemDescription:$scope.itemDescription,itemKeyWords:$scope.itemKeyWords,itemStartDate:$scope.itemStartDate};
+            var fd = new FormData();
+            fd.append('file', $scope.uploadItem);
+            fd.append('itemDto', JSON.stringify(dataObj));
+            var res = $http.post("/TCHA/items/item", fd, {transformRequest: angular.identity, headers: {'Content-Type': undefined}});
+          	res.success(function(data, status, headers, config) {
+              alert( "okkkkkkkkkkkk" );
+          	});
+          	res.error(function(data, status, headers, config) {
+          			alert( "failure message: " + JSON.stringify({data: data}));
+          	});
+    };
+
+
 });
+
+angular.module('tchaApp').directive('fileModel', ['$parse', function ($parse) {
+    return {
+                                  restrict: 'A',
+                                  link: function(scope, element, attrs) {
+                                      var model = $parse(attrs.fileModel);
+                                      var modelSetter = model.assign;
+
+                                      element.bind('change', function(){
+                                          scope.$apply(function(){
+                                              modelSetter(scope, element[0].files[0]);
+                                          });
+                                      });
+                                  }
+                              };
+  }]);
