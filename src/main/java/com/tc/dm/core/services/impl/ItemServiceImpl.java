@@ -8,6 +8,7 @@ import com.tc.dm.core.entities.ItemType;
 import com.tc.dm.core.services.FileService;
 import com.tc.dm.core.services.ItemService;
 import com.tc.dm.rest.dto.ItemContent;
+import com.tc.dm.rest.dto.ItemSearchParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -71,6 +72,12 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public List<Item> findPageOfItems(int pageIndex, int pageSize, boolean withContent) {
         List<Item> items = itemDao.findPage(pageIndex*pageSize-pageSize, pageSize);
+        return items;
+    }
+
+    @Override
+    public List<Item> searchItems(ItemSearchParam itemSearchParam) {
+        List<Item> items = itemDao.search(itemSearchParam.toMap());
         return items;
     }
 
