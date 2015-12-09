@@ -1,6 +1,7 @@
 package com.tc.dm.core.services.impl;
 
 import com.tc.dm.core.services.FileService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -12,6 +13,14 @@ import java.io.FileOutputStream;
 @Transactional
 @Service
 public class FileServiceImpl implements FileService {
+
+    @Value("${filestore.path}")
+    private String filestorePath;
+
+    public String getFilestorePath() {
+        return filestorePath;
+    }
+
     @Override
     public String storeFile(MultipartFile file) {
 
@@ -21,7 +30,7 @@ public class FileServiceImpl implements FileService {
             try {
 
                 fileName = file.getOriginalFilename();
-                saveLocation="/data/upload/"+fileName;
+                saveLocation= getFilestorePath()+fileName;
                 byte[] bytes = file.getBytes();
                 BufferedOutputStream buffStream = new BufferedOutputStream(new FileOutputStream(new File(saveLocation)));
                 buffStream.write(bytes);
