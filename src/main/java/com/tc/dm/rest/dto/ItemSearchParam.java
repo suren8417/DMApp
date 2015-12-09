@@ -9,37 +9,6 @@ import java.util.Map;
 public class ItemSearchParam {
 
     public static final SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-    public static enum SearchType {
-
-        IMAGE("Image"), DOCUMENT("Document"), AUDIO("Audio"), VIDEO("Video"), COLLECTION("Collection");
-
-        private String type;
-
-        SearchType(String type) {
-            this.type = type;
-        }
-
-        public String toString() {
-            return type;
-        }
-
-        public static SearchType fromString(String type){
-            if(IMAGE.toString().equals(type)) {
-                return IMAGE;
-            } else if(DOCUMENT.toString().equals(type)) {
-                return DOCUMENT;
-            } else if(AUDIO.toString().equals(type)) {
-                return AUDIO;
-            } else if(VIDEO.toString().equals(type)) {
-                return VIDEO;
-            } else if(COLLECTION.toString().equals(type)) {
-                return COLLECTION;
-            } else {
-                return null;
-            }
-        }
-
-    }
 
     public ItemSearchParam() {
         this.caseSensitive = false;
@@ -47,7 +16,7 @@ public class ItemSearchParam {
     }
 
     private String textToSearch;
-    private SearchType type;
+    private ItemType type;
     private Date dateOfOriginFrom;
     private Date dateOfOriginTo;
     private boolean caseSensitive;
@@ -61,11 +30,11 @@ public class ItemSearchParam {
         this.textToSearch = textToSearch;
     }
 
-    public SearchType getType() {
+    public ItemType getType() {
         return type;
     }
 
-    public void setType(SearchType type) {
+    public void setType(ItemType type) {
         this.type = type;
     }
 
@@ -115,7 +84,7 @@ public class ItemSearchParam {
     public static ItemSearchParam fromMap(Map<String, String> params) {
         ItemSearchParam itemSearchParam = new ItemSearchParam();
         itemSearchParam.setTextToSearch(params.get("textToSearch"));
-        itemSearchParam.setType(SearchType.fromString(params.get("type")));
+        itemSearchParam.setType(ItemType.fromString(params.get("type")));
         try {
             itemSearchParam.setDateOfOriginFrom(sdf.parse(params.get("dateOfOriginFrom")));
         } catch (ParseException e) {
