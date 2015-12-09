@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import static com.tc.dm.core.util.CommonUtil.*;
 
 public class ItemSearchParam {
 
@@ -73,9 +74,9 @@ public class ItemSearchParam {
     public Map<String, String> toMap(){
         Map<String, String> params = new HashMap<String, String>();
         params.put("textToSearch", textToSearch);
-        params.put("type", type.toString());
-        params.put("dateOfOriginFrom", sdf.format(dateOfOriginFrom));
-        params.put("dateOfOriginTo", sdf.format(dateOfOriginTo));
+        params.put("type", isNullOrEmpty(type)?null:type.toString());
+        params.put("dateOfOriginFrom", isNullOrEmpty(dateOfOriginFrom)?null:sdf.format(dateOfOriginFrom));
+        params.put("dateOfOriginTo", isNullOrEmpty(dateOfOriginTo)?null:sdf.format(dateOfOriginTo));
         params.put("caseSensitive", String.valueOf(caseSensitive));
         params.put("matchWhole", String.valueOf(matchWhole));
         return params;
@@ -86,12 +87,14 @@ public class ItemSearchParam {
         itemSearchParam.setTextToSearch(params.get("textToSearch"));
         itemSearchParam.setType(ItemType.fromString(params.get("type")));
         try {
-            itemSearchParam.setDateOfOriginFrom(sdf.parse(params.get("dateOfOriginFrom")));
+            itemSearchParam.setDateOfOriginFrom(isNullOrEmpty(params.get("dateOfOriginFrom"))?null:sdf.parse(
+                    params.get("dateOfOriginFrom")));
         } catch (ParseException e) {
             //Default null will be set
         }
         try {
-            itemSearchParam.setDateOfOriginTo(sdf.parse(params.get("dateOfOriginTo")));
+            itemSearchParam.setDateOfOriginTo(isNullOrEmpty(params.get("dateOfOriginTo"))?null:sdf.parse(
+                    params.get("dateOfOriginTo")));
         } catch (ParseException e) {
             //Default null will be set
         }
