@@ -16,9 +16,7 @@ public interface ItemService {
 
     public Item findItemById(Long itemId);
 
-    public ItemContent getItemContent(Long itemId);
-
-    public List<Item> findAllItems(boolean withContent);
+    public List<Item> findAllItems();
 
     public List<Item> findPageOfItems(int pageIndex, int pageSize, boolean withContent);
 

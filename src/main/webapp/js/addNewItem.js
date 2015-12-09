@@ -7,6 +7,7 @@ angular.module('tchaApp').controller('newItemController', function($scope,$http)
   $scope.itemKeyWords;
   $scope.itemStartDate;
   $scope.uploadItem;
+  $scope.id;
 
 
     $scope.itemType = [{
@@ -24,33 +25,46 @@ angular.module('tchaApp').controller('newItemController', function($scope,$http)
     }
     ];
 
- $scope.itemGridColumns = [{
-            field: 'Type',
+ $scope.itemGridColumns = [
+        {
+            field: 'itemsSelectedType',
+            displayName:'Type',
             width: 100
         }, {
-            field: 'Title',
-            width: 200
+            field: 'itemTitle',
+            displayName:'Title',
+            width: 300
         }, {
-            field: 'DateOfOrigin',
+            field: 'itemDonor',
+             displayName:'Donor',
+            width: 300
+        }, {
+            field: 'itemDescription',
+             displayName:'Description',
+            width: 500
+        }, {
+            field: 'itemKeyWords',
+             displayName:'KeyWords',
+            width: 250
+        }, {
+            field: 'itemStartDate',
+            displayName:'DateOfOrigin',
             width: 150
         }, {
-            field: 'DateOfAdd',
-            width: 150
+            field: 'id',
+            displayName:'Id',
+            visible:false
         }, {
-            field: 'DateOfValidate',
-            width: 150
-        }, {
-            field: 'Donor',
-            width: 150
-        }, {
-            field: 'Description',
-            width: 400
-        }, {
-            field: 'Status',
-            width: 100
-        }
+           field: 'itemName',
+           displayName:'ItemName',
+           width: 250
+           }
 
     ];
+
+      $http.get("/TCHA/items").success(function(data) {
+               $scope.itemGrid.data = data.itemDtos;
+        });
 
     $scope.itemGrid = {
         enableFullRowSelection: true,
@@ -59,42 +73,16 @@ angular.module('tchaApp').controller('newItemController', function($scope,$http)
         onRegisterApi: function(gridApi) {
             $scope.gridApi = gridApi;
             gridApi.selection.on.rowSelectionChanged($scope, function(row) {
-
+                $scope.itemsSelectedType = row.entity.itemsSelectedType;
+                $scope.itemTitle = row.entity.itemTitle;
+                $scope.itemDonor= row.entity.itemDonor;
+                $scope.itemDescription= row.entity.itemDescription;
+                $scope.itemKeyWords=row.entity.itemKeyWords;
+                $scope.itemStartDate=row.entity.itemStartDate;
+                $scope.id=row.entity.id;
             });
         }
     };
-
-
-
-  $scope.itemGrid.data = [{
-         "Type": "Carney",
-         "Title": "DataEntry",
-         "DateOfOrigin": "DataEntry",
-         "DateOfAdd": "DataEntry",
-         "DateOfValidate": "DataEntry",
-         "Donor": "DataEntry",
-         "Description": "DataEntry",
-         "Status": "DataEntry"
-     }, {
-         "Type": "Carney",
-         "Title": "DataEntry",
-         "DateOfOrigin": "DataEntry",
-         "DateOfAdd": "DataEntry",
-         "DateOfValidate": "DataEntry",
-         "Donor": "DataEntry",
-         "Description": "DataEntry",
-         "Status": "DataEntry"
-     }, {
-         "Type": "Carney",
-         "Title": "DataEntry",
-         "DateOfOrigin": "DataEntry",
-         "DateOfAdd": "DataEntry",
-         "DateOfValidate": "DataEntry",
-         "Donor": "DataEntry",
-         "Description": "DataEntry",
-         "Status": "DataEntry"
-     }];
-
 
 
     $scope.clear = function() {
@@ -124,8 +112,8 @@ angular.module('tchaApp').controller('newItemController', function($scope,$http)
 
 
    $scope.createItem = function() {
-   //itemStartDate:$scope.itemStartDate,uploadItem:$scope.uploadItem
-            var dataObj = {id : 123, itemsSelectedType :  $scope.itemsSelectedType, itemTitle : $scope.itemTitle, itemDonor:$scope.itemDonor,itemDescription:$scope.itemDescription,itemKeyWords:$scope.itemKeyWords,itemStartDate:$scope.itemStartDate};
+
+            var dataObj = {id : null, itemsSelectedType :  $scope.itemsSelectedType, itemTitle : $scope.itemTitle, itemDonor:$scope.itemDonor,itemDescription:$scope.itemDescription,itemKeyWords:$scope.itemKeyWords,itemStartDate:$scope.itemStartDate};
             var fd = new FormData();
             fd.append('file', $scope.uploadItem);
             fd.append('itemDto', JSON.stringify(dataObj));

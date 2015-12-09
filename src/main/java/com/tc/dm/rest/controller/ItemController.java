@@ -1,8 +1,10 @@
 package com.tc.dm.rest.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.tc.dm.core.entities.Item;
 import com.tc.dm.core.services.ItemService;
 import com.tc.dm.rest.dto.ItemDto;
+import com.tc.dm.rest.dto.ItemResponseDto;
 import com.tc.dm.rest.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +18,8 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by sg40304 on 7/9/15.
@@ -31,25 +35,39 @@ public class ItemController {
         this.itemService = itemService;
     }
 
-    @RequestMapping(value="/item", method=RequestMethod.POST )
-    public ResponseEntity addItem(@RequestParam("file") MultipartFile  file,@RequestParam("itemDto") String itemDtoString){
+    @RequestMapping(value = "/item", method = RequestMethod.POST)
+    public ResponseEntity addItem(@RequestParam("file") MultipartFile file, @RequestParam("itemDto") String itemDtoString) {
 
-        String fileName = null;
         if (!file.isEmpty()) {
             try {
                 ObjectMapper mapper = new ObjectMapper();
                 ItemDto itemDto = mapper.readValue(itemDtoString, ItemDto.class);
-                fileName = file.getOriginalFilename();
-                byte[] bytes = file.getBytes();
-                BufferedOutputStream buffStream = new BufferedOutputStream(new FileOutputStream(new File("/data/upload/" + fileName)));
-                buffStream.write(bytes);
-                buffStream.close();
+                itemDto.setUploadItem(file);
+                itemService.createItem(itemDto.toItem());
                 return new ResponseEntity(HttpStatus.OK);
             } catch (Exception e) {
                 return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
             }
         } else {
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
+
+
+    @RequestMapping(method = RequestMethod.GET)
+    public ResponseEntity getItems() {
+
+        try {
+            ItemDto userDto = new ItemDto();
+            List<ItemDto> itemDtos = userDto.toItemDtos(itemService.findAllItems());
+            ItemResponseDto itemResponseDto = new ItemResponseDto();
+            itemResponseDto.setItemDtos(itemDtos);
+            itemResponseDto.setMessage("Sending items");
+            itemResponseDto.setStatus("OK");
+            return new ResponseEntity(itemResponseDto, HttpStatus.OK);
+        } catch (Exception exception) {
+            throw exception;
         }
 
     }

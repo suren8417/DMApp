@@ -60,29 +60,18 @@ public class ItemServiceImpl implements ItemService {
         return item;
     }
 
-    @Override
-    public ItemContent getItemContent(Long itemId) {
-        return findItemById(itemId).getContent();
-    }
 
     @Override
-    public List<Item> findAllItems(boolean withContent) {
+    public List<Item> findAllItems() {
         List<Item> items = itemDao.findAll();
-        if(withContent){
-            return populateItemContent(items);
-        } else {
-            return items;
-        }
+        return items;
+
     }
 
     @Override
     public List<Item> findPageOfItems(int pageIndex, int pageSize, boolean withContent) {
         List<Item> items = itemDao.findPage(pageIndex*pageSize-pageSize, pageSize);
-        if(withContent){
-            return populateItemContent(items);
-        } else {
-            return items;
-        }
+        return items;
     }
 
     @Override
@@ -115,13 +104,4 @@ public class ItemServiceImpl implements ItemService {
         return null;
     }
 
-    private List<Item> populateItemContent(List<Item> items) {
-        if(items == null || items.isEmpty()) {
-            return items;
-        }
-        for(Item item : items) {
-            item.setContent(getItemContent(item.getId()));
-        }
-        return items;
-    }
 }

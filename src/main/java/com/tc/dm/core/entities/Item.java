@@ -1,6 +1,7 @@
 package com.tc.dm.core.entities;
 
 import com.tc.dm.rest.dto.ItemContent;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -71,13 +72,13 @@ public class Item {
     private String contentPath;
 
     @Transient
-    private ItemContent content;
+    private MultipartFile content;
 
-    public ItemContent getContent() {
+    public MultipartFile getContent() {
         return content;
     }
 
-    public void setContent(ItemContent content) {
+    public void setContent(MultipartFile content) {
         this.content = content;
     }
 
@@ -231,7 +232,6 @@ public class Item {
                 "id=" + id +
                 ", type='" + type + '\'' +
                 ", title='" + title + '\'' +
-                ", collections=" + collections +
                 ", dateOfOrigin=" + dateOfOrigin +
                 ", dateAdded=" + dateAdded +
                 ", dateValidated=" + dateValidated +

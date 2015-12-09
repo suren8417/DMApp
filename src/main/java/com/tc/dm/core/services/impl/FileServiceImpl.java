@@ -1,16 +1,37 @@
 package com.tc.dm.core.services.impl;
 
 import com.tc.dm.core.services.FileService;
-import com.tc.dm.rest.dto.ItemContent;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 
 @Transactional
 @Service
 public class FileServiceImpl implements FileService {
     @Override
-    public String storeFile(ItemContent content) {
-        return "temPath";
+    public String storeFile(MultipartFile file) {
+
+        String fileName = null;
+        String saveLocation = null;
+        if (!file.isEmpty()) {
+            try {
+
+                fileName = file.getOriginalFilename();
+                saveLocation="/data/upload/"+fileName;
+                byte[] bytes = file.getBytes();
+                BufferedOutputStream buffStream = new BufferedOutputStream(new FileOutputStream(new File(saveLocation)));
+                buffStream.write(bytes);
+                buffStream.close();
+
+            } catch (Exception e) {
+            }
+        }
+        return saveLocation;
+
     }
 
     @Override
@@ -19,7 +40,7 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public ItemContent getFile(String contentPath) {
+    public MultipartFile getFile(String contentPath) {
         return null;
     }
 }

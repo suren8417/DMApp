@@ -26,16 +26,16 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUser(User user) {
-        userDao.delete(findById(user.getId()));
+        userDao.delete(user);
     }
 
     @Override
     public User updateUser(User user) {
-        User emUser = findById(user.getId());
+      /*  User emUser = findById(user.getId());
         emUser.setName(user.getName());
         emUser.setPassword(user.getPassword());
-        emUser.setRole(user.getRole());
-        return userDao.update(emUser);
+        emUser.setRole(user.getRole());*/
+        return userDao.update(user);
     }
 
     @Override
