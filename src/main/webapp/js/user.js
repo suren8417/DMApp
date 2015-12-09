@@ -138,7 +138,7 @@ angular.module('tchaApp').controller('userController', function($scope,$http) {
     $scope.removeUser = function() {
     if($scope.userId !== null){
      var  selectedRoleId = selectRoleId($scope.selectedItemvalue);
-       	var dataObj = {id:$scope.userId,name : $scope.userName, password : $scope.rePassword, roleId : selectedRoleId, roleName:$scope.selectedItemvalue};
+       	//var dataObj = {id:$scope.userId,name : $scope.userName, password : $scope.rePassword, roleId : selectedRoleId, roleName:$scope.selectedItemvalue};
        	var res = $http.delete(deployedAt+"/TCHA/accounts/account?deleteUser="+ $scope.userId);
        	res.success(function(data, status, headers, config) {
        		  $scope.gridOptions.data = data;

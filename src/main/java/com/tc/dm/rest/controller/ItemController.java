@@ -44,7 +44,13 @@ public class ItemController {
                 ItemDto itemDto = mapper.readValue(itemDtoString, ItemDto.class);
                 itemDto.setUploadItem(file);
                 itemService.createItem(itemDto.toItem());
-                return new ResponseEntity(HttpStatus.OK);
+
+                List<ItemDto> itemDtos = itemDto.toItemDtos(itemService.findAllItems());
+                ItemResponseDto itemResponseDto = new ItemResponseDto();
+                itemResponseDto.setItemDtos(itemDtos);
+                itemResponseDto.setMessage("Creat item");
+                itemResponseDto.setStatus("OK");
+                return new ResponseEntity(itemResponseDto, HttpStatus.OK);
             } catch (Exception e) {
                 return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
             }
@@ -63,13 +69,31 @@ public class ItemController {
             List<ItemDto> itemDtos = userDto.toItemDtos(itemService.findAllItems());
             ItemResponseDto itemResponseDto = new ItemResponseDto();
             itemResponseDto.setItemDtos(itemDtos);
-            itemResponseDto.setMessage("Sending items");
+            itemResponseDto.setMessage("Sent items");
             itemResponseDto.setStatus("OK");
             return new ResponseEntity(itemResponseDto, HttpStatus.OK);
         } catch (Exception exception) {
             throw exception;
         }
 
+    }
+
+    @RequestMapping(value = "/item", method = RequestMethod.DELETE)
+    public ResponseEntity deleteAccount(@RequestParam("deleteItem") Long deleteItemId) {
+        try {
+            ItemDto itemDto = new ItemDto();
+            itemDto.setId(deleteItemId);
+            itemService.deleteItem(itemDto.toItem());
+
+            List<ItemDto> itemDtos = itemDto.toItemDtos(itemService.findAllItems());
+            ItemResponseDto itemResponseDto = new ItemResponseDto();
+            itemResponseDto.setItemDtos(itemDtos);
+            itemResponseDto.setMessage("Delete item");
+            itemResponseDto.setStatus("OK");
+            return new ResponseEntity(itemResponseDto, HttpStatus.OK);
+        } catch (Exception exception) {
+            throw exception;
+        }
     }
 
 

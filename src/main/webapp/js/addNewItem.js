@@ -80,8 +80,20 @@ angular.module('tchaApp').controller('newItemController', function($scope,$http)
                 $scope.itemKeyWords=row.entity.itemKeyWords;
                 $scope.itemStartDate=row.entity.itemStartDate;
                 $scope.id=row.entity.id;
+                $scope.uploadItem = null;
             });
         }
+    };
+
+    $scope.clearItem = function() {
+         $scope.itemsSelectedType= null;
+         $scope.itemTitle= null;
+         $scope.itemDonor= null;
+         $scope.itemDescription= null;
+         $scope.itemKeyWords= null;
+         $scope.itemStartDate= null;
+         $scope.uploadItem= null;
+         $scope.id= null;
     };
 
 
@@ -119,13 +131,25 @@ angular.module('tchaApp').controller('newItemController', function($scope,$http)
             fd.append('itemDto', JSON.stringify(dataObj));
             var res = $http.post("/TCHA/items/item", fd, {transformRequest: angular.identity, headers: {'Content-Type': undefined}});
           	res.success(function(data, status, headers, config) {
-              alert( "okkkkkkkkkkkk" );
+               $scope.itemGrid.data = data.itemDtos;
           	});
           	res.error(function(data, status, headers, config) {
           			alert( "failure message: " + JSON.stringify({data: data}));
           	});
     };
 
+
+    $scope.removeItem = function() {
+    if($scope.id !== null){
+       	var res = $http.delete("/TCHA/items/item?deleteItem="+ $scope.id);
+       	res.success(function(data, status, headers, config) {
+        $scope.itemGrid.data = data.itemDtos;
+       	});
+       	res.error(function(data, status, headers, config) {
+       			alert( "failure message: " + JSON.stringify({data: data}));
+       	});
+     }
+    };
 
 });
 

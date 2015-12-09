@@ -6,7 +6,7 @@
       <div  style=" margin-left: 50px; margin-right: 50px;margin-top: 30px;margin-bottom: 30px;">
          <div class="row" ng-controller="newItemController">
             <div class="col-md-4">
-               <form class="form-horizontal" >
+
                   <div>
                      <p>Item Type</p>
                      <div class="controls">
@@ -49,7 +49,7 @@
                      <p>Date Of Origin</p>
                      <div class="controls">
                         <p class="input-group">
-                           <input id="23224" show-button-bar="false" type="text" class="form-control" datepicker-popup="{{format}}" ng-model="itemStartDate" is-open="opened3"  datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+                           <input id="23224" show-button-bar="false" type="text"  datepicker-popup="{{format}}" ng-model="itemStartDate" is-open="opened3"  datepicker-options="dateOptions" class="form-control" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
                            <span class="input-group-btn">
                            <button type="button" class="btn btn-default" ng-click="toggleOpenDatePicker($event,'opened3')">  <i class="glyphicon glyphicon-calendar"></i></button>
                            </span>
@@ -66,10 +66,10 @@
                   </div>
                   <div class="controls">
                      <button class="btn" style=" margin-top:15px;" ng-click="createItem()">Add</button>
-                     <button class="btn" style=" margin-top:15px;">Remove</button>
-                     <button class="btn" style=" margin-top:15px;">Clear</button>
+                     <button class="btn" style=" margin-top:15px;" ng-click="removeItem()">Remove</button>
+                     <button class="btn" style=" margin-top:15px;" ng-click="clearItem()">Clear</button>
                   </div>
-               </form>
+
             </div>
             <div class="col-md-8">
                <div style=" width: 100%; height:625px;margin-top: 25px;">
