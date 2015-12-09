@@ -20,7 +20,7 @@ public class Collection {
     @Column(name = "description")
     private String description;
 
-    @ManyToMany(mappedBy = "collections", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "collections", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
     private Set<Item> items;
 
     public Long getId() {
@@ -48,6 +48,9 @@ public class Collection {
     }
 
     public Set<Item> getItems() {
+        if(null == this.items) {
+            this.items = new HashSet<>();
+        }
         return items;
     }
 

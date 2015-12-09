@@ -60,7 +60,7 @@
                   <div>
                     <p>Select Item</p>
                        <div class="controls">
-                         <input type="file" class="form-control" file-model="uploadItem"/>
+                         <input type="file" file-model="uploadItem"/>
                        </div>
                       </p>
                   </div>

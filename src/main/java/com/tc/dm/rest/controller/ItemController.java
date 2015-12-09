@@ -38,25 +38,28 @@ public class ItemController {
     @RequestMapping(value = "/item", method = RequestMethod.POST)
     public ResponseEntity addItem(@RequestParam("file") MultipartFile file, @RequestParam("itemDto") String itemDtoString) {
 
+        ItemResponseDto itemResponseDto = new ItemResponseDto();
         if (!file.isEmpty()) {
             try {
                 ObjectMapper mapper = new ObjectMapper();
                 ItemDto itemDto = mapper.readValue(itemDtoString, ItemDto.class);
                 itemDto.setUploadItem(file);
-                itemService.createItem(itemDto.toItem());
+                if (itemDto.getId() != null) {
+                    itemService.updateItem(itemDto.toItem());
+                }else{
+                    itemService.createItem(itemDto.toItem());
+                }
 
                 List<ItemDto> itemDtos = itemDto.toItemDtos(itemService.findAllItems());
-                ItemResponseDto itemResponseDto = new ItemResponseDto();
                 itemResponseDto.setItemDtos(itemDtos);
-                itemResponseDto.setMessage("Creat item");
                 itemResponseDto.setStatus("OK");
                 return new ResponseEntity(itemResponseDto, HttpStatus.OK);
             } catch (Exception e) {
                 return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
             }
-        } else {
-            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+        itemResponseDto.setStatus("No attachment");
+        return new ResponseEntity(itemResponseDto, HttpStatus.OK);
 
     }
 
@@ -69,17 +72,17 @@ public class ItemController {
             List<ItemDto> itemDtos = userDto.toItemDtos(itemService.findAllItems());
             ItemResponseDto itemResponseDto = new ItemResponseDto();
             itemResponseDto.setItemDtos(itemDtos);
-            itemResponseDto.setMessage("Sent items");
             itemResponseDto.setStatus("OK");
             return new ResponseEntity(itemResponseDto, HttpStatus.OK);
         } catch (Exception exception) {
-            throw exception;
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
     }
 
     @RequestMapping(value = "/item", method = RequestMethod.DELETE)
     public ResponseEntity deleteAccount(@RequestParam("deleteItem") Long deleteItemId) {
+
         try {
             ItemDto itemDto = new ItemDto();
             itemDto.setId(deleteItemId);
@@ -88,13 +91,36 @@ public class ItemController {
             List<ItemDto> itemDtos = itemDto.toItemDtos(itemService.findAllItems());
             ItemResponseDto itemResponseDto = new ItemResponseDto();
             itemResponseDto.setItemDtos(itemDtos);
-            itemResponseDto.setMessage("Delete item");
             itemResponseDto.setStatus("OK");
             return new ResponseEntity(itemResponseDto, HttpStatus.OK);
         } catch (Exception exception) {
-            throw exception;
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+
     }
 
+/*    @RequestMapping(value = "/item", method = RequestMethod.PUT)
+    public ResponseEntity updateAccount(@RequestParam("file") MultipartFile file, @RequestParam("itemDto") String itemDtoString) {
+
+        ItemResponseDto itemResponseDto = new ItemResponseDto();
+        if (!file.isEmpty()) {
+            try {
+                ObjectMapper mapper = new ObjectMapper();
+                ItemDto itemDto = mapper.readValue(itemDtoString, ItemDto.class);
+                itemDto.setUploadItem(file);
+                itemService.updateItem(itemDto.toItem());
+
+                List<ItemDto> itemDtos = itemDto.toItemDtos(itemService.findAllItems());
+                itemResponseDto.setItemDtos(itemDtos);
+                itemResponseDto.setStatus("OK");
+                return new ResponseEntity(itemResponseDto, HttpStatus.OK);
+            } catch (Exception e) {
+                return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        }
+        itemResponseDto.setStatus("No attachment");
+        return new ResponseEntity(itemResponseDto, HttpStatus.OK);
+
+    }*/
 
 }

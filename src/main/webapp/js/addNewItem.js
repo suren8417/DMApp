@@ -125,7 +125,7 @@ angular.module('tchaApp').controller('newItemController', function($scope,$http)
 
    $scope.createItem = function() {
 
-            var dataObj = {id : null, itemsSelectedType :  $scope.itemsSelectedType, itemTitle : $scope.itemTitle, itemDonor:$scope.itemDonor,itemDescription:$scope.itemDescription,itemKeyWords:$scope.itemKeyWords,itemStartDate:$scope.itemStartDate};
+            var dataObj = {id : $scope.id, itemsSelectedType :  $scope.itemsSelectedType, itemTitle : $scope.itemTitle, itemDonor:$scope.itemDonor,itemDescription:$scope.itemDescription,itemKeyWords:$scope.itemKeyWords,itemStartDate:$scope.itemStartDate};
             var fd = new FormData();
             fd.append('file', $scope.uploadItem);
             fd.append('itemDto', JSON.stringify(dataObj));
@@ -134,7 +134,7 @@ angular.module('tchaApp').controller('newItemController', function($scope,$http)
                $scope.itemGrid.data = data.itemDtos;
           	});
           	res.error(function(data, status, headers, config) {
-          			alert( "failure message: " + JSON.stringify({data: data}));
+          			//alert( "failure message: " + JSON.stringify({data: data}));
           	});
     };
 
@@ -146,7 +146,7 @@ angular.module('tchaApp').controller('newItemController', function($scope,$http)
         $scope.itemGrid.data = data.itemDtos;
        	});
        	res.error(function(data, status, headers, config) {
-       			alert( "failure message: " + JSON.stringify({data: data}));
+       			//alert( "failure message: " + JSON.stringify({data: data}));
        	});
      }
     };

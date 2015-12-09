@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Transactional(rollbackFor=Exception.class)
+@Transactional(rollbackFor = Exception.class)
 @Service
 public class ItemServiceImpl implements ItemService {
 
@@ -40,8 +40,12 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public void updateItem(Item item) {
+        final String contentPath = item.getContent() != null ? fileService.storeFile(item.getContent()) : findItemById(item.getId()).getContentPath();
+        item.setContentPath(contentPath);
         itemDao.update(item);
+
     }
+
 
     @Override
     public void deleteItem(Item item) {
@@ -55,7 +59,7 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public Item findItemById(Long itemId) {
         final Item item = itemDao.find(Item.class, itemId);
-        if(null != item) {
+        if (null != item) {
             item.setContent(fileService.getFile(item.getContentPath()));
         }
         return item;
@@ -71,7 +75,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public List<Item> findPageOfItems(int pageIndex, int pageSize, boolean withContent) {
-        List<Item> items = itemDao.findPage(pageIndex*pageSize-pageSize, pageSize);
+        List<Item> items = itemDao.findPage(pageIndex * pageSize - pageSize, pageSize);
         return items;
     }
 
@@ -103,8 +107,8 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public ItemType findItemTypeByName(String itemTypeName) {
-        for(ItemType itemType : itemTypeDao.findAll()) {
-            if(itemType.getName().equals(itemTypeName)) {
+        for (ItemType itemType : itemTypeDao.findAll()) {
+            if (itemType.getName().equals(itemTypeName)) {
                 return itemType;
             }
         }

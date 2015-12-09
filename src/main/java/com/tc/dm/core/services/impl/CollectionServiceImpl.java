@@ -27,6 +27,7 @@ public class CollectionServiceImpl implements CollectionService {
         HashSet<Item> items = new HashSet<>();
         for(Item item : collection.getItems()){
             item = item.getId()==null?item:itemDao.find(Item.class, item.getId());
+            item.getCollections().add(collection);
             items.add(item);
         }
         collection.setItems(items);

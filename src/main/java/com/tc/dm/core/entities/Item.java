@@ -107,6 +107,9 @@ public class Item {
     }
 
     public Set<Collection> getCollections() {
+        if(null == this.collections) {
+            this.collections = new HashSet<>();
+        }
         return collections;
     }
 
