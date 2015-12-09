@@ -1,5 +1,5 @@
 
-angular.module('tchaApp').controller('searchController', function($scope) {
+angular.module('tchaApp').controller('searchController', function($scope,$http) {
 
  $scope.searchData=null;
  $scope.searchDataInDetail=null;
@@ -13,9 +13,15 @@ angular.module('tchaApp').controller('searchController', function($scope) {
  $scope.searchInDetail= false;
 
  $scope.search = function(searchText,image,document,audio,video,collection,startDate,endDate){
+alert("ddddddddd");
+    $http.get("/TCHA/searches?searchText="+ searchText+"&image="+image+"&document="+document+"&audio="+audio+"&video="+video+"&collection="+collection+"&startDate="+startDate+"&endDate="+endDate)
+         .success(function(data) {
+alert("ddddddddd");
+                         });
+
  $scope.searchSummary= true;
  $scope.searchInDetail= false;
- $scope.searchData = {"items":
+/* $scope.searchData = {"items":
          [
                  {
                     "title":"2005 Cricket team - Image ",
@@ -40,7 +46,7 @@ angular.module('tchaApp').controller('searchController', function($scope) {
                     "title":"Western band in 1980 - Image",
                     "description":"description of module2"
                  }
-         ]};
+         ]};*/
 
  $scope.resultCount="5 Results were retrieved";
  };
