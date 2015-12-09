@@ -65,7 +65,7 @@ public class CollectionDto {
         collectionDto.setId(collection.getId());
         collectionDto.setName(collection.getName());
         collectionDto.setDescription(collection.getDescription());
-        collectionDto.setItemDtos(new ItemDto().toItemDtos(new ArrayList<Item>(collection.getItems())));
+        collectionDto.setItemDtos(ItemDto.toItemDtos(collection.getItems()));
         return collectionDto;
     }
 
