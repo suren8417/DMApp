@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
+import java.util.List;
 
 @Transactional
 @Service
@@ -46,5 +47,9 @@ public class CollectionServiceImpl implements CollectionService {
     @Override
     public Collection findCollectionById(Long collectionId) {
         return collectionDao.find(Collection.class, collectionId);
+    }
+
+    public List<Collection> findAllCollections() {
+        return collectionDao.findAll();
     }
 }
