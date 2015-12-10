@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import static com.tc.dm.core.util.CommonUtil.*;
 
 @Repository
 public class ItemDaoImpl extends GenericDaoJpaImpl<Long, Item> {
@@ -30,18 +31,24 @@ public class ItemDaoImpl extends GenericDaoJpaImpl<Long, Item> {
         List<Predicate> predicates = new ArrayList<Predicate>();
 
         if(!CommonUtil.isNullOrEmpty(itemSearchParam.getTextToSearch())) {
-            predicates.add(cb.like(rootItem.<String>get("title"), "%"+itemSearchParam.getTextToSearch()+"%"));
+            Predicate hasTitle = cb.like(rootItem.<String>get("title"), "%" + itemSearchParam.getTextToSearch() + "%");
+            Predicate hasDesc = cb.like(rootItem.<String>get("description"), "%" + itemSearchParam.getTextToSearch() + "%");
+            Predicate hasKeyword = cb.like(rootItem.<String>get("keywords"), "%" + itemSearchParam.getTextToSearch() + "%");
+            predicates.add(cb.or(hasTitle, hasDesc, hasKeyword));
         }
-        if(!CommonUtil.isNullOrEmpty(itemSearchParam.getType())) {
-            predicates.add(cb.like(rootItem.<String>get("type"), "%"+itemSearchParam.getType().toString()+"%"));
+        if(!CommonUtil.isNullOrEmpty(itemSearchParam.getTypes())) {
+            predicates.add(rootItem.<String>get("type").in(itemSearchParam.getTypes()));
         }
         if(!CommonUtil.isNullOrEmpty(itemSearchParam.getDateOfOriginFrom())) {
             predicates.add(cb.greaterThanOrEqualTo(rootItem.<Date>get("dateOfOrigin"), itemSearchParam.getDateOfOriginFrom()));
         }
-
+        if(!CommonUtil.isNullOrEmpty(itemSearchParam.getDateOfOriginTo())) {
+            predicates.add(cb.lessThanOrEqualTo(rootItem.<Date>get("dateOfOrigin"), itemSearchParam.getDateOfOriginTo()));
+        }
         cq.where(predicates.toArray(new Predicate[predicates.size()]));
 
         TypedQuery<Item> tq = em.createQuery(cq);
-        return tq.getResultList();
+        List<Item> resultList = tq.getResultList();
+        return resultList==null?new ArrayList<Item>():resultList;
     }
 }
