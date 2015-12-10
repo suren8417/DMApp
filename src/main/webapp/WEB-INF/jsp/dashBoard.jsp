@@ -40,7 +40,7 @@
                <div class="collapse navbar-collapse" id="myNavbar"  >
                   <ul class="nav navbar-nav" >
                      <li class="active dropdown" ng-show="userTask">
-                        <a class="dropdown-toggle" data-toggle="dropdown" > <span class="glyphicon glyphicon-cog"></span> Actions <span class="caret"></span></a>
+                        <a href="" class="dropdown-toggle" data-toggle="dropdown" > <span class="glyphicon glyphicon-cog"></span> Actions <span class="caret"></span></a>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenu1" >
                               <li ng-repeat="a in subjects" ><a href={{'#/'+a.rout}} >{{a.displayText}}</a></li>
                         </ul>
