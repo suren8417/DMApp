@@ -19,28 +19,28 @@
                   <div>
                      <p>Title</p>
                      <div class="controls">
-                        <input type="text" id="itemTitle" name="itemTitle" placeholder="" ng-model="itemTitle"  class="form-control">
+                        <input type="text" id="itemTitle" name="itemTitle" placeholder="" ng-model="itemTitle"  class="form-control" maxlength="250">
                      </div>
                      </p>
                   </div>
                   <div>
                      <p>Donor</p>
                      <div class="controls">
-                        <input type="text" id="itemDonor" name="itemDonor" ng-model="itemDonor" placeholder="" class="form-control">
+                        <input type="text" id="itemDonor" name="itemDonor" ng-model="itemDonor" placeholder="" class="form-control" maxlength="250">
                      </div>
                      </p>
                   </div>
                   <div>
                      <p>Description</p>
                      <div class="controls">
-                        <textarea rows="4" cols="50" id="itemDescription" name="itemDescription" ng-model="itemDescription" class="form-control"></textarea>
+                        <textarea rows="4" cols="50" id="itemDescription" name="itemDescription" ng-model="itemDescription" class="form-control" maxlength="1000"></textarea>
                      </div>
                      </p>
                   </div>
                   <div>
                      <p>Key Words</p>
                      <div class="controls">
-                        <textarea rows="3" cols="50" id="itemKeyWords" name="itemKeyWords" ng-model="itemKeyWords" class="form-control"></textarea>
+                        <textarea rows="3" cols="50" id="itemKeyWords" name="itemKeyWords" ng-model="itemKeyWords" class="form-control" maxlength="1000"></textarea>
                      </div>
                      </p>
                   </div>
@@ -49,7 +49,7 @@
                      <p>Date Of Origin</p>
                      <div class="controls">
                         <p class="input-group" style="width: 200px;">
-                           <input id="23224" show-button-bar="false" type="text"  datepicker-popup="{{format}}" ng-model="itemStartDate" is-open="opened3"  datepicker-options="dateOptions" class="form-control" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+                           <input onkeydown="return false" id="23224" show-button-bar="false" type="text"  datepicker-popup="{{format}}" ng-model="itemStartDate" is-open="opened3"  datepicker-options="dateOptions" class="form-control" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
                            <span class="input-group-btn">
                            <button type="button" class="btn btn-default" ng-click="toggleOpenDatePicker($event,'opened3')">  <i class="glyphicon glyphicon-calendar"></i></button>
                            </span>
