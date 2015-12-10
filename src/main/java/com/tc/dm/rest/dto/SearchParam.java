@@ -8,11 +8,11 @@ import java.util.*;
 
 import static com.tc.dm.core.util.CommonUtil.*;
 
-public class ItemSearchParam {
+public class SearchParam {
 
     public static final SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
 
-    public ItemSearchParam() {
+    public SearchParam() {
         this.caseSensitive = false;
         this.matchWhole = false;
         getTypes();
@@ -95,29 +95,29 @@ public class ItemSearchParam {
         return params;
     }
 
-    public static ItemSearchParam fromMap(Map<String, String> params) {
-        ItemSearchParam itemSearchParam = new ItemSearchParam();
-        itemSearchParam.setTextToSearch(params.get("textToSearch"));
+    public static SearchParam fromMap(Map<String, String> params) {
+        SearchParam searchParam = new SearchParam();
+        searchParam.setTextToSearch(params.get("textToSearch"));
         String iTypes[] = StringUtils.split(params.get("types"), ",");
         if(null != iTypes) {
             for(String type : iTypes) {
-                itemSearchParam.getTypes().add(ItemType.fromString(type));
+                searchParam.getTypes().add(ItemType.fromString(type));
             }
         }
         try {
-            itemSearchParam.setDateOfOriginFrom(isNullOrEmpty(params.get("dateOfOriginFrom"))?null:sdf.parse(
+            searchParam.setDateOfOriginFrom(isNullOrEmpty(params.get("dateOfOriginFrom"))?null:sdf.parse(
                     params.get("dateOfOriginFrom")));
         } catch (ParseException e) {
             //Default null will be set
         }
         try {
-            itemSearchParam.setDateOfOriginTo(isNullOrEmpty(params.get("dateOfOriginTo"))?null:sdf.parse(
+            searchParam.setDateOfOriginTo(isNullOrEmpty(params.get("dateOfOriginTo"))?null:sdf.parse(
                     params.get("dateOfOriginTo")));
         } catch (ParseException e) {
             //Default null will be set
         }
-        itemSearchParam.setCaseSensitive(Boolean.parseBoolean(params.get("caseSensitive")));
-        itemSearchParam.setMatchWhole(Boolean.parseBoolean(params.get("matchWhole")));
-        return itemSearchParam;
+        searchParam.setCaseSensitive(Boolean.parseBoolean(params.get("caseSensitive")));
+        searchParam.setMatchWhole(Boolean.parseBoolean(params.get("matchWhole")));
+        return searchParam;
     }
 }

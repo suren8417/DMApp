@@ -6,7 +6,7 @@ import com.tc.dm.core.entities.Collection;
 import com.tc.dm.core.entities.Item;
 import com.tc.dm.core.services.SearchService;
 import com.tc.dm.rest.dto.ItemDto;
-import com.tc.dm.rest.dto.ItemSearchParam;
+import com.tc.dm.rest.dto.SearchParam;
 import com.tc.dm.rest.dto.SearchResultDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,7 +28,7 @@ public class SearchServiceImpl implements SearchService {
     CollectionDaoImpl collectionDao;
 
     @Override
-    public List<SearchResultDto> searchItems(ItemSearchParam searchParam) {
+    public List<SearchResultDto> search(SearchParam searchParam) {
 
         if(isNullOrEmpty(searchParam)) return new ArrayList<SearchResultDto>();
 

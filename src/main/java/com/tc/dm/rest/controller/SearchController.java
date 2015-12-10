@@ -1,9 +1,9 @@
 package com.tc.dm.rest.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.tc.dm.core.services.CollectionService;
-import com.tc.dm.core.services.ItemService;
-import com.tc.dm.rest.dto.*;
+import com.tc.dm.core.services.SearchService;
+import com.tc.dm.rest.dto.SearchParam;
+import com.tc.dm.rest.dto.SearchResponseDto;
+import com.tc.dm.rest.dto.SearchResultDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,23 +12,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.io.IOException;
-import java.util.Date;
 import java.util.List;
-import static com.tc.dm.core.util.CommonUtil.*;
 
-/**
- * Created by sg40304 on 7/9/15.
- */
 @Controller
 @RequestMapping("/searches")
 public class SearchController {
 
-    private ItemService itemService;
+    private SearchService searchService;
 
     @Autowired
-    public SearchController(ItemService itemService) {
-        this.itemService = itemService;
+    public SearchController(SearchService searchService) {
+        this.searchService = searchService;
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -36,12 +30,12 @@ public class SearchController {
 
         try {
 
-            ItemSearchParam itemSearchParam = new ItemSearchParam();
-            itemSearchParam.setTextToSearch(searchText);
-            //itemSearchParam.setDateOfOriginFrom(toDate(startDate));
-            //itemSearchParam.setDateOfOriginTo(toDate(endDate));
+            SearchParam searchParam = new SearchParam();
+            searchParam.setTextToSearch(searchText);
+            //searchParam.setDateOfOriginFrom(toDate(startDate));
+            //searchParam.setDateOfOriginTo(toDate(endDate));
 
-            itemService.searchItems(itemSearchParam);
+            List<SearchResultDto> resultDtoList = searchService.search(searchParam);
 
             SearchResponseDto searchResponseDto = new SearchResponseDto();
             searchResponseDto.setStatus("OK");

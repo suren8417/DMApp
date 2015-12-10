@@ -2,8 +2,7 @@ package com.tc.dm.core.services;
 
 import com.tc.dm.core.entities.Item;
 import com.tc.dm.core.entities.ItemType;
-import com.tc.dm.rest.dto.ItemContent;
-import com.tc.dm.rest.dto.ItemSearchParam;
+import com.tc.dm.rest.dto.SearchParam;
 
 import java.util.List;
 
@@ -21,7 +20,7 @@ public interface ItemService {
 
     public List<Item> findPageOfItems(int pageIndex, int pageSize, boolean withContent);
 
-    public List<Item> searchItems(ItemSearchParam itemSearchParam);
+    public List<Item> searchItems(SearchParam searchParam);
 
     public ItemType createItemType(ItemType itemType);
 

@@ -2,7 +2,7 @@ package com.tc.dm.core.dao.impl;
 
 import com.tc.dm.core.entities.Item;
 import com.tc.dm.core.util.CommonUtil;
-import com.tc.dm.rest.dto.ItemSearchParam;
+import com.tc.dm.rest.dto.SearchParam;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.TypedQuery;
@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import static com.tc.dm.core.util.CommonUtil.*;
 
 @Repository
 public class ItemDaoImpl extends GenericDaoJpaImpl<Long, Item> {
@@ -22,7 +21,7 @@ public class ItemDaoImpl extends GenericDaoJpaImpl<Long, Item> {
     @Override
     public List<Item> search(Map<String, String> params) {
 
-        ItemSearchParam itemSearchParam = ItemSearchParam.fromMap(params);
+        SearchParam searchParam = SearchParam.fromMap(params);
 
         CriteriaBuilder cb = this.em.getCriteriaBuilder();
         CriteriaQuery<Item> cq = cb.createQuery(Item.class);
@@ -30,20 +29,20 @@ public class ItemDaoImpl extends GenericDaoJpaImpl<Long, Item> {
 
         List<Predicate> predicates = new ArrayList<Predicate>();
 
-        if(!CommonUtil.isNullOrEmpty(itemSearchParam.getTextToSearch())) {
-            Predicate hasTitle = cb.like(rootItem.<String>get("title"), "%" + itemSearchParam.getTextToSearch() + "%");
-            Predicate hasDesc = cb.like(rootItem.<String>get("description"), "%" + itemSearchParam.getTextToSearch() + "%");
-            Predicate hasKeyword = cb.like(rootItem.<String>get("keywords"), "%" + itemSearchParam.getTextToSearch() + "%");
+        if(!CommonUtil.isNullOrEmpty(searchParam.getTextToSearch())) {
+            Predicate hasTitle = cb.like(rootItem.<String>get("title"), "%" + searchParam.getTextToSearch() + "%");
+            Predicate hasDesc = cb.like(rootItem.<String>get("description"), "%" + searchParam.getTextToSearch() + "%");
+            Predicate hasKeyword = cb.like(rootItem.<String>get("keywords"), "%" + searchParam.getTextToSearch() + "%");
             predicates.add(cb.or(hasTitle, hasDesc, hasKeyword));
         }
-        if(!CommonUtil.isNullOrEmpty(itemSearchParam.getTypes())) {
-            predicates.add(rootItem.<String>get("type").in(itemSearchParam.getTypes()));
+        if(!CommonUtil.isNullOrEmpty(searchParam.getTypes())) {
+            predicates.add(rootItem.<String>get("type").in(searchParam.getTypes()));
         }
-        if(!CommonUtil.isNullOrEmpty(itemSearchParam.getDateOfOriginFrom())) {
-            predicates.add(cb.greaterThanOrEqualTo(rootItem.<Date>get("dateOfOrigin"), itemSearchParam.getDateOfOriginFrom()));
+        if(!CommonUtil.isNullOrEmpty(searchParam.getDateOfOriginFrom())) {
+            predicates.add(cb.greaterThanOrEqualTo(rootItem.<Date>get("dateOfOrigin"), searchParam.getDateOfOriginFrom()));
         }
-        if(!CommonUtil.isNullOrEmpty(itemSearchParam.getDateOfOriginTo())) {
-            predicates.add(cb.lessThanOrEqualTo(rootItem.<Date>get("dateOfOrigin"), itemSearchParam.getDateOfOriginTo()));
+        if(!CommonUtil.isNullOrEmpty(searchParam.getDateOfOriginTo())) {
+            predicates.add(cb.lessThanOrEqualTo(rootItem.<Date>get("dateOfOrigin"), searchParam.getDateOfOriginTo()));
         }
         cq.where(predicates.toArray(new Predicate[predicates.size()]));
 

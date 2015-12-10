@@ -7,8 +7,7 @@ import com.tc.dm.core.entities.Item;
 import com.tc.dm.core.entities.ItemType;
 import com.tc.dm.core.services.FileService;
 import com.tc.dm.core.services.ItemService;
-import com.tc.dm.rest.dto.ItemContent;
-import com.tc.dm.rest.dto.ItemSearchParam;
+import com.tc.dm.rest.dto.SearchParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -80,8 +79,8 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public List<Item> searchItems(ItemSearchParam itemSearchParam) {
-        List<Item> items = itemDao.search(itemSearchParam.toMap());
+    public List<Item> searchItems(SearchParam searchParam) {
+        List<Item> items = itemDao.search(searchParam.toMap());
         return items;
     }
 
