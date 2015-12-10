@@ -1,23 +1,25 @@
 package com.tc.dm.rest.dto;
 
+import org.springframework.util.StringUtils;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+
 import static com.tc.dm.core.util.CommonUtil.*;
 
-public class ItemSearchParam {
+public class SearchParam {
 
     public static final SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
 
-    public ItemSearchParam() {
+    public SearchParam() {
         this.caseSensitive = false;
         this.matchWhole = false;
+        getTypes();
     }
 
     private String textToSearch;
-    private ItemType type;
+    private List<ItemType> types;
     private Date dateOfOriginFrom;
     private Date dateOfOriginTo;
     private boolean caseSensitive;
@@ -31,12 +33,23 @@ public class ItemSearchParam {
         this.textToSearch = textToSearch;
     }
 
-    public ItemType getType() {
-        return type;
+    public List<ItemType> getTypes() {
+        if(null == this.types) {
+            this.types = new ArrayList<>();
+        }
+        return this.types;
     }
 
-    public void setType(ItemType type) {
-        this.type = type;
+    public List<String> getTypesAsStrings() {
+        List<String> itemTypesAsStrings = new ArrayList<>();
+        for(ItemType type : this.getTypes()) {
+            itemTypesAsStrings.add(type.toString());
+        }
+        return itemTypesAsStrings;
+    }
+
+    public void setTypes(List<ItemType> types) {
+        this.types = types;
     }
 
     public Date getDateOfOriginFrom() {
@@ -74,7 +87,7 @@ public class ItemSearchParam {
     public Map<String, String> toMap(){
         Map<String, String> params = new HashMap<String, String>();
         params.put("textToSearch", textToSearch);
-        params.put("type", isNullOrEmpty(type)?null:type.toString());
+        params.put("types", isNullOrEmpty(types)?null:StringUtils.collectionToDelimitedString(this.types, ","));
         params.put("dateOfOriginFrom", isNullOrEmpty(dateOfOriginFrom)?null:sdf.format(dateOfOriginFrom));
         params.put("dateOfOriginTo", isNullOrEmpty(dateOfOriginTo)?null:sdf.format(dateOfOriginTo));
         params.put("caseSensitive", String.valueOf(caseSensitive));
@@ -82,24 +95,29 @@ public class ItemSearchParam {
         return params;
     }
 
-    public static ItemSearchParam fromMap(Map<String, String> params) {
-        ItemSearchParam itemSearchParam = new ItemSearchParam();
-        itemSearchParam.setTextToSearch(params.get("textToSearch"));
-        itemSearchParam.setType(ItemType.fromString(params.get("type")));
+    public static SearchParam fromMap(Map<String, String> params) {
+        SearchParam searchParam = new SearchParam();
+        searchParam.setTextToSearch(params.get("textToSearch"));
+        String iTypes[] = StringUtils.split(params.get("types"), ",");
+        if(null != iTypes) {
+            for(String type : iTypes) {
+                searchParam.getTypes().add(ItemType.fromString(type));
+            }
+        }
         try {
-            itemSearchParam.setDateOfOriginFrom(isNullOrEmpty(params.get("dateOfOriginFrom"))?null:sdf.parse(
+            searchParam.setDateOfOriginFrom(isNullOrEmpty(params.get("dateOfOriginFrom"))?null:sdf.parse(
                     params.get("dateOfOriginFrom")));
         } catch (ParseException e) {
             //Default null will be set
         }
         try {
-            itemSearchParam.setDateOfOriginTo(isNullOrEmpty(params.get("dateOfOriginTo"))?null:sdf.parse(
+            searchParam.setDateOfOriginTo(isNullOrEmpty(params.get("dateOfOriginTo"))?null:sdf.parse(
                     params.get("dateOfOriginTo")));
         } catch (ParseException e) {
             //Default null will be set
         }
-        itemSearchParam.setCaseSensitive(Boolean.parseBoolean(params.get("caseSensitive")));
-        itemSearchParam.setMatchWhole(Boolean.parseBoolean(params.get("matchWhole")));
-        return itemSearchParam;
+        searchParam.setCaseSensitive(Boolean.parseBoolean(params.get("caseSensitive")));
+        searchParam.setMatchWhole(Boolean.parseBoolean(params.get("matchWhole")));
+        return searchParam;
     }
 }

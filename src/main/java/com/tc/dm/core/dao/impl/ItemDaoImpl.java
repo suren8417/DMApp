@@ -2,7 +2,7 @@ package com.tc.dm.core.dao.impl;
 
 import com.tc.dm.core.entities.Item;
 import com.tc.dm.core.util.CommonUtil;
-import com.tc.dm.rest.dto.ItemSearchParam;
+import com.tc.dm.rest.dto.SearchParam;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.TypedQuery;
@@ -21,7 +21,7 @@ public class ItemDaoImpl extends GenericDaoJpaImpl<Long, Item> {
     @Override
     public List<Item> search(Map<String, String> params) {
 
-        ItemSearchParam itemSearchParam = ItemSearchParam.fromMap(params);
+        SearchParam searchParam = SearchParam.fromMap(params);
 
         CriteriaBuilder cb = this.em.getCriteriaBuilder();
         CriteriaQuery<Item> cq = cb.createQuery(Item.class);
@@ -29,19 +29,25 @@ public class ItemDaoImpl extends GenericDaoJpaImpl<Long, Item> {
 
         List<Predicate> predicates = new ArrayList<Predicate>();
 
-        if(!CommonUtil.isNullOrEmpty(itemSearchParam.getTextToSearch())) {
-            predicates.add(cb.like(rootItem.<String>get("title"), "%"+itemSearchParam.getTextToSearch()+"%"));
+        if(!CommonUtil.isNullOrEmpty(searchParam.getTextToSearch())) {
+            Predicate hasTitle = cb.like(rootItem.<String>get("title"), "%" + searchParam.getTextToSearch() + "%");
+            Predicate hasDesc = cb.like(rootItem.<String>get("description"), "%" + searchParam.getTextToSearch() + "%");
+            Predicate hasKeyword = cb.like(rootItem.<String>get("keywords"), "%" + searchParam.getTextToSearch() + "%");
+            predicates.add(cb.or(hasTitle, hasDesc, hasKeyword));
         }
-        if(!CommonUtil.isNullOrEmpty(itemSearchParam.getType())) {
-            predicates.add(cb.like(rootItem.<String>get("type"), "%"+itemSearchParam.getType().toString()+"%"));
+        if(!CommonUtil.isNullOrEmpty(searchParam.getTypes())) {
+            predicates.add(rootItem.<String>get("type").in(searchParam.getTypes()));
         }
-        if(!CommonUtil.isNullOrEmpty(itemSearchParam.getDateOfOriginFrom())) {
-            predicates.add(cb.greaterThanOrEqualTo(rootItem.<Date>get("dateOfOrigin"), itemSearchParam.getDateOfOriginFrom()));
+        if(!CommonUtil.isNullOrEmpty(searchParam.getDateOfOriginFrom())) {
+            predicates.add(cb.greaterThanOrEqualTo(rootItem.<Date>get("dateOfOrigin"), searchParam.getDateOfOriginFrom()));
         }
-
+        if(!CommonUtil.isNullOrEmpty(searchParam.getDateOfOriginTo())) {
+            predicates.add(cb.lessThanOrEqualTo(rootItem.<Date>get("dateOfOrigin"), searchParam.getDateOfOriginTo()));
+        }
         cq.where(predicates.toArray(new Predicate[predicates.size()]));
 
         TypedQuery<Item> tq = em.createQuery(cq);
-        return tq.getResultList();
+        List<Item> resultList = tq.getResultList();
+        return resultList==null?new ArrayList<Item>():resultList;
     }
 }

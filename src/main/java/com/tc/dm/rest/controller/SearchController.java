@@ -1,9 +1,10 @@
 package com.tc.dm.rest.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.tc.dm.core.services.CollectionService;
-import com.tc.dm.core.services.ItemService;
-import com.tc.dm.rest.dto.*;
+import com.tc.dm.core.services.SearchService;
+import com.tc.dm.rest.dto.ItemType;
+import com.tc.dm.rest.dto.SearchParam;
+import com.tc.dm.rest.dto.SearchResponseDto;
+import com.tc.dm.rest.dto.SearchResultDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,23 +13,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.io.IOException;
-import java.util.Date;
+import java.text.ParseException;
 import java.util.List;
 import static com.tc.dm.core.util.CommonUtil.*;
 
-/**
- * Created by sg40304 on 7/9/15.
- */
 @Controller
 @RequestMapping("/searches")
 public class SearchController {
 
-    private ItemService itemService;
+    private SearchService searchService;
 
     @Autowired
-    public SearchController(ItemService itemService) {
-        this.itemService = itemService;
+    public SearchController(SearchService searchService) {
+        this.searchService = searchService;
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -36,14 +33,27 @@ public class SearchController {
 
         try {
 
-            ItemSearchParam itemSearchParam = new ItemSearchParam();
-            itemSearchParam.setTextToSearch(searchText);
-            //itemSearchParam.setDateOfOriginFrom(toDate(startDate));
-            //itemSearchParam.setDateOfOriginTo(toDate(endDate));
+            SearchParam searchParam = new SearchParam();
+            searchParam.setTextToSearch(searchText);
 
-            itemService.searchItems(itemSearchParam);
+            String TYPE_BOX = "YES";
+            if(TYPE_BOX.equals(image)) { searchParam.getTypes().add(ItemType.IMAGE);}
+            if(TYPE_BOX.equals(document)) { searchParam.getTypes().add(ItemType.DOCUMENT);}
+            if(TYPE_BOX.equals(audio)) { searchParam.getTypes().add(ItemType.AUDIO);}
+            if(TYPE_BOX.equals(video)) { searchParam.getTypes().add(ItemType.VIDEO);}
+            if(TYPE_BOX.equals(collection)) { searchParam.getTypes().add(ItemType.COLLECTION);}
+
+            try {
+                searchParam.setDateOfOriginFrom(toDate(startDate));
+                searchParam.setDateOfOriginTo(toDate(endDate));
+            } catch (ParseException e) {
+                //DO Nothing
+            }
+
+            List<SearchResultDto> resultDtoList = searchService.search(searchParam);
 
             SearchResponseDto searchResponseDto = new SearchResponseDto();
+            searchResponseDto.setSearchResultDtos(resultDtoList);
             searchResponseDto.setStatus("OK");
             return new ResponseEntity(searchResponseDto, HttpStatus.OK);
         } catch (Exception exception) {
