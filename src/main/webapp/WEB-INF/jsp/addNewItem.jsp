@@ -82,7 +82,7 @@
                       </p>
                   </div>
                   <div class="controls">
-                     <button class="btn" style=" margin-top:15px;width: 100px;" ng-click="createItem()">Add</button>
+                     <button class="btn" style=" margin-top:15px;width: 100px;" ng-click="createItem()">Save</button>
                      <button class="btn" style=" margin-top:15px;width: 100px;" ng-click="removeItem()">Remove</button>
                      <button class="btn" style=" margin-top:15px;width: 100px;" ng-click="formClear()">Clear</button>
                   </div>

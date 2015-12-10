@@ -4,6 +4,12 @@ angular.module('tchaApp').controller('collectionController', function($scope,$ht
     $scope.collectionDescription;
     $scope.collectionId=null;
     $scope.selectItems=[];
+    $scope.successMessage=false;
+    $scope.deleteMessage=false;
+
+    $scope.collectionNameRequired=false;
+    $scope.collectionDescriptionRequired=false;
+
     $scope.columns = [{
         field: 'name',
         displayName:'CollectionName',
@@ -65,6 +71,7 @@ angular.module('tchaApp').controller('collectionController', function($scope,$ht
             onRegisterApi: function(gridApi) {
                 $scope.gridApi = gridApi;
                 gridApi.selection.on.rowSelectionChanged($scope, function(row) {
+                    $scope.collectionId = row.entity.id;
                     $scope.collectionName = row.entity.name;
                     $scope.collectionDescription = row.entity.description;;
                 });
@@ -101,7 +108,41 @@ angular.module('tchaApp').controller('collectionController', function($scope,$ht
         });
 
 
+    $scope.formClear = function() {
+         $scope.clearItem();
+        $scope.successMessage=false;
+         $scope.deleteMessage=false;
+    };
+
+    $scope.clearItem = function() {
+      $scope.collectionName=null;
+      $scope.collectionDescription=null;
+      $scope.collectionId=null;
+      $scope.selectItems=[];
+
+      $scope.collectionNameRequired=false;
+      $scope.collectionDescriptionRequired=false;
+
+    };
+
+
+   function validateForm() {
+
+    if($scope.collectionName == null){
+         $scope.collectionNameRequired=true;
+         return false;
+    }
+    if($scope.collectionDescription == null){
+         $scope.collectionDescriptionRequired=true;
+         return false;
+    }
+
+     return true;
+    }
+
         $scope.createAndUpdateCollection = function() {
+   $scope.deleteMessage=false;
+        if(validateForm()){
 
                  var dataObj = {id : $scope.collectionId, name :$scope.collectionName, description : $scope.collectionDescription};
                  var fd = new FormData();
@@ -110,13 +151,31 @@ angular.module('tchaApp').controller('collectionController', function($scope,$ht
                  var res = $http.post("/TCHA/collections/collection", fd, {transformRequest: angular.identity, headers: {'Content-Type': undefined}});
                	res.success(function(data, status, headers, config) {
                     $scope.collectionGrid.data = data.collectionDto;
+                        $scope.successMessage=true;;
+                    $scope.clearItem();
                	});
                	res.error(function(data, status, headers, config) {
                			//alert( "failure message: " + JSON.stringify({data: data}));
                	});
+               	}
          };
 
-
+    $scope.removeCollection = function() {
+        $scope.successMessage=false;
+        if ($scope.id !== null) {
+            var res = $http.delete("/TCHA/collections/collection?deleteCollection=" + $scope.collectionId);
+            res.success(function(data, status, headers, config) {
+              $scope.collectionGrid.data = data.collectionDto;
+              $scope.clearItem();
+              $scope.deleteMessage=true;
+/*                 $scope.deleteMessage=true;
+                 $scope.clearItem();*/
+            });
+            res.error(function(data, status, headers, config) {
+                //alert( "failure message: " + JSON.stringify({data: data}));
+            });
+        }
+    };
 
 
 });

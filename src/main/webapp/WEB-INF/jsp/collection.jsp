@@ -6,10 +6,16 @@
         <div style=" margin-left: 50px; margin-right: 50px;margin-top: 30px;margin-bottom: 30px;" ng-controller="collectionController">
             <div class="row" >
                 <div class="col-md-4">
+                   <div>
+                    <p style="color:green" ng-show="successMessage"><span class="glyphicon glyphicon-ok"></span> Successfully save</p>
+                    <p style="color:green" ng-show="deleteMessage"><span class="glyphicon glyphicon-ok"></span> Successfully remove</p>
+                   </div>
                         <div>
                             <p>Name</p>
                             <div class="controls">
                                 <input type="text"  ng-model="collectionName" class="form-control">
+                                </p>
+                                <p style="color:red" ng-show="collectionNameRequired"><span class="glyphicon glyphicon-exclamation-sign"></span> Please enter name</p>
                             </div>
                             </p>
                         </div>
@@ -17,6 +23,8 @@
                             <p>Description</p>
                             <div class="controls">
                               <textarea rows="8" cols="50"  ng-model="collectionDescription" class="form-control"></textarea>
+                              </p>
+                              <p style="color:red" ng-show="collectionDescriptionRequired"><span class="glyphicon glyphicon-exclamation-sign"></span> Please enter description</p>
                             </div>
                             </p>
                         </div>
@@ -37,9 +45,9 @@
                      </div>
                </div>
                <div class="controls">
-                 <button class="btn" style=" margin-top:15px;width: 100px;" ng-click="createAndUpdateCollection()">Create</button>
-                 <button class="btn" style=" margin-top:15px;width: 100px;">Remove</button>
-                 <button class="btn" style=" margin-top:15px;width: 100px;">Clear</button>
+                 <button class="btn" style=" margin-top:15px;width: 100px;" ng-click="createAndUpdateCollection()">Save</button>
+                 <button class="btn" style=" margin-top:15px;width: 100px;" ng-click="removeCollection()"">Remove</button>
+                 <button class="btn" style=" margin-top:15px;width: 100px;" ng-click="formClear()">Clear</button>
                </div>
               </div>
              </div>

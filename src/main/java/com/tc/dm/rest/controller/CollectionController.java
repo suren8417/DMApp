@@ -8,6 +8,7 @@ import com.tc.dm.rest.dto.CollectionDto;
 import com.tc.dm.rest.dto.CollectionResponseDto;
 import com.tc.dm.rest.dto.ItemDto;
 import com.tc.dm.rest.dto.ItemResponseDto;
+import org.hibernate.mapping.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -84,5 +85,24 @@ public class CollectionController {
 
     }
 
+    @RequestMapping(value = "/collection", method = RequestMethod.DELETE)
+    public ResponseEntity deleteCollection(@RequestParam("deleteCollection") Long deleteCollectionId) {
+
+        try {
+            com.tc.dm.core.entities.Collection collection= collectionService.findCollectionById(deleteCollectionId);
+            collectionService.deleteCollection(collection);
+
+            List<CollectionDto> collectionDtos = CollectionDto.toDtos(collectionService.findAllCollections());
+            List<ItemDto> itemDtos = ItemDto.toItemDtos(itemService.findAllItems());
+            CollectionResponseDto collectionResponseDto = new CollectionResponseDto();
+            collectionResponseDto.setItemDtos(itemDtos);
+            collectionResponseDto.setCollectionDto(collectionDtos);
+            collectionResponseDto.setStatus("OK");
+            return new ResponseEntity(collectionResponseDto, HttpStatus.OK);
+        } catch (Exception exception) {
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
 
 }
