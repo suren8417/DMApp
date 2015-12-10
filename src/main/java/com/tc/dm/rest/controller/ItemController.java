@@ -46,7 +46,7 @@ public class ItemController {
                 itemDto.setUploadItem(file);
                 if (itemDto.getId() != null) {
                     itemService.updateItem(itemDto.toItem());
-                }else{
+                } else {
                     itemService.createItem(itemDto.toItem());
                 }
 
@@ -60,6 +60,27 @@ public class ItemController {
         }
         itemResponseDto.setStatus("No attachment");
         return new ResponseEntity(itemResponseDto, HttpStatus.OK);
+
+    }
+
+
+    @RequestMapping(value = "/itemDetail", method = RequestMethod.POST)
+    public ResponseEntity addItemWhithOutFile(@RequestParam("itemDto") String itemDtoString) {
+
+        ItemResponseDto itemResponseDto = new ItemResponseDto();
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            ItemDto itemDto = mapper.readValue(itemDtoString, ItemDto.class);
+            if (itemDto.getId() != null) {
+                itemService.updateItem(itemDto.toItem());
+            }
+            List<ItemDto> itemDtos = itemDto.toItemDtos(itemService.findAllItems());
+            itemResponseDto.setItemDtos(itemDtos);
+            itemResponseDto.setStatus("OK");
+            return new ResponseEntity(itemResponseDto, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
 
     }
 
@@ -99,28 +120,5 @@ public class ItemController {
 
     }
 
-/*    @RequestMapping(value = "/item", method = RequestMethod.PUT)
-    public ResponseEntity updateAccount(@RequestParam("file") MultipartFile file, @RequestParam("itemDto") String itemDtoString) {
-
-        ItemResponseDto itemResponseDto = new ItemResponseDto();
-        if (!file.isEmpty()) {
-            try {
-                ObjectMapper mapper = new ObjectMapper();
-                ItemDto itemDto = mapper.readValue(itemDtoString, ItemDto.class);
-                itemDto.setUploadItem(file);
-                itemService.updateItem(itemDto.toItem());
-
-                List<ItemDto> itemDtos = itemDto.toItemDtos(itemService.findAllItems());
-                itemResponseDto.setItemDtos(itemDtos);
-                itemResponseDto.setStatus("OK");
-                return new ResponseEntity(itemResponseDto, HttpStatus.OK);
-            } catch (Exception e) {
-                return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-        }
-        itemResponseDto.setStatus("No attachment");
-        return new ResponseEntity(itemResponseDto, HttpStatus.OK);
-
-    }*/
 
 }
