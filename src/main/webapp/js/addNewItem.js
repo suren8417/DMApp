@@ -144,6 +144,7 @@ angular.module('tchaApp').controller('newItemController', function($scope, $http
             });
             res.success(function(data, status, headers, config) {
                 $scope.itemGrid.data = data.itemDtos;
+                $scope.clearItem();
             });
             res.error(function(data, status, headers, config) {
                 //alert( "failure message: " + JSON.stringify({data: data}));
@@ -157,6 +158,7 @@ angular.module('tchaApp').controller('newItemController', function($scope, $http
             });
             res.success(function(data, status, headers, config) {
                 $scope.itemGrid.data = data.itemDtos;
+                $scope.clearItem();
             });
             res.error(function(data, status, headers, config) {
                 //alert( "failure message: " + JSON.stringify({data: data}));
@@ -171,6 +173,7 @@ angular.module('tchaApp').controller('newItemController', function($scope, $http
             var res = $http.delete("/TCHA/items/item?deleteItem=" + $scope.id);
             res.success(function(data, status, headers, config) {
                 $scope.itemGrid.data = data.itemDtos;
+                 $scope.clearItem();
             });
             res.error(function(data, status, headers, config) {
                 //alert( "failure message: " + JSON.stringify({data: data}));

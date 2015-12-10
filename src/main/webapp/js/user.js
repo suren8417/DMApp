@@ -173,6 +173,7 @@ angular.module('tchaApp').controller('userController', function($scope,$http) {
       	res.success(function(data, status, headers, config) {
       	        $scope.gridOptions.data = data;
       	        $scope.successMessage=true;
+      	        $scope.clearUser();
       	});
       	res.error(function(data, status, headers, config) {
       			alert( "failure message: " + JSON.stringify({data: data}));
@@ -186,6 +187,7 @@ angular.module('tchaApp').controller('userController', function($scope,$http) {
       	res.success(function(data, status, headers, config) {
       	 $scope.gridOptions.data = data;
       	 $scope.successMessage=true;
+      	 $scope.clearUser();
       	});
       	res.error(function(data, status, headers, config) {
       	$scope.userNameExist=true;
