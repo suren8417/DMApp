@@ -9,6 +9,15 @@ angular.module('tchaApp').controller('newItemController', function($scope, $http
     $scope.uploadItem;
     $scope.id;
 
+    $scope.successMessage=false;
+    $scope.deleteMessage=false;
+    $scope.itemTypeRequired=false;
+    $scope.itemTitleRequired=false;
+    $scope.itemDonorRequired=false;
+    $scope.itemDescriptionRequired=false;
+    $scope.itemKeyWordsRequired=false;
+    $scope.itemOriginDateRequired=false;
+    $scope.itemFileRequired=false;
 
     $scope.itemType = [{
         label: 'Image',
@@ -83,6 +92,12 @@ angular.module('tchaApp').controller('newItemController', function($scope, $http
         }
     };
 
+    $scope.formClear = function() {
+         $scope.clearItem();
+         $scope.successMessage=false;
+         $scope.deleteMessage=false;
+    };
+
     $scope.clearItem = function() {
         $scope.itemsSelectedType = null;
         $scope.itemTitle = null;
@@ -92,6 +107,14 @@ angular.module('tchaApp').controller('newItemController', function($scope, $http
         $scope.itemStartDate = null;
         $scope.uploadItem = null;
         $scope.id = null;
+
+        $scope.itemTypeRequired=false;
+        $scope.itemTitleRequired=false;
+        $scope.itemDonorRequired=false;
+        $scope.itemDescriptionRequired=false;
+        $scope.itemKeyWordsRequired=false;
+        $scope.itemOriginDateRequired=false;
+        $scope.itemFileRequired=false;
     };
 
 
@@ -119,10 +142,43 @@ angular.module('tchaApp').controller('newItemController', function($scope, $http
     $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
     $scope.format = $scope.formats[1];
 
+   function validateForm() {
 
+    if($scope.itemsSelectedType == null){
+         $scope.itemTypeRequired=true;
+         return false;
+    }
+    if($scope.itemTitle == null){
+         $scope.itemTitleRequired=true;
+         return false;
+    }
+    if($scope.itemDonor == null){
+         $scope.itemDonorRequired=true;
+         return false;
+    }
+    if($scope.itemDescription == null){
+        $scope.itemDescriptionRequired=true;
+        return false;
+    }
+    if($scope.itemKeyWords == null){
+        $scope.itemKeyWordsRequired=true;
+        return false;
+    }
+    if($scope.itemStartDate == null){
+        $scope.itemOriginDateRequired=true;
+        return false;
+    }
+
+    if($scope.id == null && $scope.uploadItem == null){
+        $scope.itemFileRequired=true;
+        return false;
+    }
+     return true;
+    }
 
     $scope.createItem = function() {
-
+     $scope.deleteMessage=false;
+      if(validateForm()){
         var dataObj = {
             id: $scope.id,
             itemsSelectedType: $scope.itemsSelectedType,
@@ -144,6 +200,7 @@ angular.module('tchaApp').controller('newItemController', function($scope, $http
             });
             res.success(function(data, status, headers, config) {
                 $scope.itemGrid.data = data.itemDtos;
+                $scope.successMessage=true;
                 $scope.clearItem();
             });
             res.error(function(data, status, headers, config) {
@@ -158,21 +215,24 @@ angular.module('tchaApp').controller('newItemController', function($scope, $http
             });
             res.success(function(data, status, headers, config) {
                 $scope.itemGrid.data = data.itemDtos;
+                $scope.successMessage=true;
                 $scope.clearItem();
             });
             res.error(function(data, status, headers, config) {
                 //alert( "failure message: " + JSON.stringify({data: data}));
             });
         }
-
+      }
     };
 
 
     $scope.removeItem = function() {
+    $scope.successMessage=false;
         if ($scope.id !== null) {
             var res = $http.delete("/TCHA/items/item?deleteItem=" + $scope.id);
             res.success(function(data, status, headers, config) {
                 $scope.itemGrid.data = data.itemDtos;
+                 $scope.deleteMessage=true;
                  $scope.clearItem();
             });
             res.error(function(data, status, headers, config) {
