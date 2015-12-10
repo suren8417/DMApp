@@ -51,9 +51,15 @@ public class SearchServiceImpl implements SearchService {
         for(Item item : itemDao.search(searchParam.toMap())) {
             SearchResultDto dto = new SearchResultDto();
             dto.setTitle(item.getTitle());
+            dto.setType(item.getType());
             dto.setDescription(item.getDescription());
             dto.setItemDtos(Arrays.asList(ItemDto.toDto(item)));
             result.add(dto);
+        }
+        int id =0;
+        for(SearchResultDto searchResultDto : result){
+            searchResultDto.setId(id);
+            id++;
         }
         return result;
     }
@@ -71,6 +77,7 @@ public class SearchServiceImpl implements SearchService {
                 SearchResultDto dto = new SearchResultDto();
                 dto.setTitle(collection.getName());
                 dto.setDescription(collection.getDescription());
+                dto.setType("Collection");
                 dto.setItemDtos(ItemDto.toItemDtos(collection.getItems()));
                 result.add(dto);
             }

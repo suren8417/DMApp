@@ -3,59 +3,27 @@ angular.module('tchaApp').controller('searchController', function($scope,$http) 
 
  $scope.searchData=null;
  $scope.searchDataInDetail=null;
- $scope.image="NO";
- $scope.document="NO";
- $scope.audio="NO";
- $scope.video="NO";
- $scope.collection="NO";
  $scope.resultCount;
  $scope.searchSummary= false;
  $scope.searchInDetail= false;
 
  $scope.search = function(searchText,image,document,audio,video,collection,startDate,endDate){
-alert("ddddddddd");
     $http.get("/TCHA/searches?searchText="+ searchText+"&image="+image+"&document="+document+"&audio="+audio+"&video="+video+"&collection="+collection+"&startDate="+startDate+"&endDate="+endDate)
          .success(function(data) {
-alert("ddddddddd");
-                         });
+             $scope.searchData = data.searchResultDtos;
+         });
 
  $scope.searchSummary= true;
  $scope.searchInDetail= false;
-/* $scope.searchData = {"items":
-         [
-                 {
-                    "title":"2005 Cricket team - Image ",
-                    "description":"I actually quite dislike this change so far (don't work with tables that often). It makes some tasks bit more complicated. E.g. when you want to include two different borders in same place (visually), while one being TOP for one row, and second being BOTTOM for other row. They will collapse (= only one of them will be shown). Then you have to study how is bordercalculated and what border styles  (double vs. solid etc.)."
-                 },
-
-                 {
-                    "title":"Western band in 1980 - Collection ",
-                    "description":"So that will output 2 tables, with the proper titles and descriptions, but I can't seem to get the weeks to display correctly. Note that some  have more that one  I'm not really sure if the error is in my template or json.So that will output 2 tables, with the proper titles and descriptions, but I can't seem to get So that will output 2 tables, with the proper titles and descriptions, but I can't seem to get the weeks to display correctly. Note that some  have more that one  I'm not really sure if the error isthe weeks to display correctly. Note that some  have more that one  I'm not really sure if the error is"
-                 },
-                 {
-                    "title":"Western band in 1980 - Document",
-                     "description":"description of module2"
-                 }
-                 ,
-                 {
-                    "title":"Western band in 1980 - Video",
-                    "description":"description of module2"
-                 }
-                 ,
-                 {
-                    "title":"Western band in 1980 - Image",
-                    "description":"description of module2"
-                 }
-         ]};*/
-
- $scope.resultCount="5 Results were retrieved";
+ $scope.resultCount= $scope.searchData.length.toString() +" Results were retrieved";
  };
 
-$scope.showSearchInDetail = function(){
-  $scope.searchInDetail= true;
+$scope.showSearchInDetail = function(id){
+alert(id);
+/*  $scope.searchInDetail= true;
   $scope.searchSummary= false;
   $scope.searchDataInDetail=  { "title":"2005 Cricket team - Image ",
-                                "description":"I actually quite dislike this change so far (don't work with tables that often). It makes some tasks bit more complicated. E.g. when you want to include two different borders in same place (visually), while one being TOP for one row, and second being BOTTOM for other row. They will collapse (= only one of them will be shown). Then you have to study how is bordercalculated and what border styles  (double vs. solid etc.)."};
+                                "description":"I actually quite "};*/
 };
 
 $scope.hidePreviousSearchDetails= function(){

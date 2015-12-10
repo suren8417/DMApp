@@ -40,8 +40,8 @@
              <div class="col-md-12">
                <div>
                   <p>Please select items for collection</p>
-                     <div style=" width: 100%; height: 500px;margin-top:5px;">
-                     <div id="grid1" ui-grid="itemGrid" ui-grid-selection class="grid" style="height: 500px;"></div>
+                     <div style=" width: 100%; height: 300px;margin-top:5px;">
+                     <div id="grid1" ui-grid="itemGrid" ui-grid-selection class="grid" style="height: 300px;"></div>
                      </div>
                </div>
                <div class="controls">

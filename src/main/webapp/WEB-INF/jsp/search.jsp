@@ -49,7 +49,7 @@
                <div class="col-md-1"></div>
                <div class="col-md-2">
                       <p class="input-group">
-                        <input id="2322" show-button-bar="false" type="text" class="form-control" datepicker-popup="{{format}}" ng-model="startDate" is-open="opened"  datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+                        <input id="2322" onkeydown="return false" show-button-bar="false" type="text" class="form-control" datepicker-popup="{{format}}" ng-model="startDate" is-open="opened"  datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
                         <span class="input-group-btn">
                           <button type="button" class="btn btn-default" ng-click="toggleOpenDatePicker($event,'opened')"> From <i class="glyphicon glyphicon-calendar"></i></button>
                         </span>
@@ -58,7 +58,7 @@
                <div class="col-md-1"></div>
                   <div class="col-md-2">
                       <p class="input-group">
-                       <input id="23dd22" show-button-bar="false" type="text" class="form-control" datepicker-popup="{{format}}" ng-model="endDate" is-open="opened1"  datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+                       <input id="23dd22" onkeydown="return false" show-button-bar="false" type="text" class="form-control" datepicker-popup="{{format}}" ng-model="endDate" is-open="opened1"  datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
                         <span class="input-group-btn">
                           <button type="button" class="btn btn-default" ng-click="toggleOpenDatePicker($event,'opened1')"> To <i class="glyphicon glyphicon-calendar"></i></button>
                         </span>
@@ -69,10 +69,15 @@
 
             <div style="margin:10px 80px 0px 80px;" ng-show="searchSummary" id="searchSummaryId">
                 <p style=" font-size:14px;margin:0px 0px 10px 0px;" ><span ng-bind="resultCount"></span></p>
-                <table ng-repeat="item in searchData.items">
+                <table ng-repeat="item in searchData">
                 <tr style="margin:0px 0px 5px 0px;">
                     <td>
-                        <a style=" font-size:18px;margin:0px 0px 0px 0px;" ng-click="showSearchInDetail()" >{{ item.title }}</a>
+                        <span ng-if="item.type ==='Video'"><span class="glyphicon glyphicon-film"></span></span>
+                        <span ng-if="item.type ==='Image'"><span class="glyphicon glyphicon-picture"></span></span>
+                        <span ng-if="item.type ==='Document'"><span class="glyphicon glyphicon-list-alt"></span></span>
+                        <span ng-if="item.type ==='Audio'"><span class="glyphicon glyphicon-music"></span></span>
+                        <span ng-if="item.type ==='Collection'"><span class="glyphicon glyphicon-tags"></span></span>
+                        <a href="" style=" font-size:18px;margin:0px 0px 0px 0px;" ng-click="showSearchInDetail(item.id)" >{{ item.title }}</a>
                         <p style="margin:0px 0px 0px 0px;">{{ item.description }}</p>
                         <p>More .....</p>
                     </td>
@@ -80,10 +85,20 @@
                 </table>
             </div>
 
+
+
+
+
+
+
+
+
+
+
+
             <div style="margin:20px 80px 10px 80px;" ng-show="searchInDetail" id="searchInDetailId">
              <p style=" font-size:18px;margin:0px 0px 0px 0px;"  >{{ searchDataInDetail.title }}</p>
              <p style="margin:0px 0px 25px 0px;">{{ searchDataInDetail.description }}</p>
-
              <div class="bg"  ng-show="searchInDetail" >
 
              <!--    Layout the large images horizontally using viewwindow
