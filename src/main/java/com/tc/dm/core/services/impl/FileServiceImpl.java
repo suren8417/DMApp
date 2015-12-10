@@ -6,9 +6,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.UUID;
 
 @Transactional
 @Service
@@ -22,30 +23,35 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public String storeFile(MultipartFile file) {
-
-        String fileName = null;
-        String saveLocation = null;
-        if (!file.isEmpty()) {
+    public String storeFile(MultipartFile file) throws Exception {
+        if (null != file && !file.isEmpty()) {
             try {
+                final String fileUniqueId = UUID.randomUUID().toString()+"_"+String.valueOf(System.currentTimeMillis())+"_";
+                final String filePath = getFilestorePath()+File.separator+fileUniqueId+file.getOriginalFilename();
+                file.transferTo(new File(filePath));
+                return filePath;
 
-                fileName = file.getOriginalFilename();
-                saveLocation= getFilestorePath()+fileName;
-                byte[] bytes = file.getBytes();
-                BufferedOutputStream buffStream = new BufferedOutputStream(new FileOutputStream(new File(saveLocation)));
-                buffStream.write(bytes);
-                buffStream.close();
-
+//                final String fileName = file.getOriginalFilename();
+//                final String saveLocation= getFilestorePath()+File.separator+fileName;
+//                byte[] bytes = file.getBytes();
+//                BufferedOutputStream buffStream = new BufferedOutputStream(new FileOutputStream(new File(saveLocation)));
+//                buffStream.write(bytes);
+//                buffStream.close();
+//                return saveLocation;
             } catch (Exception e) {
+                throw new Exception("File creation failed", e);
             }
-        }
-        return saveLocation;
+        } else throw new Exception("File is NullOrEmpty");
 
     }
 
     @Override
-    public boolean deleteFile(String contentPath) {
-        return false;
+    public boolean deleteFile(String contentPath) throws Exception {
+        try {
+            return Files.deleteIfExists(Paths.get(contentPath));
+        } catch (Exception e) {
+            throw new Exception("File deletion failed for:"+contentPath, e);
+        }
     }
 
     @Override

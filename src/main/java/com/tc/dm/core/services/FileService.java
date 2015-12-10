@@ -5,9 +5,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface FileService {
 
-    public String storeFile(MultipartFile file);
+    public String storeFile(MultipartFile file) throws Exception;
 
-    public boolean deleteFile(String contentPath);
+    public boolean deleteFile(String contentPath) throws Exception;
 
     public MultipartFile getFile(String contentPath);
 }
