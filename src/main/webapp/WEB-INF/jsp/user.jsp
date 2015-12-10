@@ -15,6 +15,7 @@
                             <p>Username</p>
                             <div class="controls">
                                 <input type="text" id="username" name="username" placeholder="" class="form-control" ng-model="userName" maxlength="10" >
+                                </p>
                                 <p style="color:red" ng-show="userNameRequired"><span class="glyphicon glyphicon-exclamation-sign"></span> Please enter username</p>
                                 <p style="color:red" ng-show="userNameExist"><span class="glyphicon glyphicon-exclamation-sign"></span> Username Exists</p>
                             </div>
@@ -23,6 +24,7 @@
                             <p style="margin-top: 10px;">Password</p>
                             <div class="controls">
                                 <input type="password" id="password1" name="password1" placeholder="" class="form-control" ng-model="password" maxlength="10" >
+                                </p>
                                 <p style="color:red" ng-show="passwordRequired"><span class="glyphicon glyphicon-exclamation-sign"></span> Please enter password</p>
                             </div>
                         </div>
@@ -30,6 +32,7 @@
                             <p style="margin-top: 10px;">Password (Confirm)</p>
                             <div class="controls">
                                 <input type="password" id="password_confirm" name="password_confirm" placeholder="" class="form-control" ng-model="rePassword" maxlength="10" >
+                                </p>
                                  <p style="color:red" ng-show="rePasswordRequired"><span class="glyphicon glyphicon-exclamation-sign"></span> Please confirm password</p>
                                  <p style="color:red" ng-show="reCorrectPasswordRequired"><span class="glyphicon glyphicon-exclamation-sign"></span> Password not match</p>
                             </div>
@@ -41,13 +44,14 @@
                                 <select ng-model="selectedItemvalue" class="form-control" style="width: 30%;" required>
                                     <option ng-repeat="sel in selectables" >{{sel.label}}</option>
                                 </select>
+                                </p>
                                  <p style="color:red" ng-show="roleRequired"><span class="glyphicon glyphicon-exclamation-sign"></span> Please select role</p>
                             </div>
                         </div>
                         <div class="controls">
-                            <button class="btn" style=" margin-top:15px;" ng-click="createOrUpdateUser()">Save</button>
-                            <button class="btn" style=" margin-top:15px;" ng-click="removeUser()">Remove</button>
-                            <button class="btn" style=" margin-top:15px;" ng-click="formClear()">Clear</button>
+                            <button class="btn" style=" margin-top:15px;width: 100px;" ng-click="createOrUpdateUser()">Save</button>
+                            <button class="btn" style=" margin-top:15px;width: 100px;" ng-click="removeUser()">Remove</button>
+                            <button class="btn" style=" margin-top:15px;width: 100px;" ng-click="formClear()">Clear</button>
                         </div>
 
                   </form>

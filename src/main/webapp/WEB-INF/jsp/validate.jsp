@@ -14,8 +14,8 @@
                             </div>
                          </div>
                         <div class="controls">
-                            <button class="btn" style=" margin-top:15px;">Validate</button>
-                            <button class="btn" style=" margin-top:15px;">Rejected</button>
+                            <button class="btn" style=" margin-top:15px;width: 100px;">Validate</button>
+                            <button class="btn" style=" margin-top:15px;width: 100px;">Rejected</button>
                         </div>
 
                     </form>

@@ -37,9 +37,9 @@
                      </div>
                </div>
                <div class="controls">
-                 <button class="btn" style=" margin-top:15px;" ng-click="createAndUpdateCollection()">Create</button>
-                 <button class="btn" style=" margin-top:15px;">Remove</button>
-                 <button class="btn" style=" margin-top:15px;">Clear</button>
+                 <button class="btn" style=" margin-top:15px;width: 100px;" ng-click="createAndUpdateCollection()">Create</button>
+                 <button class="btn" style=" margin-top:15px;width: 100px;">Remove</button>
+                 <button class="btn" style=" margin-top:15px;width: 100px;">Clear</button>
                </div>
               </div>
              </div>
