@@ -13,7 +13,7 @@
                         <div>
                             <p>Name</p>
                             <div class="controls">
-                                <input type="text"  ng-model="collectionName" class="form-control">
+                                <input type="text"  ng-model="collectionName" class="form-control" maxlength="100">
                                 </p>
                                 <p style="color:red" ng-show="collectionNameRequired"><span class="glyphicon glyphicon-exclamation-sign"></span> Please enter name</p>
                             </div>
@@ -22,7 +22,7 @@
                         <div>
                             <p>Description</p>
                             <div class="controls">
-                              <textarea rows="8" cols="50"  ng-model="collectionDescription" class="form-control"></textarea>
+                              <textarea rows="8" cols="50"  ng-model="collectionDescription" class="form-control" maxlength="1500"></textarea>
                               </p>
                               <p style="color:red" ng-show="collectionDescriptionRequired"><span class="glyphicon glyphicon-exclamation-sign"></span> Please enter description</p>
                             </div>
