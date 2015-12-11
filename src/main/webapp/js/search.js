@@ -9,6 +9,8 @@ angular.module('tchaApp').controller('searchController', function($scope,$http,$
 
 $scope.search = function(searchText, image, document, audio, video, collection, startDate, endDate) {
 
+    $scope.myHTML = $sce.trustAsHtml("");
+
     if (searchText === undefined) {
         searchText = "";
     }
@@ -68,21 +70,21 @@ $scope.showSearchInDetail = function(id) {
 
         if (item.itemsSelectedType === 'Video') {
             myHTML1 = myHTML1 + "<video width=\"800\" height=\"400\" controls>" +
-                "  <source src=\"movie.mp4\" type=\"video/mp4\">" +
+                "  <source src=\"docs/"+item.itemName+"\" type=\"video/mp4\">" +
                 "  Your browser does not support the video tag." +
                 "</video>";
         }
         if (item.itemsSelectedType === 'Image') {
-            myHTML1 = myHTML1 + "<img src=\"images/trinityCollegeKandy.jpg\" width=\"100%\" height=\"800\">";
+            myHTML1 = myHTML1 + "<img src=\"docs/"+item.itemName+"\" width=\"75%\" height=\"600\">";
         }
         if (item.itemsSelectedType === 'Document') {
-            myHTML1 = myHTML1 + "<object data=\"test.pdf\" type=\"application/pdf\" width=\"100%\" height=\"900px\">" +
-                "<a href=\"test.pdf\">test.pdf</a>" +
+            myHTML1 = myHTML1 + "<object data=\"docs/"+item.itemName+"\" type=\"application/pdf\" width=\"100%\" height=\"900px\">" +
+                "<a href=\"docs/"+item.itemName+"\">test.pdf</a>" +
                 "</object>";
         }
         if (item.itemsSelectedType === 'Audio') {
             myHTML1 = myHTML1 + "<audio controls>" +
-                "  <source src=\"horse.mp3\" type=\"audio/mpeg\">" +
+                "  <source src=\"docs/"+item.itemName+"\" type=\"audio/mpeg\">" +
                 "Your browser does not support the audio element." +
                 "</audio>";
         }
