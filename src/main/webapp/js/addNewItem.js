@@ -38,9 +38,13 @@ angular.module('tchaApp').controller('newItemController', function($scope, $http
             displayName: 'Type',
             width: 100
         }, {
+            field: 'status',
+            displayName: 'Status',
+            width: 100
+        }, {
             field: 'itemTitle',
             displayName: 'Title',
-            width: 300
+            width: 200
         }, {
             field: 'itemDonor',
             displayName: 'Donor',
@@ -48,11 +52,11 @@ angular.module('tchaApp').controller('newItemController', function($scope, $http
         }, {
             field: 'itemDescription',
             displayName: 'Description',
-            width: 500
+            width: 800
         }, {
             field: 'itemKeyWords',
             displayName: 'KeyWords',
-            width: 250
+            width: 500
         }, {
             field: 'itemStartDate',
             displayName: 'DateOfOrigin',
@@ -64,7 +68,7 @@ angular.module('tchaApp').controller('newItemController', function($scope, $http
         }, {
             field: 'itemName',
             displayName: 'ItemName',
-            width: 250
+            width: 200
         }
 
     ];

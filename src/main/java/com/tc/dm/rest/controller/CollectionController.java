@@ -58,17 +58,23 @@ public class CollectionController {
 
     @RequestMapping(value = "/collection", method = RequestMethod.POST)
     public ResponseEntity addItem(@RequestParam("itemArray") String itemArray, @RequestParam("collection") String collection) {
+
         ObjectMapper mapper = new ObjectMapper();
         try {
             List<Integer> list = new ObjectMapper().readValue(itemArray, List.class);
             CollectionDto collectionDto = mapper.readValue(collection, CollectionDto.class);
 
-            for(Integer itemId: list){
+            for (Integer itemId : list) {
                 ItemDto itemDto = new ItemDto();
                 itemDto.setId(Long.valueOf(itemId));
                 collectionDto.getItemDtos().add(itemDto);
             }
-            collectionService.createCollection(collectionDto.toCollection());
+
+            if (collectionDto.getId() != null) {
+                collectionService.updateCollection(collectionDto.toCollection());
+            } else {
+                collectionService.createCollection(collectionDto.toCollection());
+            }
 
             List<CollectionDto> collectionDtos = CollectionDto.toDtos(collectionService.findAllCollections());
             List<ItemDto> itemDtos = ItemDto.toItemDtos(itemService.findAllItems());
@@ -89,7 +95,7 @@ public class CollectionController {
     public ResponseEntity deleteCollection(@RequestParam("deleteCollection") Long deleteCollectionId) {
 
         try {
-            com.tc.dm.core.entities.Collection collection= collectionService.findCollectionById(deleteCollectionId);
+            com.tc.dm.core.entities.Collection collection = collectionService.findCollectionById(deleteCollectionId);
             collectionService.deleteCollection(collection);
 
             List<CollectionDto> collectionDtos = CollectionDto.toDtos(collectionService.findAllCollections());

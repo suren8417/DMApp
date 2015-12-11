@@ -36,6 +36,13 @@ public class CollectionServiceImpl implements CollectionService {
 
     @Override
     public void updateCollection(Collection collection) {
+        HashSet<Item> items = new HashSet<>();
+        for(Item item : collection.getItems()){
+            item = item.getId()==null?item:itemDao.find(Item.class, item.getId());
+            item.getCollections().add(collection);
+            items.add(item);
+        }
+        collection.setItems(items);
         collectionDao.update(collection);
     }
 
