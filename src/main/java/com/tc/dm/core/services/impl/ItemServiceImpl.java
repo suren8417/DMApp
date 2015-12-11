@@ -4,11 +4,13 @@ import com.tc.dm.core.dao.impl.ItemDaoImpl;
 import com.tc.dm.core.entities.Item;
 import com.tc.dm.core.services.FileService;
 import com.tc.dm.core.services.ItemService;
+import com.tc.dm.rest.dto.ItemStatus;
 import com.tc.dm.rest.dto.SearchParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Transactional(rollbackFor = Exception.class)
@@ -85,7 +87,18 @@ public class ItemServiceImpl implements ItemService {
     public List<Item> findAllItems() {
         List<Item> items = itemDao.findAll();
         return items;
+    }
 
+    public List<Item> findItemsByStatus(ItemStatus... itemStatus) {
+        if(null == itemStatus) {
+            return this.findAllItems();
+        }
+        SearchParam searchParam = new SearchParam();
+        for(ItemStatus status : itemStatus) {
+            searchParam.getStatus().add(status);
+        }
+        List<Item> items = itemDao.search(searchParam.toMap());
+        return items;
     }
 
     @Override

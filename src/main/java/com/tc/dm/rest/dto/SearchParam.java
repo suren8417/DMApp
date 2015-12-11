@@ -20,6 +20,7 @@ public class SearchParam {
 
     private String textToSearch;
     private List<ItemType> types;
+    private List<ItemStatus> status;
     private Date dateOfOriginFrom;
     private Date dateOfOriginTo;
     private boolean caseSensitive;
@@ -50,6 +51,25 @@ public class SearchParam {
 
     public void setTypes(List<ItemType> types) {
         this.types = types;
+    }
+
+    public List<ItemStatus> getStatus() {
+        if(null == this.status) {
+            this.status = new ArrayList<>();
+        }
+        return status;
+    }
+
+    public List<String> getStatusAsStrings() {
+        List<String> itemStatusAsStrings = new ArrayList<>();
+        for(ItemStatus status : this.getStatus()) {
+            itemStatusAsStrings.add(status.toString());
+        }
+        return itemStatusAsStrings;
+    }
+
+    public void setStatus(List<ItemStatus> status) {
+        this.status = status;
     }
 
     public Date getDateOfOriginFrom() {
@@ -88,6 +108,7 @@ public class SearchParam {
         Map<String, String> params = new HashMap<String, String>();
         params.put("textToSearch", textToSearch);
         params.put("types", isNullOrEmpty(types)?null:StringUtils.collectionToDelimitedString(this.types, ","));
+        params.put("status", isNullOrEmpty(status)?null:StringUtils.collectionToDelimitedString(this.status, ","));
         params.put("dateOfOriginFrom", isNullOrEmpty(dateOfOriginFrom)?null:sdf.format(dateOfOriginFrom));
         params.put("dateOfOriginTo", isNullOrEmpty(dateOfOriginTo)?null:sdf.format(dateOfOriginTo));
         params.put("caseSensitive", String.valueOf(caseSensitive));
@@ -102,6 +123,12 @@ public class SearchParam {
         if(null != iTypes) {
             for(String type : iTypes) {
                 searchParam.getTypes().add(ItemType.fromString(type));
+            }
+        }
+        String iStatus[] = params.get("status")==null?null:params.get("status").split(",");
+        if(null != iStatus) {
+            for(String status : iStatus) {
+                searchParam.getStatus().add(ItemStatus.fromString(status));
             }
         }
         try {

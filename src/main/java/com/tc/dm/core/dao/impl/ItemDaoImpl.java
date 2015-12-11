@@ -39,6 +39,9 @@ public class ItemDaoImpl extends GenericDaoJpaImpl<Long, Item> {
         if(!isNullOrEmpty(searchParam.getTypes())) {
             predicates.add(rootItem.<String>get("type").in(searchParam.getTypesAsStrings()));
         }
+        if(!isNullOrEmpty(searchParam.getStatus())) {
+            predicates.add(rootItem.<String>get("status").in(searchParam.getStatusAsStrings()));
+        }
         if(!isNullOrEmpty(searchParam.getDateOfOriginFrom())) {
             predicates.add(cb.greaterThanOrEqualTo(rootItem.<Date>get("dateOfOrigin"), searchParam.getDateOfOriginFrom()));
         }
