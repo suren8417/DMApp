@@ -70,21 +70,44 @@ angular.module('tchaApp').controller('collectionController', function($scope, $h
         onRegisterApi: function(gridApi) {
             $scope.gridApi = gridApi;
             gridApi.selection.on.rowSelectionChanged($scope, function(row) {
+
+                $scope.gridApi.selection.clearSelectedRows();
+
                 $scope.collectionId = row.entity.id;
                 $scope.collectionName = row.entity.name;
-                $scope.collectionDescription = row.entity.description;;
+                $scope.collectionDescription = row.entity.description;
+                var items = null;
+                angular.forEach($scope.collectionGrid.data, function(collection) {
+                    if (collection.id === $scope.collectionId) {
+                        items = collection.itemDtos;
+                    }
+                });
+
+                var index = 0;
+                var displayItems = $scope.itemGrid.data;
+                angular.forEach(displayItems, function(displayItem) {
+                    angular.forEach(items, function(item) {
+                        if (item.id === displayItem.id) {
+
+                            $scope.gridApi.selection.selectRow($scope.itemGrid.data[index]);
+                        }
+                    });
+                    index++;
+                });
             });
         }
     };
 
+
+
+
     $scope.itemGrid = {
 
-        enableRowSelection: true,
+        enableFullRowSelection: true,
         multiSelect: true,
         columnDefs: $scope.itemGridColumns,
         onRegisterApi: function(gridApi) {
             $scope.gridApi = gridApi;
-            $scope.gridApi.selection.toggleRowSelection($scope.itemGrid.data[0]);
             gridApi.selection.on.rowSelectionChanged($scope, function(row) {
                 if ($scope.selectItems.indexOf(row.entity.id) == -1) {
                     $scope.selectItems.push(row.entity.id);
@@ -97,28 +120,31 @@ angular.module('tchaApp').controller('collectionController', function($scope, $h
 
     $http.get("/TCHA/collections").success(function(data) {
         $scope.itemGrid.data = data.itemDtos;
-        /*          $timeout(function() {
-                       if($scope.gridApi.selection.selectRow){
-                         $scope.gridApi.selection.selectRow($scope.itemGrid.data[3]);
-                            $scope.gridApi.selection.selectRow($scope.itemGrid.data[1]);
-                       }
-                     });*/
+        /*           $timeout(function() {
+                         if($scope.gridApi.selection.selectRow){
+
+                              $scope.gridApi.selection.selectRow($scope.itemGrid.data[1]);
+                         }
+                       });*/
         $scope.collectionGrid.data = data.collectionDto;
     });
 
 
     $scope.formClear = function() {
+
         $scope.clearItem();
         $scope.successMessage = false;
         $scope.deleteMessage = false;
 
         $http.get("/TCHA/collections").success(function(data) {
-         $scope.itemGrid.data = data.itemDtos;
-         $scope.collectionGrid.data = data.collectionDto;
+            $scope.itemGrid.data = data.itemDtos;
+            $scope.collectionGrid.data = data.collectionDto;
         });
+
     };
 
     $scope.clearItem = function() {
+
         $scope.collectionName = null;
         $scope.collectionDescription = null;
         $scope.collectionId = null;
@@ -126,6 +152,8 @@ angular.module('tchaApp').controller('collectionController', function($scope, $h
 
         $scope.collectionNameRequired = false;
         $scope.collectionDescriptionRequired = false;
+
+        $scope.gridApi.selection.clearSelectedRows();
 
     };
 
