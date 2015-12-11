@@ -19,7 +19,7 @@
                <div class="col-md-1"></div>
                <div class="col-md-1">
                   <div class="checkbox">
-                     <label><input type="checkbox" ng-model="image" ng-true-value="'YES'" ng-false-value="'NO'"> Image</label>
+                     <label><input type="checkbox" ng-model="image" ng-true-value="'YES'" ng-false-value="'NO'" > Image</label>
                   </div>
                </div>
                <div class="col-md-1">
@@ -29,17 +29,17 @@
                </div>
                <div class="col-md-1">
                   <div class="checkbox">
-                     <label><input type="checkbox" ng-model="audio" ng-true-value="'YES'" ng-false-value="'NO'"> Audio</label>
+                     <label><input type="checkbox" ng-model="audio" ng-true-value="'YES'" ng-false-value="'NO'" > Audio</label>
                   </div>
                </div>
                <div class="col-md-1">
                   <div class="checkbox">
-                     <label><input type="checkbox" ng-model="video" ng-true-value="'YES'" ng-false-value="'NO'"> Video </label>
+                     <label><input type="checkbox" ng-model="video" ng-true-value="'YES'" ng-false-value="'NO'" > Video </label>
                   </div>
                </div>
                <div class="col-md-1">
                   <div class="checkbox">
-                     <label><input type="checkbox" ng-model="collection" ng-true-value="'YES'" ng-false-value="'NO'"> Collection</label>
+                     <label><input type="checkbox" ng-model="collection" ng-true-value="'YES'" ng-false-value="'NO'" > Collection</label>
                   </div>
                </div>
                <div class="col-md-2"></div>
@@ -72,11 +72,11 @@
                 <table ng-repeat="item in searchData">
                 <tr style="margin:0px 0px 5px 0px;">
                     <td>
-                        <span ng-if="item.type ==='Video'"><span class="glyphicon glyphicon-film"></span></span>
-                        <span ng-if="item.type ==='Image'"><span class="glyphicon glyphicon-picture"></span></span>
-                        <span ng-if="item.type ==='Document'"><span class="glyphicon glyphicon-list-alt"></span></span>
-                        <span ng-if="item.type ==='Audio'"><span class="glyphicon glyphicon-music"></span></span>
-                        <span ng-if="item.type ==='Collection'"><span class="glyphicon glyphicon-tags"></span></span>
+                        <span ng-if="item.type ==='Video'"><span class="glyphicon glyphicon-film" style="margin-right: 10px;"></span></span>
+                        <span ng-if="item.type ==='Image'"><span class="glyphicon glyphicon-picture" style="margin-right: 10px;"></span></span>
+                        <span ng-if="item.type ==='Document'"><span class="glyphicon glyphicon-list-alt" style="margin-right: 10px;"></span></span>
+                        <span ng-if="item.type ==='Audio'"><span class="glyphicon glyphicon-music" style="margin-right: 10px;" ></span></span>
+                        <span ng-if="item.type ==='Collection'"><span class="glyphicon glyphicon-tags" style="margin-right: 10px;"></span></span>
                         <a href="" style=" font-size:18px;margin:0px 0px 0px 0px;" ng-click="showSearchInDetail(item.id)" >{{ item.title }}</a>
                         <p style="margin:0px 0px 0px 0px;">{{ item.description }}</p>
                         <p>More .....</p>
@@ -86,63 +86,7 @@
             </div>
 
 
+            <div style="margin:20px 80px 10px 80px;" ng-show="searchInDetail" ng-bind-html="myHTML" >
 
-
-
-
-
-
-
-
-
-
-            <div style="margin:20px 80px 10px 80px;" ng-show="searchInDetail" id="searchInDetailId">
-             <p style=" font-size:18px;margin:0px 0px 0px 0px;"  >{{ searchDataInDetail.title }}</p>
-             <p style="margin:0px 0px 25px 0px;">{{ searchDataInDetail.description }}</p>
-             <div class="bg"  ng-show="searchInDetail" >
-
-             <!--    Layout the large images horizontally using viewwindow
-                     to hide the overflow (all but the current image). -->
-                     <div class="mainimageshell">
-                         <div class="viewwindow">
-                     <!--    fullscroller is referenced from the Controller js
-                             to control scrolling -->
-                             <ul id="fullscroller" class="fullsizelist" ng-style="listposition" >
-                         <!--    Iterate through all images and display them end to end -->
-                                 <li ng-repeat="image in galleryData">
-                                     <img id="fullsize" class="large" ng-src="{{IMAGE_LOCATION+image.image}}" />
-                                 </li>
-                             </ul>
-                         </div>
-                     </div>
-
-                     <!-- Display the description of the current image -->
-                     <div class="captionshell">
-                         <p class="caption" style="margin-top: 10px;">{{selected.desc}}</p>
-                     </div>
-
-                     <div style="clear:both;"></div>
-
-                  <!--    Layout the large images horizontally using viewwindow
-                     to hide the overflow (all but the current image). -->
-                     <div class="thumbsshell">
-                         <div class="thumbswrapper">
-                             <ul>
-                         <!--    Iterate through all images and display them end to end as thumbs -->
-                                 <li ng-repeat="image in galleryData">
-                                     <div class="thumbwrapper">
-                                 <!--    Note ng-click here calls the scrollTo function found in the
-                                         controller and passes it its index. This is used to scroll
-                                         the large image to the correct image -->
-                                         <a ng-href="" ng-click="scrollTo(image,$index)">
-                                             <img class="thumbnail" ng-src="{{IMAGE_LOCATION+image.image}}" />
-                                         </a>
-                                     </div>
-                                 </li>
-                             </ul>
-                         </div>
-                     </div>
-
-                 </div>
             </div>
  </div>
