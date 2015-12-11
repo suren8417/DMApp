@@ -4,6 +4,7 @@ import com.tc.dm.core.dao.impl.CollectionDaoImpl;
 import com.tc.dm.core.dao.impl.ItemDaoImpl;
 import com.tc.dm.core.entities.Collection;
 import com.tc.dm.core.entities.Item;
+import com.tc.dm.core.entities.ItemType;
 import com.tc.dm.core.services.SearchService;
 import com.tc.dm.rest.dto.ItemDto;
 import com.tc.dm.rest.dto.SearchParam;
@@ -15,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.*;
 
 import static com.tc.dm.core.util.CommonUtil.isNullOrEmpty;
-import static com.tc.dm.rest.dto.ItemType.COLLECTION;
+import static com.tc.dm.rest.dto.ItemType.*;
 
 @Transactional(rollbackFor = Exception.class)
 @Service
@@ -34,8 +35,7 @@ public class SearchServiceImpl implements SearchService {
 
         List<SearchResultDto> result = new ArrayList<SearchResultDto>();
 
-
-        if(searchParam.getTypes().contains(COLLECTION)){
+        if(searchParam.getTypes().isEmpty() || searchParam.getTypes().contains(COLLECTION)){
 
             Map<String, String> collectionParam = new HashMap<>();
             collectionParam.put("name", searchParam.getTextToSearch());
@@ -47,14 +47,17 @@ public class SearchServiceImpl implements SearchService {
 
             mergeIntoResultDtoList(result, collectionListOnName, collectionListOnDesc);
         }
+        if(searchParam.getTypes().isEmpty() ||
+                !Collections.disjoint(searchParam.getTypes(), Arrays.asList(IMAGE, DOCUMENT, AUDIO, VIDEO, MAP))) {
 
-        for(Item item : itemDao.search(searchParam.toMap())) {
-            SearchResultDto dto = new SearchResultDto();
-            dto.setTitle(item.getTitle());
-            dto.setType(item.getType());
-            dto.setDescription(item.getDescription());
-            dto.setItemDtos(Arrays.asList(ItemDto.toDto(item)));
-            result.add(dto);
+            for (Item item : itemDao.search(searchParam.toMap())) {
+                SearchResultDto dto = new SearchResultDto();
+                dto.setTitle(item.getTitle());
+                dto.setType(item.getType());
+                dto.setDescription(item.getDescription());
+                dto.setItemDtos(Arrays.asList(ItemDto.toDto(item)));
+                result.add(dto);
+            }
         }
         int id =0;
         for(SearchResultDto searchResultDto : result){
@@ -66,7 +69,7 @@ public class SearchServiceImpl implements SearchService {
 
     private void mergeIntoResultDtoList(List<SearchResultDto> result, List<Collection>... collectionLists) {
 
-        if(isNullOrEmpty(result) || isNullOrEmpty(collectionLists)) return;
+        if(null==result || isNullOrEmpty(collectionLists)) return;
 
         List<Long> ids = new ArrayList<>();
         for(List<Collection> collectionList : collectionLists) {
@@ -77,7 +80,7 @@ public class SearchServiceImpl implements SearchService {
                 SearchResultDto dto = new SearchResultDto();
                 dto.setTitle(collection.getName());
                 dto.setDescription(collection.getDescription());
-                dto.setType("Collection");
+                dto.setType(COLLECTION.toString());
                 dto.setItemDtos(ItemDto.toItemDtos(collection.getItems()));
                 result.add(dto);
             }
