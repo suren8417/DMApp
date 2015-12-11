@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import static com.tc.dm.core.util.CommonUtil.*;
 
 @Repository
 public class ItemDaoImpl extends GenericDaoJpaImpl<Long, Item> {
@@ -29,19 +30,19 @@ public class ItemDaoImpl extends GenericDaoJpaImpl<Long, Item> {
 
         List<Predicate> predicates = new ArrayList<Predicate>();
 
-        if(!CommonUtil.isNullOrEmpty(searchParam.getTextToSearch())) {
+        if(!isNullOrEmpty(searchParam.getTextToSearch())) {
             Predicate hasTitle = cb.like(rootItem.<String>get("title"), "%" + searchParam.getTextToSearch() + "%");
             Predicate hasDesc = cb.like(rootItem.<String>get("description"), "%" + searchParam.getTextToSearch() + "%");
             Predicate hasKeyword = cb.like(rootItem.<String>get("keywords"), "%" + searchParam.getTextToSearch() + "%");
             predicates.add(cb.or(hasTitle, hasDesc, hasKeyword));
         }
-        if(!CommonUtil.isNullOrEmpty(searchParam.getTypes())) {
-            predicates.add(rootItem.<String>get("type").in(searchParam.getTypes()));
+        if(!isNullOrEmpty(searchParam.getTypes())) {
+            predicates.add(rootItem.<String>get("type").in(searchParam.getTypesAsStrings()));
         }
-        if(!CommonUtil.isNullOrEmpty(searchParam.getDateOfOriginFrom())) {
+        if(!isNullOrEmpty(searchParam.getDateOfOriginFrom())) {
             predicates.add(cb.greaterThanOrEqualTo(rootItem.<Date>get("dateOfOrigin"), searchParam.getDateOfOriginFrom()));
         }
-        if(!CommonUtil.isNullOrEmpty(searchParam.getDateOfOriginTo())) {
+        if(!isNullOrEmpty(searchParam.getDateOfOriginTo())) {
             predicates.add(cb.lessThanOrEqualTo(rootItem.<Date>get("dateOfOrigin"), searchParam.getDateOfOriginTo()));
         }
         cq.where(predicates.toArray(new Predicate[predicates.size()]));

@@ -98,7 +98,7 @@ public class SearchParam {
     public static SearchParam fromMap(Map<String, String> params) {
         SearchParam searchParam = new SearchParam();
         searchParam.setTextToSearch(params.get("textToSearch"));
-        String iTypes[] = StringUtils.split(params.get("types"), ",");
+        String iTypes[] = params.get("types")==null?null:params.get("types").split(",");
         if(null != iTypes) {
             for(String type : iTypes) {
                 searchParam.getTypes().add(ItemType.fromString(type));
