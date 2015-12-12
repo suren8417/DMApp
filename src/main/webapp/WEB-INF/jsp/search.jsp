@@ -14,32 +14,32 @@
                </div>
                <div class="col-md-2"></div>
             </div>
-            <div class="row">
+            <div class="row" style="margin-bottom:10px">
                <div class="col-md-2"></div>
                <div class="col-md-1"></div>
                <div class="col-md-1">
                   <div class="checkbox">
-                     <label><input type="checkbox" ng-model="image" ng-true-value="'YES'" ng-false-value="'NO'" > Image</label>
+                     <label><input type="checkbox" ng-model="image" ng-true-value="'YES'" ng-false-value="'NO'" style="width: 20px;height: 20px;"> <span>Image</span></label>
                   </div>
                </div>
                <div class="col-md-1">
                   <div class="checkbox">
-                     <label><input type="checkbox" ng-model="document" ng-true-value="'YES'" ng-false-value="'NO'" > Document</label>
+                     <label><input type="checkbox" ng-model="document" ng-true-value="'YES'" ng-false-value="'NO'" style="width: 20px;height: 20px;"><span> Document</span></label>
                   </div>
                </div>
                <div class="col-md-1">
                   <div class="checkbox">
-                     <label><input type="checkbox" ng-model="audio" ng-true-value="'YES'" ng-false-value="'NO'" > Audio</label>
+                     <label><input type="checkbox" ng-model="audio" ng-true-value="'YES'" ng-false-value="'NO'" style="width: 20px;height: 20px;"><span> Audio</span></label>
                   </div>
                </div>
                <div class="col-md-1">
                   <div class="checkbox">
-                     <label><input type="checkbox" ng-model="video" ng-true-value="'YES'" ng-false-value="'NO'" > Video </label>
+                     <label><input type="checkbox" ng-model="video" ng-true-value="'YES'" ng-false-value="'NO'" style="width: 20px;height: 20px;"><span> Video</span> </label>
                   </div>
                </div>
                <div class="col-md-1">
                   <div class="checkbox">
-                     <label><input type="checkbox" ng-model="collection" ng-true-value="'YES'" ng-false-value="'NO'" > Collection</label>
+                     <label><input type="checkbox" ng-model="collection" ng-true-value="'YES'" ng-false-value="'NO'" style="width: 20px;height: 20px;"><span> Collection</span></label>
                   </div>
                </div>
                <div class="col-md-2"></div>

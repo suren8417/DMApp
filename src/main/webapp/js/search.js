@@ -30,7 +30,18 @@ $scope.search = function(searchText, image, document, audio, video, collection, 
         collection = "NO";
     }
 
-    $http.get("/TCHA/searches?searchText=" + searchText + "&image=" + image + "&document=" + document + "&audio=" + audio + "&video=" + video + "&collection=" + collection + "&startDate=" + startDate + "&endDate=" + endDate)
+        var dataObj = {
+
+            searchText: searchText,
+            image: image,
+            document: document,
+            audio: audio,
+            video: video,
+            startDate: startDate,
+            endDate: endDate
+        };
+
+    $http.get("/TCHA/searches?searchQuery=" + JSON.stringify(dataObj))
         .success(function(data) {
             $scope.searchData = data.searchResultDtos;
         });

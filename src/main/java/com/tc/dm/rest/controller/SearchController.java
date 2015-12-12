@@ -1,10 +1,8 @@
 package com.tc.dm.rest.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tc.dm.core.services.SearchService;
-import com.tc.dm.rest.dto.ItemType;
-import com.tc.dm.rest.dto.SearchParam;
-import com.tc.dm.rest.dto.SearchResponseDto;
-import com.tc.dm.rest.dto.SearchResultDto;
+import com.tc.dm.rest.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,26 +27,27 @@ public class SearchController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity getItems(@RequestParam("searchText") String searchText, @RequestParam("image") String image,@RequestParam("document") String document,@RequestParam("audio") String audio,@RequestParam("video") String video,@RequestParam("collection") String collection,@RequestParam("startDate") String startDate,@RequestParam("endDate") String endDate) {
+    public ResponseEntity getItems(@RequestParam("searchQuery") String searchQueryString) {
 
         try {
+            ObjectMapper mapper = new ObjectMapper();
+            SearchQueryDto searchQueryDto = mapper.readValue(searchQueryString, SearchQueryDto.class);
+
 
             SearchParam searchParam = new SearchParam();
-            searchParam.setTextToSearch(searchText);
+            searchParam.setTextToSearch(searchQueryDto.getSearchText());
 
             String TYPE_BOX = "YES";
-            if(TYPE_BOX.equals(image)) { searchParam.getTypes().add(ItemType.IMAGE);}
-            if(TYPE_BOX.equals(document)) { searchParam.getTypes().add(ItemType.DOCUMENT);}
-            if(TYPE_BOX.equals(audio)) { searchParam.getTypes().add(ItemType.AUDIO);}
-            if(TYPE_BOX.equals(video)) { searchParam.getTypes().add(ItemType.VIDEO);}
-            if(TYPE_BOX.equals(collection)) { searchParam.getTypes().add(ItemType.COLLECTION);}
+            if(TYPE_BOX.equals(searchQueryDto.getImage())) { searchParam.getTypes().add(ItemType.IMAGE);}
+            if(TYPE_BOX.equals(searchQueryDto.getDocument())) { searchParam.getTypes().add(ItemType.DOCUMENT);}
+            if(TYPE_BOX.equals(searchQueryDto.getAudio())) { searchParam.getTypes().add(ItemType.AUDIO);}
+            if(TYPE_BOX.equals(searchQueryDto.getVideo())) { searchParam.getTypes().add(ItemType.VIDEO);}
+            if(TYPE_BOX.equals(searchQueryDto.getCollection())) { searchParam.getTypes().add(ItemType.COLLECTION);}
 
-            try {
-                searchParam.setDateOfOriginFrom(toDate(startDate));
-                searchParam.setDateOfOriginTo(toDate(endDate));
-            } catch (ParseException e) {
-                //DO Nothing
-            }
+
+                searchParam.setDateOfOriginFrom(searchQueryDto.getStartDate());
+                searchParam.setDateOfOriginTo(searchQueryDto.getEndDate());
+
 
             List<SearchResultDto> resultDtoList = searchService.search(searchParam);
 
