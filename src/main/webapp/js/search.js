@@ -80,31 +80,47 @@ $scope.showSearchInDetail = function(id) {
             "  <p style=\"margin:0px 0px 25px 0px;\">Origin Date : " + item.itemStartDate + "</p>";
 
         if (item.itemsSelectedType === 'Video') {
-            myHTML1 = myHTML1 + "<video width=\"800\" height=\"400\" controls>" +
-                "  <source src=\"docs/"+item.itemName+"\" type=\"video/mp4\">" +
-                "  Your browser does not support the video tag." +
-                "</video>";
+
+            if (item.itemName.indexOf(".mp4") > -1) {
+                myHTML1 = myHTML1 + "<video width=\"800\" height=\"400\" controls>" +
+                    "  <source src=\"docs/" + item.itemName + "\" type=\"video/mp4\">" +
+                    "  Your browser does not support the video tag." +
+                    "</video>";
+            } else {
+                myHTML1 = myHTML1 + "<a href=\"docs/" + item.itemName + "\" download=\""+item.itemName+"\" >Download the Video</a>";
+
+            }
         }
         if (item.itemsSelectedType === 'Image') {
-            myHTML1 = myHTML1 + "<img src=\"docs/"+item.itemName+"\" width=\"75%\" height=\"600\">";
+            myHTML1 = myHTML1 + "<img src=\"docs/" + item.itemName + "\" width=\"75%\" height=\"600\">";
         }
         if (item.itemsSelectedType === 'Document') {
-            myHTML1 = myHTML1 + "<object data=\"docs/"+item.itemName+"\" type=\"application/pdf\" width=\"100%\" height=\"900px\">" +
-                "<a href=\"docs/"+item.itemName+"\">test.pdf</a>" +
-                "</object>";
+            if (item.itemName.indexOf(".pdf") > -1) {
+                myHTML1 = myHTML1 + "<object data=\"docs/" + item.itemName + "\" type=\"application/pdf\" width=\"100%\" height=\"900px\">" +
+                    "<a href=\"docs/" + item.itemName + "\">test.pdf</a>" +
+                    "</object>";
+            } else {
+                myHTML1 = myHTML1 + "<a href=\"docs/" + item.itemName + "\" download=\""+item.itemName+"\">Download the Document</a>";
+
+            }
         }
         if (item.itemsSelectedType === 'Audio') {
-            myHTML1 = myHTML1 + "<audio controls>" +
-                "  <source src=\"docs/"+item.itemName+"\" type=\"audio/mpeg\">" +
-                "Your browser does not support the audio element." +
-                "</audio>";
+            if (item.itemName.indexOf(".mp3") > -1) {
+                myHTML1 = myHTML1 + "<audio controls>" +
+                    "  <source src=\"docs/" + item.itemName + "\" type=\"audio/mpeg\">" +
+                    "Your browser does not support the audio element." +
+                    "</audio>";
+            } else {
+                myHTML1 = myHTML1 + "<a href=\"docs/" + item.itemName + "\" download=\""+item.itemName+"\">Download the Audio</a>";
+
+            }
         }
         myHTML1 = myHTML1 + "</p></p>"
 
     });
     $scope.myHTML = $sce.trustAsHtml(myHTML1);
-
 };
+
 
 
     $scope.clear = function() {
