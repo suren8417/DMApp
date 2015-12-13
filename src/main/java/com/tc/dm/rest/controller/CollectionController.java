@@ -63,9 +63,10 @@ public class CollectionController {
         try {
             List<Integer> list = new ObjectMapper().readValue(itemArray, List.class);
             CollectionDto collectionDto = mapper.readValue(collection, CollectionDto.class);
-
-            for (Integer itemId : list) {
+            for (int i = 0; i < list.size(); i++) {
+                Integer itemId = list.get(i);
                 ItemDto itemDto = new ItemDto();
+                itemDto.setItemTitle(String.valueOf(i));//to produce different hashcode for items has only id populated we need to set another attribute which takes part in hashcode generation
                 itemDto.setId(Long.valueOf(itemId));
                 collectionDto.getItemDtos().add(itemDto);
             }
@@ -84,7 +85,7 @@ public class CollectionController {
             collectionResponseDto.setStatus("OK");
             return new ResponseEntity(collectionResponseDto, HttpStatus.OK);
 
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return new ResponseEntity(HttpStatus.OK);

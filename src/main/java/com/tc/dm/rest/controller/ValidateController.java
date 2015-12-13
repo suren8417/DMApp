@@ -46,7 +46,7 @@ public class ValidateController {
                 item.setStatus(ItemStatus.APPROVED.toString());
                 itemService.updateItem(item);
             }
-            List<ItemDto> itemDtos = itemDto.toItemDtos(itemService.findItemsByStatus(ItemStatus.NEW,ItemStatus.APPROVED));
+            List<ItemDto> itemDtos = itemDto.toItemDtos(itemService.findItemsByStatus(ItemStatus.NEW, ItemStatus.EDITED, ItemStatus.APPROVED));
             itemResponseDto.setItemDtos(itemDtos);
             itemResponseDto.setStatus("OK");
             return new ResponseEntity(itemResponseDto, HttpStatus.OK);
@@ -70,7 +70,7 @@ public class ValidateController {
                 item.setStatus(ItemStatus.PENDING.toString());
                 itemService.updateItem(item);
             }
-            List<ItemDto> itemDtos = itemDto.toItemDtos(itemService.findItemsByStatus(ItemStatus.NEW,ItemStatus.APPROVED));
+            List<ItemDto> itemDtos = itemDto.toItemDtos(itemService.findItemsByStatus(ItemStatus.NEW, ItemStatus.EDITED, ItemStatus.APPROVED));
             itemResponseDto.setItemDtos(itemDtos);
             itemResponseDto.setStatus("OK");
             return new ResponseEntity(itemResponseDto, HttpStatus.OK);
@@ -85,7 +85,7 @@ public class ValidateController {
 
         try {
             ItemDto userDto = new ItemDto();
-            List<ItemDto> itemDtos = userDto.toItemDtos(itemService.findItemsByStatus(ItemStatus.NEW,ItemStatus.APPROVED));
+            List<ItemDto> itemDtos = userDto.toItemDtos(itemService.findItemsByStatus(ItemStatus.NEW,ItemStatus.EDITED,ItemStatus.APPROVED));
             ItemResponseDto itemResponseDto = new ItemResponseDto();
             itemResponseDto.setItemDtos(itemDtos);
             itemResponseDto.setStatus("OK");

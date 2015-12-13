@@ -4,7 +4,7 @@ import com.tc.dm.core.dao.impl.CollectionDaoImpl;
 import com.tc.dm.core.dao.impl.ItemDaoImpl;
 import com.tc.dm.core.entities.Collection;
 import com.tc.dm.core.entities.Item;
-import com.tc.dm.core.entities.ItemType;
+import com.tc.dm.core.services.FileService;
 import com.tc.dm.core.services.SearchService;
 import com.tc.dm.rest.dto.ItemDto;
 import com.tc.dm.rest.dto.SearchParam;
@@ -28,43 +28,56 @@ public class SearchServiceImpl implements SearchService {
     @Autowired
     CollectionDaoImpl collectionDao;
 
+    @Autowired
+    FileService fileService;
+
     @Override
-    public List<SearchResultDto> search(SearchParam searchParam) {
+    public List<SearchResultDto> search(SearchParam searchParam) throws Exception {
+        try {
+            if (isNullOrEmpty(searchParam)) return new ArrayList<SearchResultDto>();
 
-        if(isNullOrEmpty(searchParam)) return new ArrayList<SearchResultDto>();
+            List<SearchResultDto> result = new ArrayList<SearchResultDto>();
 
-        List<SearchResultDto> result = new ArrayList<SearchResultDto>();
+            if (searchParam.getTypes().isEmpty() || searchParam.getTypes().contains(COLLECTION)) {
 
-        if(searchParam.getTypes().isEmpty() || searchParam.getTypes().contains(COLLECTION)){
+                Map<String, String> collectionParam = new HashMap<>();
+                collectionParam.put("name", searchParam.getTextToSearch());
+                List<Collection> collectionListOnName = collectionDao.search(collectionParam);
 
-            Map<String, String> collectionParam = new HashMap<>();
-            collectionParam.put("name", searchParam.getTextToSearch());
-            List<Collection> collectionListOnName = collectionDao.search(collectionParam);
+                collectionParam.clear();
+                collectionParam.put("description", searchParam.getTextToSearch());
+                List<Collection> collectionListOnDesc = collectionDao.search(collectionParam);
 
-            collectionParam.clear();
-            collectionParam.put("description", searchParam.getTextToSearch());
-            List<Collection> collectionListOnDesc = collectionDao.search(collectionParam);
-
-            mergeIntoResultDtoList(result, collectionListOnName, collectionListOnDesc);
-        }
-        if(searchParam.getTypes().isEmpty() ||
-                !Collections.disjoint(searchParam.getTypes(), Arrays.asList(IMAGE, DOCUMENT, AUDIO, VIDEO, MAP))) {
-
-            for (Item item : itemDao.search(searchParam.toMap())) {
-                SearchResultDto dto = new SearchResultDto();
-                dto.setTitle(item.getTitle());
-                dto.setType(item.getType());
-                dto.setDescription(item.getDescription());
-                dto.setItemDtos(Arrays.asList(ItemDto.toDto(item)));
-                result.add(dto);
+                mergeIntoResultDtoList(result, collectionListOnName, collectionListOnDesc);
             }
+            if (searchParam.getTypes().isEmpty() ||
+                    !Collections.disjoint(searchParam.getTypes(), Arrays.asList(IMAGE, DOCUMENT, AUDIO, VIDEO, MAP))) {
+
+                for (Item item : itemDao.search(searchParam.toMap())) {
+                    SearchResultDto dto = new SearchResultDto();
+                    dto.setTitle(item.getTitle());
+                    dto.setType(item.getType());
+                    dto.setDescription(item.getDescription());
+                    dto.setItemDtos(Arrays.asList(ItemDto.toDto(item)));
+                    result.add(dto);
+                }
+            }
+            int id = 0;
+            if(!result.isEmpty()) {
+                fileService.clearCache();
+            }
+            for (SearchResultDto searchResultDto : result) {
+                searchResultDto.setId(id);
+                id++;
+
+                for (ItemDto itemDto : searchResultDto.getItemDtos()) {
+                    fileService.copyToCache(itemDto.getItemContentPath());
+                }
+            }
+            return result;
+        } catch (Exception e) {
+            throw new Exception("Error occured while searching", e);
         }
-        int id =0;
-        for(SearchResultDto searchResultDto : result){
-            searchResultDto.setId(id);
-            id++;
-        }
-        return result;
     }
 
     private void mergeIntoResultDtoList(List<SearchResultDto> result, List<Collection>... collectionLists) {

@@ -9,5 +9,9 @@ public interface FileService {
 
     public boolean deleteFile(String contentPath) throws Exception;
 
-    public MultipartFile getFile(String contentPath);
+    public MultipartFile getFile(String contentPath) throws Exception;
+
+    boolean copyToCache(String contentPath) throws Exception;
+
+    boolean clearCache() throws Exception;
 }

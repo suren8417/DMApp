@@ -2,7 +2,7 @@ package com.tc.dm.rest.dto;
 
 public enum ItemStatus {
 
-    NEW("NEW"), APPROVED("APPROVED"), PENDING("PENDING"), REMOVED("REMOVED");
+    NEW("NEW"), EDITED("EDITED"), APPROVED("APPROVED"), PENDING("PENDING"), REMOVED("REMOVED");
 
     private String status;
 
@@ -15,8 +15,11 @@ public enum ItemStatus {
     }
 
     public static ItemStatus fromString(String status){
+        if(null == status) return null;
         if(NEW.toString().equals(status)) {
             return NEW;
+        } else if(EDITED.toString().equals(status)) {
+            return EDITED;
         } else if(APPROVED.toString().equals(status)) {
             return APPROVED;
         } else if(PENDING.toString().equals(status)) {

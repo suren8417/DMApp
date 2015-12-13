@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface SearchService {
 
-    public List<SearchResultDto> search(SearchParam searchParam);
+    public List<SearchResultDto> search(SearchParam searchParam) throws Exception;
 }

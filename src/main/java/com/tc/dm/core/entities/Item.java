@@ -10,32 +10,19 @@ import java.util.Set;
 
 @Entity
 @Table(name = "item")
-//@Indexed
-//@AnalyzerDef(name = "customanalyzer",
-//        tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class),
-//        filters = {
-//                @TokenFilterDef(factory = LowerCaseFilterFactory.class),
-//                @TokenFilterDef(factory = SnowballPorterFilterFactory.class, params = {
-//                        @org.hibernate.search.annotations.Parameter(name = "language", value = "English")
-//                })
-//        })
 public class Item {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy=GenerationType.AUTO)
-//    @DocumentId
     private Long id;
 
-//    @ManyToOne(fetch = FetchType.EAGER)
-//    @JoinColumn(name = "type_id")
     @Column(name = "type")
     private String type;
 
     @Column(name = "title")
-//    @Analyzer(definition = "customanalyzer")
     private String title;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, fetch = FetchType.EAGER, targetEntity = Collection.class)
     @JoinTable(name = "item_collection", joinColumns = @JoinColumn(name = "item_id"), inverseJoinColumns = @JoinColumn(name = "collection_id"))
     private Set<Collection> collections;
 
@@ -55,12 +42,7 @@ public class Item {
     private String donor;
 
     @Column(name = "description")
-//    @Analyzer(definition = "customanalyzer")
     private String description;
-
-//    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
-//    @JoinTable(name = "item_keyword", joinColumns = @JoinColumn(name = "item_id"),inverseJoinColumns = @JoinColumn(name = "keyword_id"))
-//    private Set<KeyWord> keyWords;
 
     @Column(name = "keywords")
     private String keywords;
@@ -196,10 +178,8 @@ public class Item {
 
         Item item = (Item) o;
 
-        if (id != null ? !id.equals(item.id) : item.id != null) return false;
         if (type != null ? !type.equals(item.type) : item.type != null) return false;
         if (title != null ? !title.equals(item.title) : item.title != null) return false;
-        if (collections != null ? !collections.equals(item.collections) : item.collections != null) return false;
         if (dateOfOrigin != null ? !dateOfOrigin.equals(item.dateOfOrigin) : item.dateOfOrigin != null) return false;
         if (dateAdded != null ? !dateAdded.equals(item.dateAdded) : item.dateAdded != null) return false;
         if (dateValidated != null ? !dateValidated.equals(item.dateValidated) : item.dateValidated != null)
@@ -214,10 +194,8 @@ public class Item {
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (type != null ? type.hashCode() : 0);
+        int result = type != null ? type.hashCode() : 0;
         result = 31 * result + (title != null ? title.hashCode() : 0);
-        result = 31 * result + (collections != null ? collections.hashCode() : 0);
         result = 31 * result + (dateOfOrigin != null ? dateOfOrigin.hashCode() : 0);
         result = 31 * result + (dateAdded != null ? dateAdded.hashCode() : 0);
         result = 31 * result + (dateValidated != null ? dateValidated.hashCode() : 0);

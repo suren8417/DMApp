@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.text.ParseException;
+import java.util.Arrays;
 import java.util.List;
 import static com.tc.dm.core.util.CommonUtil.*;
 
@@ -44,10 +45,9 @@ public class SearchController {
             if(TYPE_BOX.equals(searchQueryDto.getVideo())) { searchParam.getTypes().add(ItemType.VIDEO);}
             if(TYPE_BOX.equals(searchQueryDto.getCollection())) { searchParam.getTypes().add(ItemType.COLLECTION);}
 
-
-                searchParam.setDateOfOriginFrom(searchQueryDto.getStartDate());
-                searchParam.setDateOfOriginTo(searchQueryDto.getEndDate());
-
+            searchParam.setDateOfOriginFrom(searchQueryDto.getStartDate());
+            searchParam.setDateOfOriginTo(searchQueryDto.getEndDate());
+            searchParam.setStatus(Arrays.asList(ItemStatus.APPROVED));
 
             List<SearchResultDto> resultDtoList = searchService.search(searchParam);
 

@@ -23,6 +23,16 @@ public class ItemDto {
     private String status;
     private String itemName;
 
+    public String getItemContentPath() {
+        return itemContentPath;
+    }
+
+    public void setItemContentPath(String itemContentPath) {
+        this.itemContentPath = itemContentPath;
+    }
+
+    private String itemContentPath;
+
     public Long getId() {
         return id;
     }
@@ -107,14 +117,15 @@ public class ItemDto {
     public Item toItem() {
         Item item = Item.getInstance();
         item.setId(id);
-        item.setType(itemsSelectedType);
+        item.setType(ItemType.fromString(itemsSelectedType)==null?null:ItemType.fromString(itemsSelectedType).toString());
         item.setTitle(itemTitle);
         item.setDonor(itemDonor);
         item.setDescription(itemDescription);
         item.setKeywords(itemKeyWords);
         item.setDateOfOrigin(itemStartDate);
         item.setContent(uploadItem);
-        item.setStatus(NEW.toString());
+        item.setStatus(ItemStatus.fromString(status)==null?null:ItemStatus.fromString(status).toString());
+        item.setContentPath(itemContentPath);
         return item;
 
     }
@@ -130,6 +141,7 @@ public class ItemDto {
         itemDto.setItemKeyWords(item.getKeywords());
         itemDto.setItemStartDate(item.getDateOfOrigin());
         itemDto.setItemName(extractFileName(item.getContentPath()));
+        itemDto.setItemContentPath(item.getContentPath());
         return itemDto;
     }
 

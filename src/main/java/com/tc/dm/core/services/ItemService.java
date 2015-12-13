@@ -10,7 +10,7 @@ public interface ItemService {
 
     public Item createItem(Item item) throws Exception;
 
-    public void updateItem(Item item) throws Exception;
+    public Item updateItem(Item item) throws Exception;
 
     public void deleteItem(Item item) throws Exception;
 
@@ -24,13 +24,4 @@ public interface ItemService {
 
     public List<Item> searchItems(SearchParam searchParam);
 
-//    public ItemType createItemType(ItemType itemType);
-//
-//    public void updateItemType(ItemType itemType);
-//
-//    public void deleteItemType(ItemType itemType);
-//
-//    public ItemType findItemTypeById(Long itemTypeId);
-//
-//    public ItemType findItemTypeByName(String itemTypeName);
 }

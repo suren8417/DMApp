@@ -15,6 +15,7 @@ public enum ItemType {
     }
 
     public static ItemType fromString(String type){
+        if(null == type) return null;
         if(IMAGE.toString().equals(type)) {
             return IMAGE;
         } else if(DOCUMENT.toString().equals(type)) {

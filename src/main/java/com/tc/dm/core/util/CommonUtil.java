@@ -19,6 +19,11 @@ public class CommonUtil {
         return path.substring(path.lastIndexOf(File.separator) + 1);
     }
 
+    public static String extractFileExt(String path) {
+        if(path.lastIndexOf(".")<0 || path.lastIndexOf(".") == path.length()) return "unknown";
+        return path.substring(path.lastIndexOf(".") + 1);
+    }
+
     public static Date toDate(String dateStr) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
         return sdf.parse(dateStr);

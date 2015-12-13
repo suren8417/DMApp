@@ -10,9 +10,11 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.io.IOException;
+import java.nio.file.*;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.UUID;
+import static com.tc.dm.core.util.CommonUtil.*;
 
 @Transactional
 @Service
@@ -28,6 +30,9 @@ public class FileServiceImpl implements FileService {
     private String nasUserName;
     @Value("${nas.password}")
     private String nasPassword;
+
+    @Value("${file.cache.path}")
+    private String fileCachePath;
 
     public String getFilestorePath() {
         return filestorePath;
@@ -49,21 +54,25 @@ public class FileServiceImpl implements FileService {
         return nasPassword;
     }
 
+    public String getFileCachePath() {
+        return fileCachePath;
+    }
+
     @Override
     public String storeFile(MultipartFile file) throws Exception {
         if (null != file && !file.isEmpty()) {
             try {
                 String filePath = null;
-                final String fileUniqueId = UUID.randomUUID().toString() + "_" + String.valueOf(System.currentTimeMillis()) + "_";
+                final String fileUniqueName = UUID.randomUUID().toString() + "." + extractFileExt(file.getOriginalFilename());
                 if("true".equalsIgnoreCase(getFilestoreIsNas())) {
                     final NtlmPasswordAuthentication ntlmAuth = getAuthenticationToekn();
-                    filePath = "smb:" + getFilestorePath().replace("\\", "/") + "/" + fileUniqueId + file.getOriginalFilename();
+                    filePath = "smb:" + getFilestorePath().replace("\\", "/") + "/" + fileUniqueName;
                     final SmbFileOutputStream sfos = new SmbFileOutputStream(new SmbFile(filePath, ntlmAuth));
                     sfos.write(file.getBytes());
                     sfos.flush();
                     sfos.close();
                 } else {
-                    filePath = getFilestorePath() + File.separator + fileUniqueId + file.getOriginalFilename();
+                    filePath = getFilestorePath() + File.separator + fileUniqueName;
                     file.transferTo(new File(filePath));
                 }
                 return filePath;
@@ -91,8 +100,57 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public MultipartFile getFile(String contentPath) {
-        return null;
+    public MultipartFile getFile(String contentPath) throws Exception {
+        throw new Exception("Unimplemented method");
+    }
+
+    @Override
+    public boolean copyToCache(String contentPath) throws Exception {
+        try {
+            String targetFilePath = getFileCachePath()+File.separator+extractFileName(contentPath);
+            if("true".equalsIgnoreCase(getFilestoreIsNas())) {
+                final NtlmPasswordAuthentication ntlmAuth = getAuthenticationToekn();
+                final SmbFile source = new SmbFile(contentPath, ntlmAuth);
+                SmbFile target = new SmbFile(targetFilePath);
+                target.createNewFile();
+                source.copyTo(target);
+                return true;
+            } else {
+                Path source = Paths.get(contentPath);
+                Path target = Paths.get(targetFilePath);
+                CopyOption[] options = new CopyOption[]{
+                        StandardCopyOption.REPLACE_EXISTING,
+                        StandardCopyOption.COPY_ATTRIBUTES
+                };
+                Path copiedPath = java.nio.file.Files.copy(source, target, options);
+                return true;
+            }
+        } catch (Exception e) {
+            throw new Exception("File copying to cache failed for:"+contentPath, e);
+        }
+    }
+
+    @Override
+    public boolean clearCache() throws Exception {
+        try {
+            Path rootPath = Paths.get(getFileCachePath());
+            Files.walkFileTree(rootPath, new SimpleFileVisitor<Path>() {
+                @Override
+                public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+                    Files.delete(file);
+                    return FileVisitResult.CONTINUE;
+                }
+
+                @Override
+                public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
+//                    Files.delete(dir);
+                    return FileVisitResult.CONTINUE;
+                }
+            });
+        } catch(Exception e){
+            throw new Exception("File cache cleaning failed", e);
+        }
+        return true;
     }
 
     private NtlmPasswordAuthentication getAuthenticationToekn() {

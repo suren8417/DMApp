@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Transactional(rollbackFor = Exception.class)
@@ -19,12 +18,6 @@ public class ItemServiceImpl implements ItemService {
 
     @Autowired
     ItemDaoImpl itemDao;
-
-//    @Autowired
-//    ItemTypeDaoImpl itemTypeDao;
-//
-//    @Autowired
-//    ItemKeyWordDaoImpl keyWordDao;
 
     @Autowired
     FileService fileService;
@@ -41,7 +34,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public void updateItem(Item item) throws Exception {
+    public Item updateItem(Item item) throws Exception {
         try {
             String contentPath = findItemById(item.getId()).getContentPath();
             if (item.getContent() != null) {
@@ -49,7 +42,8 @@ public class ItemServiceImpl implements ItemService {
                 contentPath = fileService.storeFile(item.getContent());
             }
             item.setContentPath(contentPath);
-            itemDao.update(item);
+            item = itemDao.update(item);
+            return item;
         } catch (Exception e) {
             throw new Exception("Item Update Failed:", e);
         }
@@ -74,7 +68,7 @@ public class ItemServiceImpl implements ItemService {
         try {
             final Item item = itemDao.find(Item.class, itemId);
             if (null != item) {
-                item.setContent(fileService.getFile(item.getContentPath()));
+//                item.setContent(fileService.getFile(item.getContentPath()));
             }
             return item;
         } catch (Exception e) {
@@ -112,35 +106,4 @@ public class ItemServiceImpl implements ItemService {
         List<Item> items = itemDao.search(searchParam.toMap());
         return items;
     }
-
-//    @Override
-//    public ItemType createItemType(ItemType itemType) {
-//        return itemTypeDao.create(itemType);
-//    }
-//
-//    @Override
-//    public void updateItemType(ItemType itemType) {
-//        itemTypeDao.update(itemType);
-//    }
-//
-//    @Override
-//    public void deleteItemType(ItemType itemType) {
-//        itemTypeDao.delete(itemTypeDao.find(ItemType.class, itemType.getId()));
-//    }
-//
-//    @Override
-//    public ItemType findItemTypeById(Long itemTypeId) {
-//        return itemTypeDao.find(ItemType.class, itemTypeId);
-//    }
-//
-//    @Override
-//    public ItemType findItemTypeByName(String itemTypeName) {
-//        for (ItemType itemType : itemTypeDao.findAll()) {
-//            if (itemType.getName().equals(itemTypeName)) {
-//                return itemType;
-//            }
-//        }
-//        return null;
-//    }
-
 }
