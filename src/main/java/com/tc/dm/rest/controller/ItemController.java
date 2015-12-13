@@ -51,7 +51,7 @@ public class ItemController {
                     itemService.createItem(itemDto.toItem());
                 }
 
-                List<ItemDto> itemDtos = itemDto.toItemDtos(itemService.findAllItems());
+                List<ItemDto> itemDtos = itemDto.toItemDtos(itemService.findItemsByStatus(ItemStatus.NEW,ItemStatus.PENDING));
                 itemResponseDto.setItemDtos(itemDtos);
                 itemResponseDto.setStatus("OK");
                 return new ResponseEntity(itemResponseDto, HttpStatus.OK);
@@ -75,7 +75,7 @@ public class ItemController {
             if (itemDto.getId() != null) {
                 itemService.updateItem(itemDto.toItem());
             }
-            List<ItemDto> itemDtos = itemDto.toItemDtos(itemService.findAllItems());
+            List<ItemDto> itemDtos = itemDto.toItemDtos(itemService.findItemsByStatus(ItemStatus.NEW, ItemStatus.PENDING));
             itemResponseDto.setItemDtos(itemDtos);
             itemResponseDto.setStatus("OK");
             return new ResponseEntity(itemResponseDto, HttpStatus.OK);
@@ -99,7 +99,7 @@ public class ItemController {
                 item.setStatus(ItemStatus.APPROVED.toString());
                 itemService.updateItem(item);
             }
-            List<ItemDto> itemDtos = itemDto.toItemDtos(itemService.findAllItems());
+            List<ItemDto> itemDtos = itemDto.toItemDtos(itemService.findItemsByStatus(ItemStatus.NEW, ItemStatus.PENDING));
             itemResponseDto.setItemDtos(itemDtos);
             itemResponseDto.setStatus("OK");
             return new ResponseEntity(itemResponseDto, HttpStatus.OK);
@@ -123,7 +123,7 @@ public class ItemController {
                 item.setStatus(ItemStatus.PENDING.toString());
                 itemService.updateItem(item);
             }
-            List<ItemDto> itemDtos = itemDto.toItemDtos(itemService.findAllItems());
+            List<ItemDto> itemDtos = itemDto.toItemDtos(itemService.findItemsByStatus(ItemStatus.NEW, ItemStatus.PENDING));
             itemResponseDto.setItemDtos(itemDtos);
             itemResponseDto.setStatus("OK");
             return new ResponseEntity(itemResponseDto, HttpStatus.OK);
@@ -138,7 +138,7 @@ public class ItemController {
 
         try {
             ItemDto userDto = new ItemDto();
-            List<ItemDto> itemDtos = userDto.toItemDtos(itemService.findAllItems());
+            List<ItemDto> itemDtos = userDto.toItemDtos(itemService.findItemsByStatus(ItemStatus.NEW,ItemStatus.PENDING));
             ItemResponseDto itemResponseDto = new ItemResponseDto();
             itemResponseDto.setItemDtos(itemDtos);
             itemResponseDto.setStatus("OK");
@@ -157,7 +157,7 @@ public class ItemController {
             itemDto.setId(deleteItemId);
             itemService.deleteItem(itemDto.toItem());
 
-            List<ItemDto> itemDtos = itemDto.toItemDtos(itemService.findAllItems());
+            List<ItemDto> itemDtos = itemDto.toItemDtos(itemService.findItemsByStatus(ItemStatus.NEW, ItemStatus.PENDING));
             ItemResponseDto itemResponseDto = new ItemResponseDto();
             itemResponseDto.setItemDtos(itemDtos);
             itemResponseDto.setStatus("OK");

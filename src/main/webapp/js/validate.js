@@ -48,7 +48,7 @@ angular.module('tchaApp').controller('validateItemController', function($scope, 
         $scope.successMessage = false;
         $scope.rejectMessage = false;
         $scope.itemRequired = false
-        $http.get("/TCHA/items").success(function(data) {
+        $http.get("/TCHA/validates").success(function(data) {
             $scope.validateItemGrid.data = data.itemDtos;
         });
     }
@@ -76,7 +76,7 @@ angular.module('tchaApp').controller('validateItemController', function($scope, 
         }
     };
 
-    $http.get("/TCHA/items").success(function(data) {
+    $http.get("/TCHA/validates").success(function(data) {
         $scope.validateItemGrid.data = data.itemDtos;
     });
 
@@ -94,7 +94,7 @@ angular.module('tchaApp').controller('validateItemController', function($scope, 
 
             var fd = new FormData();
             fd.append('itemArray', JSON.stringify($scope.selectItems));
-            var res = $http.post("/TCHA/items/validateItem", fd, {
+            var res = $http.post("/TCHA/validates/validateItem", fd, {
                 transformRequest: angular.identity,
                 headers: {
                     'Content-Type': undefined
@@ -117,7 +117,7 @@ angular.module('tchaApp').controller('validateItemController', function($scope, 
 
             var fd = new FormData();
             fd.append('itemArray', JSON.stringify($scope.selectItems));
-            var res = $http.post("/TCHA/items/rejectItem", fd, {
+            var res = $http.post("/TCHA/validates/rejectItem", fd, {
                 transformRequest: angular.identity,
                 headers: {
                     'Content-Type': undefined
