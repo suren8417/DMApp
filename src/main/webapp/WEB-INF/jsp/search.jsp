@@ -1,7 +1,7 @@
  <div style="margin:65px 0px 0px 170px;" >
    <p>Search</p>
  </div>
- <div ng-controller="searchController"  style="margin:0px 170px 0px 170px; background-color: #ffffff; border:1px solid #e7e7e7;height:100%;">
+ <div ng-controller="searchController"  style="margin:0px 170px 20px 170px; background-color: #ffffff; border:1px solid #e7e7e7;height:100%;">
             <div class="row" style="margin-top:40px">
                <div class="col-md-2"></div>
                <div class="col-md-8">
@@ -89,4 +89,8 @@
             <div style="margin:20px 80px 10px 80px;" ng-show="searchInDetail" ng-bind-html="myHTML" >
 
             </div>
+
+              <div class="controls" ng-show="searchInDetail" style="margin-left: 75px;margin-bottom: 25px;">
+                <button class="btn" style=" margin-top:15px;width: 100px;" ng-click="backToSearchSummary()">Back</button>
+              </div>
  </div>

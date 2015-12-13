@@ -50,6 +50,11 @@ $scope.search = function(searchText, image, document, audio, video, collection, 
 
 };
 
+$scope.backToSearchSummary = function () {
+    $scope.searchInDetail = false;
+    $scope.searchSummary = true;
+};
+
 $scope.showSearchInDetail = function(id) {
     $scope.searchInDetail = true;
     $scope.searchSummary = false;
@@ -115,9 +120,14 @@ $scope.showSearchInDetail = function(id) {
 
             }
         }
-        myHTML1 = myHTML1 + "</p></p>"
+        myHTML1 = myHTML1 + "</p></p> ";
 
     });
+
+/*         myHTML1 = myHTML1 + "</p></p> <div class=\"controls\">"+
+                                                      "    <button class=\"btn\" style=\" margin-top:15px;width: 100px;\" ng-click=\"backToSearchSummary()\">Back</button>"+
+                                                      "  </div>";
+                                                      "  </div>";*/
     $scope.myHTML = $sce.trustAsHtml(myHTML1);
 };
 
