@@ -127,6 +127,7 @@ $scope.showSearchInDetail = function(id) {
         $scope.dt = null;
     };
 
+
     $scope.toggleMin = function() {
         $scope.minDate = $scope.minDate ? null : new Date();
     };
@@ -146,7 +147,7 @@ $scope.showSearchInDetail = function(id) {
 
     $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
     $scope.format = $scope.formats[1];
-
+    $scope.dtmax = new Date();
 
 });
 

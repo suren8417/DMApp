@@ -143,8 +143,9 @@ angular.module('tchaApp').controller('newItemController', function($scope, $http
         startingDay: 1
     };
 
-    $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+    $scope.formats = ['DD-MM-YYYY', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
     $scope.format = $scope.formats[1];
+    $scope.dtmax = new Date();
 
    function validateForm() {
 

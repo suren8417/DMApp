@@ -49,7 +49,7 @@
                <div class="col-md-1"></div>
                <div class="col-md-2">
                       <p class="input-group">
-                        <input id="2322" onkeydown="return false" show-button-bar="false" type="text" class="form-control" datepicker-popup="{{format}}" ng-model="startDate" is-open="opened"  datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+                        <input id="2322" onkeydown="return false" max-date="dtmax" show-button-bar="false" type="text" class="form-control" datepicker-popup="{{format}}" ng-model="startDate" is-open="opened"  datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
                         <span class="input-group-btn">
                           <button type="button" class="btn btn-default" ng-click="toggleOpenDatePicker($event,'opened')"> From <i class="glyphicon glyphicon-calendar"></i></button>
                         </span>
@@ -58,7 +58,7 @@
                <div class="col-md-1"></div>
                   <div class="col-md-2">
                       <p class="input-group">
-                       <input id="23dd22" onkeydown="return false" show-button-bar="false" type="text" class="form-control" datepicker-popup="{{format}}" ng-model="endDate" is-open="opened1"  datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+                       <input id="23dd22" onkeydown="return false" max-date="dtmax" show-button-bar="false" type="text" class="form-control" datepicker-popup="{{format}}" ng-model="endDate" is-open="opened1"  datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
                         <span class="input-group-btn">
                           <button type="button" class="btn btn-default" ng-click="toggleOpenDatePicker($event,'opened1')"> To <i class="glyphicon glyphicon-calendar"></i></button>
                         </span>

@@ -62,7 +62,7 @@
                      <p>Date Of Origin</p>
                      <div class="controls">
                         <p class="input-group" style="width: 200px;">
-                           <input onkeydown="return false" id="23224" show-button-bar="false" type="text"  datepicker-popup="{{format}}" ng-model="itemStartDate" is-open="opened3"  datepicker-options="dateOptions" class="form-control" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+                           <input onkeydown="return false" id="23224" show-button-bar="false" type="text"  datepicker-popup="{{format}}" ng-model="itemStartDate" is-open="opened3" max-date="dtmax" datepicker-options="dateOptions" class="form-control" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
                            <span class="input-group-btn">
                            <button type="button" class="btn btn-default" ng-click="toggleOpenDatePicker($event,'opened3')">  <i class="glyphicon glyphicon-calendar"></i></button>
                            </span>
