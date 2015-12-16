@@ -6,6 +6,7 @@ angular.module('tchaApp').controller('searchController', function($scope,$http,$
  $scope.resultCount;
  $scope.searchSummary= false;
  $scope.searchInDetail= false;
+ var items =null;
 
 $scope.search = function(searchText, image, document, audio, video, collection, startDate, endDate) {
 
@@ -53,6 +54,14 @@ $scope.search = function(searchText, image, document, audio, video, collection, 
 $scope.backToSearchSummary = function () {
     $scope.searchInDetail = false;
     $scope.searchSummary = true;
+
+    angular.forEach(items, function(item) {
+        if (item.itemsSelectedType === 'Video' | item.itemsSelectedType === 'Audio') {
+        //item.id.pause();
+        document.getElementById(item.id).pause();
+        }
+    });
+
 };
 
 $scope.showSearchInDetail = function(id) {
@@ -61,7 +70,14 @@ $scope.showSearchInDetail = function(id) {
 
     var myHTML1 = "";
 
-    var items = $scope.searchData[id].itemDtos;
+    items = $scope.searchData[id].itemDtos;
+
+  if ($scope.searchData[id].type === 'Collection') {
+   myHTML1 = myHTML1 + "<span class=\"glyphicon glyphicon-tags\" style=\"margin-right: 10px;\"></span>";
+                myHTML1 = myHTML1 + "<p style=\" font-size:18px;margin:0px 0px 0px 0px;\"  >" + $scope.searchData[id].title + "</p>" +
+                        "  <p style=\"margin:0px 0px 25px 0px;\">" + $scope.searchData[id].description + "</p>";
+        }
+
 
     angular.forEach(items, function(item) {
         if (item.itemsSelectedType === 'Video') {
@@ -87,7 +103,7 @@ $scope.showSearchInDetail = function(id) {
         if (item.itemsSelectedType === 'Video') {
 
             if (item.itemName.indexOf(".mp4") > -1) {
-                myHTML1 = myHTML1 + "<video width=\"800\" height=\"400\" controls>" +
+                myHTML1 = myHTML1 + "<video id="+item.id+" width=\"800\" height=\"400\" controls>" +
                     "  <source src=\"docs/" + item.itemName + "\" type=\"video/mp4\">" +
                     "  Your browser does not support the video tag." +
                     "</video>";
@@ -111,7 +127,7 @@ $scope.showSearchInDetail = function(id) {
         }
         if (item.itemsSelectedType === 'Audio') {
             if (item.itemName.indexOf(".mp3") > -1) {
-                myHTML1 = myHTML1 + "<audio controls>" +
+                myHTML1 = myHTML1 + "<audio controls id="+item.id+">" +
                     "  <source src=\"docs/" + item.itemName + "\" type=\"audio/mpeg\">" +
                     "Your browser does not support the audio element." +
                     "</audio>";
@@ -120,7 +136,7 @@ $scope.showSearchInDetail = function(id) {
 
             }
         }
-        myHTML1 = myHTML1 + "</p></p> ";
+        myHTML1 = myHTML1 + "</p> <hr style=\"margin-bottom: 20px;\"></p> ";
 
     });
 
