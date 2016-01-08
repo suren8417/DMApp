@@ -27,6 +27,7 @@ public class ItemServiceImpl implements ItemService {
         try {
             final String contentPath = fileService.storeFile(item.getContent());
             item.setContentPath(contentPath);
+            fileService.copyToCache(contentPath);
             return itemDao.create(item);
         } catch (Exception e) {
             throw new Exception("Item Creation Failed:", e);

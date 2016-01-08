@@ -38,7 +38,11 @@ public class SearchServiceImpl implements SearchService {
 
             List<SearchResultDto> result = new ArrayList<SearchResultDto>();
 
-            if (searchParam.getTypes().isEmpty() || searchParam.getTypes().contains(COLLECTION)) {
+            if (searchParam.getTypes().isEmpty()) {
+                searchParam.getTypes().addAll(Arrays.asList(IMAGE, DOCUMENT, AUDIO, VIDEO, COLLECTION, MAP));
+            }
+
+            if (searchParam.getTypes().contains(COLLECTION)) {
 
                 Map<String, String> collectionParam = new HashMap<>();
                 collectionParam.put("name", searchParam.getTextToSearch());
@@ -50,8 +54,7 @@ public class SearchServiceImpl implements SearchService {
 
                 mergeIntoResultDtoList(result, collectionListOnName, collectionListOnDesc);
             }
-            if (searchParam.getTypes().isEmpty() ||
-                    !Collections.disjoint(searchParam.getTypes(), Arrays.asList(IMAGE, DOCUMENT, AUDIO, VIDEO, MAP))) {
+            if (!Collections.disjoint(searchParam.getTypes(), Arrays.asList(IMAGE, DOCUMENT, AUDIO, VIDEO, MAP))) {
 
                 for (Item item : itemDao.search(searchParam.toMap())) {
                     SearchResultDto dto = new SearchResultDto();
@@ -70,9 +73,9 @@ public class SearchServiceImpl implements SearchService {
                 searchResultDto.setId(id);
                 id++;
 
-                for (ItemDto itemDto : searchResultDto.getItemDtos()) {
-                    fileService.copyToCache(itemDto.getItemContentPath());
-                }
+//                for (ItemDto itemDto : searchResultDto.getItemDtos()) {
+//                    fileService.copyToCache(itemDto.getItemContentPath());
+//                }
             }
             return result;
         } catch (Exception e) {
