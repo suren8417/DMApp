@@ -40,10 +40,21 @@ public class CollectionServiceImpl implements CollectionService {
     @Override
     public Collection updateCollection(Collection collection) throws Exception {
         try {
-            Set<Item> items = collection.getItems();
+            Set<Item> oldItems = collectionDao.find(Collection.class, collection.getId()).getItems();
+            for(Item oldItem : oldItems) {
+                Iterator<Collection> collectionIterator = oldItem.getCollections().iterator();
+                while (collectionIterator.hasNext()) {
+                    Collection itemCollection = collectionIterator.next();
+                    if(itemCollection.getId().equals(collection.getId())){
+                        collectionIterator.remove();
+                    }
+                }
+                oldItem = itemDao.update(oldItem);
+            }
+            Set<Item> newItems = collection.getItems();
             collection.setItems(null);
             collection = collectionDao.update(collection);
-            for (Item item : items) {
+            for (Item item : newItems) {
                 if (item.getId() == null) {
                     if (!item.getCollections().contains(collection)) {
                         item.getCollections().add(collection);
