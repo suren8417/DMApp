@@ -66,9 +66,9 @@ public class SearchServiceImpl implements SearchService {
                 }
             }
             int id = 0;
-            if(!result.isEmpty()) {
+      /*      if(!result.isEmpty()) {
                 fileService.clearCache();
-            }
+            }*/
             for (SearchResultDto searchResultDto : result) {
                 searchResultDto.setId(id);
                 id++;

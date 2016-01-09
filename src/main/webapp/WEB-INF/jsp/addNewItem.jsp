@@ -2,9 +2,9 @@
    <p>Add New Item</p>
 </div>
 <div  style="margin:0px 170px 30px 170px; background-color: #ffffff; border:1px solid #e7e7e7;height:100%;">
-   <div class="row">
+   <div class="row" ng-controller="newItemController">
       <div  style=" margin-left: 50px; margin-right: 50px;margin-top: 30px;margin-bottom: 30px;">
-         <div class="row" ng-controller="newItemController">
+         <div class="row" >
             <div class="col-md-4">
                   <div>
                     <p style="color:green" ng-show="successMessage"><span class="glyphicon glyphicon-ok"></span> Successfully save</p>
@@ -81,6 +81,7 @@
                        </div>
                       </p>
                   </div>
+
                   <div class="controls">
                      <button class="btn" style=" margin-top:15px;width: 100px;" ng-click="createItem()">Save</button>
                      <button class="btn" style=" margin-top:15px;width: 100px;" ng-click="removeItem()">Remove</button>
@@ -94,6 +95,10 @@
                </div>
             </div>
          </div>
+
+         <div ng-bind-html="myHTML" style=" margin-top: 20px;">
+         </div>
+
       </div>
    </div>
 </div>
