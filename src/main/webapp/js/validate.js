@@ -39,6 +39,7 @@ angular.module('tchaApp').controller('validateItemController', function($scope, 
         }, {
             field: 'itemName',
             displayName: 'ItemName',
+            visible: false,
             width: 200
         }
 

@@ -68,6 +68,7 @@ angular.module('tchaApp').controller('newItemController', function($scope, $http
         }, {
             field: 'itemName',
             displayName: 'ItemName',
+            visible: false,
             width: 200
         }
 
