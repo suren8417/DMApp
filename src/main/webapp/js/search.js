@@ -38,6 +38,7 @@ $scope.search = function(searchText, image, document, audio, video, collection, 
             document: document,
             audio: audio,
             video: video,
+            collection:collection,
             startDate: startDate,
             endDate: endDate
         };
