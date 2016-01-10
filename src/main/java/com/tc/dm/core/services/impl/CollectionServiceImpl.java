@@ -40,7 +40,7 @@ public class CollectionServiceImpl implements CollectionService {
     @Override
     public Collection updateCollection(Collection collection) throws Exception {
         try {
-            Set<Item> oldItems = collectionDao.find(Collection.class, collection.getId()).getItems();
+            Set<Item> oldItems = Collections.synchronizedSet(collectionDao.find(Collection.class, collection.getId()).getItems());
             for(Item oldItem : oldItems) {
                 Iterator<Collection> collectionIterator = oldItem.getCollections().iterator();
                 while (collectionIterator.hasNext()) {
