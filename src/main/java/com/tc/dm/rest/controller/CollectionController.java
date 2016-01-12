@@ -4,10 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tc.dm.core.entities.Item;
 import com.tc.dm.core.services.CollectionService;
 import com.tc.dm.core.services.ItemService;
-import com.tc.dm.rest.dto.CollectionDto;
-import com.tc.dm.rest.dto.CollectionResponseDto;
-import com.tc.dm.rest.dto.ItemDto;
-import com.tc.dm.rest.dto.ItemResponseDto;
+import com.tc.dm.rest.dto.*;
 import org.hibernate.mapping.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -44,7 +41,7 @@ public class CollectionController {
 
         try {
             List<CollectionDto> collectionDtos = CollectionDto.toDtos(collectionService.findAllCollections());
-            List<ItemDto> itemDtos = ItemDto.toItemDtos(itemService.findAllItems());
+            List<ItemDto> itemDtos = ItemDto.toItemDtos(itemService.findItemsByStatus(ItemStatus.APPROVED));
             CollectionResponseDto collectionResponseDto = new CollectionResponseDto();
             collectionResponseDto.setItemDtos(itemDtos);
             collectionResponseDto.setCollectionDto(collectionDtos);
@@ -78,7 +75,7 @@ public class CollectionController {
             }
 
             List<CollectionDto> collectionDtos = CollectionDto.toDtos(collectionService.findAllCollections());
-            List<ItemDto> itemDtos = ItemDto.toItemDtos(itemService.findAllItems());
+            List<ItemDto> itemDtos = ItemDto.toItemDtos(itemService.findItemsByStatus(ItemStatus.APPROVED));
             CollectionResponseDto collectionResponseDto = new CollectionResponseDto();
             collectionResponseDto.setItemDtos(itemDtos);
             collectionResponseDto.setCollectionDto(collectionDtos);
@@ -100,7 +97,7 @@ public class CollectionController {
             collectionService.deleteCollection(collection);
 
             List<CollectionDto> collectionDtos = CollectionDto.toDtos(collectionService.findAllCollections());
-            List<ItemDto> itemDtos = ItemDto.toItemDtos(itemService.findAllItems());
+            List<ItemDto> itemDtos = ItemDto.toItemDtos(itemService.findItemsByStatus(ItemStatus.APPROVED));
             CollectionResponseDto collectionResponseDto = new CollectionResponseDto();
             collectionResponseDto.setItemDtos(itemDtos);
             collectionResponseDto.setCollectionDto(collectionDtos);
