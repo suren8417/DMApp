@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 
 @Transactional(rollbackFor = Exception.class)
 @Service
@@ -38,44 +40,46 @@ public class CollectionServiceImpl implements CollectionService {
     }
 
     @Override
-    public Collection updateCollection(Collection collection) throws Exception {
+    public Collection updateCollection(final Collection collection) throws Exception {
         try {
-            Set<Item> oldItems = Collections.synchronizedSet(collectionDao.find(Collection.class, collection.getId()).getItems());
-            for(Item oldItem : oldItems) {
-                Iterator<Collection> collectionIterator = oldItem.getCollections().iterator();
-                while (collectionIterator.hasNext()) {
-                    Collection itemCollection = collectionIterator.next();
-                    if(itemCollection.getId().equals(collection.getId())){
-                        collectionIterator.remove();
-                    }
-                }
-                oldItem = itemDao.update(oldItem);
+            List<Long> commonItemIds = new ArrayList<>();
+            List<Long> newItemIds = new ArrayList<>();
+            List<Long> removedItemIds = new ArrayList<>();
+
+            for(Item item : collection.getItems()) {
+                    newItemIds.add(item.getId());
             }
-            Set<Item> newItems = collection.getItems();
-            collection.setItems(null);
-            collection = collectionDao.update(collection);
-            for (Item item : newItems) {
-                if (item.getId() == null) {
-                    if (!item.getCollections().contains(collection)) {
-                        item.getCollections().add(collection);
-                    }
-                    item = itemDao.create(item);
+
+            for(Item item : collectionDao.find(Collection.class, collection.getId()).getItems()) {
+                if(!newItemIds.contains(item.getId())) {
+                    removedItemIds.add(item.getId());
                 } else {
-                    item = itemDao.find(Item.class, item.getId());
-                    boolean alreadyAdded = false;
-                    for (Collection itemCollection : item.getCollections()) {
-                        if (itemCollection.getId().equals(collection.getId())) {
-                            alreadyAdded = true;
-                        }
-                    }
-                    if (!alreadyAdded) {
-                        item.getCollections().add(collection);
-                        item = itemDao.update(item);
-                    }
+                    commonItemIds.add(item.getId());
                 }
             }
-            collection = collectionDao.find(Collection.class, collection.getId());
-            return collection;
+
+            Collection daoCollection = collectionDao.find(Collection.class, collection.getId());
+            for(Long itemId : removedItemIds) {
+                Item item = itemDao.find(Item.class, itemId);
+                item.getCollections().remove(daoCollection);
+                itemDao.update(item);
+            }
+
+            for (Long itemId : newItemIds) {
+                if(!commonItemIds.contains(itemId)) {
+                    Item daoItem = itemDao.find(Item.class, itemId);
+                    daoItem.getCollections().add(daoCollection);
+                    itemDao.update(daoItem);
+                }
+            }
+
+            daoCollection = collectionDao.find(Collection.class, collection.getId());
+            daoCollection.setName(collection.getName());
+            daoCollection.setDescription(collection.getDescription());
+            daoCollection = collectionDao.update(daoCollection);
+
+            daoCollection = collectionDao.find(Collection.class, collection.getId());
+            return daoCollection;
         } catch (Exception e) {
             throw new Exception("Collection update Failed", e);
         }
