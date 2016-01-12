@@ -1,4 +1,4 @@
-angular.module('tchaApp').controller('collectionController', function($scope, $http, $timeout) {
+angular.module('tchaApp').controller('collectionController', function($scope, $http, $timeout, $sce) {
 
     $scope.collectionName;
     $scope.collectionDescription;
@@ -115,6 +115,47 @@ angular.module('tchaApp').controller('collectionController', function($scope, $h
                 } else {
                     $scope.selectItems.splice($scope.selectItems.indexOf(row.entity.id), 1);
                 }
+
+                                      var myHTML1 = "";
+                                       if (row.entity.itemsSelectedType === 'Video') {
+
+                                           if (row.entity.itemName.indexOf(".mp4") > -1) {
+                                               myHTML1 = myHTML1 + "<video id="+row.entity.id+" width=\"600\" height=\"340\" controls>" +
+                                                   "  <source src=\"docs/" + row.entity.itemName + "\" type=\"video/mp4\">" +
+                                                   "  Your browser does not support the video tag." +
+                                                   "</video>";
+                                           } else {
+                                               myHTML1 = myHTML1 + "<a href=\"docs/" + row.entity.itemName + "\" download=\""+row.entity.itemName+"\" >Download the Video</a>";
+
+                                           }
+                                       }
+                                       if (row.entity.itemsSelectedType === 'Image') {
+                                           myHTML1 = myHTML1 + "<img src=\"docs/" + row.entity.itemName + "\" width=\"75%\" height=\"600\">";
+                                       }
+                                       if (row.entity.itemsSelectedType === 'Document') {
+                                           if (row.entity.itemName.indexOf(".pdf") > -1) {
+                                               myHTML1 = myHTML1 + "<object data=\"docs/" + row.entity.itemName + "\" type=\"application/pdf\" width=\"100%\" height=\"900px\">" +
+                                                   "<a href=\"docs/" + row.entity.itemName + "\">test.pdf</a>" +
+                                                   "</object>";
+                                           } else {
+                                               myHTML1 = myHTML1 + "<a href=\"docs/" + row.entity.itemName + "\" download=\""+row.entity.itemName+"\">Download the Document</a>";
+
+                                           }
+                                       }
+                                       if (row.entity.itemsSelectedType === 'Audio') {
+                                           if (row.entity.itemName.indexOf(".mp3") > -1) {
+                                               myHTML1 = myHTML1 + "<audio controls id="+row.entity.id+">" +
+                                                   "  <source src=\"docs/" + row.entity.itemName + "\" type=\"audio/mpeg\">" +
+                                                   "Your browser does not support the audio element." +
+                                                   "</audio>";
+                                           } else {
+                                               myHTML1 = myHTML1 + "<a href=\"docs/" + row.entity.itemName + "\" download=\""+row.entity.itemName+"\">Download the Audio</a>";
+
+                                           }
+                                       }
+
+                                   $scope.myHTML = $sce.trustAsHtml(myHTML1);
+
             });
         }
     };
@@ -146,6 +187,7 @@ angular.module('tchaApp').controller('collectionController', function($scope, $h
 
     $scope.clearItem = function() {
 
+        $scope.myHTML = $sce.trustAsHtml("");
         $scope.collectionName = null;
         $scope.collectionDescription = null;
         $scope.collectionId = null;

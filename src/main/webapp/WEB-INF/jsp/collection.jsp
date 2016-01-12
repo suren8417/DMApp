@@ -2,8 +2,8 @@
     <p>Manage Collection</p>
 </div>
 <div  style="margin:0px 170px 0px 170px; background-color: #ffffff; border:1px solid #e7e7e7;height:100%;">
-    <div class="row">
-        <div style=" margin-left: 50px; margin-right: 50px;margin-top: 30px;margin-bottom: 30px;" ng-controller="collectionController">
+    <div class="row" ng-controller="collectionController">
+        <div style=" margin-left: 50px; margin-right: 50px;margin-top: 30px;margin-bottom: 30px;" >
             <div class="row" >
                 <div class="col-md-4">
                    <div>
@@ -51,6 +51,9 @@
                </div>
               </div>
              </div>
+
+               <div ng-bind-html="myHTML" style=" margin-top: 20px;">
+                   </div>
         </div>
     </div>
  </div>

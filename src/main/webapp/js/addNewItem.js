@@ -98,7 +98,7 @@ angular.module('tchaApp').controller('newItemController', function($scope, $http
         if (row.entity.itemsSelectedType === 'Video') {
 
             if (row.entity.itemName.indexOf(".mp4") > -1) {
-                myHTML1 = myHTML1 + "<video id="+row.entity.id+" width=\"600\" height=\"400\" controls>" +
+                myHTML1 = myHTML1 + "<video id="+row.entity.id+" width=\"600\" height=\"340\" controls>" +
                     "  <source src=\"docs/" + row.entity.itemName + "\" type=\"video/mp4\">" +
                     "  Your browser does not support the video tag." +
                     "</video>";
