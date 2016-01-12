@@ -46,6 +46,7 @@ $scope.search = function(searchText, image, document, audio, video, collection, 
     $http.get("/TCHA/searches?searchQuery=" + JSON.stringify(dataObj))
         .success(function(data) {
             $scope.searchData = data.searchResultDtos;
+            $scope.resultCount="About " + data.searchResultDtos.length +" results";
         });
     $scope.searchSummary = true;
     $scope.searchInDetail = false;
