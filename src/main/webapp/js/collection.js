@@ -73,7 +73,7 @@ angular.module('tchaApp').controller('collectionController', function($scope, $h
             gridApi.selection.on.rowSelectionChanged($scope, function(row) {
 
                 $scope.gridApi.selection.clearSelectedRows();
-
+                $scope.selectItems = [];
                 $scope.collectionId = row.entity.id;
                 $scope.collectionName = row.entity.name;
                 $scope.collectionDescription = row.entity.description;
