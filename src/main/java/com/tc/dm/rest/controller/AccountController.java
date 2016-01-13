@@ -90,10 +90,10 @@ public class AccountController {
             LoginDto loginDto = new LoginDto();
             List<PrivilegeDto> privileges = new ArrayList<PrivilegeDto>();
             List<User> users = userService.findByName(userName);
-            User correctUser = null;
-            for (User user : users) {
-                if (user.getPassword().equals(password)) {
-                    correctUser = user;
+            User correctUser = userService.authenticate(userName, password);
+            //for (User user : users) {
+                if (correctUser != null) {
+                    //correctUser = user;
                     loginDto.setUserType(correctUser.getRole().getName());
 
                     PrivilegeDto privilegeDto = new PrivilegeDto();
@@ -125,9 +125,9 @@ public class AccountController {
                         privilegeDto4.setRout("users");
                         privileges.add(privilegeDto4);
                     }
-                    break;
+                    //break;
                 }
-            }
+            //}
 
             loginDto.setPrivilegeTasks(privileges);
             return new ResponseEntity<LoginDto>(loginDto, HttpStatus.OK);
