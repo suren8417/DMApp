@@ -1,10 +1,9 @@
- <div style="margin:65px 0px 0px 170px;" >
-   <p>Search</p>
- </div>
- <div ng-controller="searchController"  style="margin:0px 170px 20px 170px; background-color: #ffffff; border:1px solid #e7e7e7;height:100%;">
-            <div class="row" style="margin-top:40px">
+<div ng-controller="searchController"  style="margin:0px 170px 20px 170px; background-color: #ffffff; border:1px solid #e7e7e7;height:100%;">
+            <div class="row">
+			<legend style="width:94%; margin-left:30px;"><h3><b style="color:#1D1F5A;">Search</b></h3></legend>
                <div class="col-md-2"></div>
                <div class="col-md-8">
+			   
                   <div class="input-group">
                      <input type="text" class="form-control" ng-model="searchText" placeholder="Search for...">
                      <span class="input-group-btn">
@@ -67,9 +66,9 @@
                <div class="col-md-2"></div>
             </div>
 
-            <div style="margin:10px 80px 0px 80px;" ng-show="searchSummary" id="searchSummaryId">
-                <p style=" font-size:14px;margin:0px 0px 10px 0px;" ><span ng-bind="resultCount"></span></p>
-                <table ng-repeat="item in searchData">
+            <div style="margin:10px 80px 10px 80px; border:1px solid #e7e7e7;" ng-show="searchSummary" id="searchSummaryId">
+                <p style=" font-size:14px;margin:10px 10px 10px 10px;" ><span ng-bind="resultCount"></span></p>
+                <table ng-repeat="item in searchData" style="margin:10px 10px 10px 10px;">
                 <tr style="margin:0px 0px 5px 0px;">
                     <td>
                         <span ng-if="item.type ==='Video'"><span class="glyphicon glyphicon-film" style="margin-right: 10px;"></span></span>
@@ -86,11 +85,16 @@
             </div>
 
 
-            <div style="margin:20px 80px 10px 80px;" ng-show="searchInDetail" ng-bind-html="myHTML" >
+            <div style="margin:20px 80px 10px 80px; border:1px solid #e7e7e7;" ng-show="searchInDetail" ng-bind-html="myHTML" >
 
             </div>
 
               <div class="controls" ng-show="searchInDetail" style="margin-left: 75px;margin-bottom: 25px;">
                 <button class="btn" style=" margin-top:15px;width: 100px;" ng-click="backToSearchSummary()">Back</button>
               </div>
+			  
+			  
+			  
  </div>
+ 
+ <img src="images/Badge.png" width="10%" style="margin-left:170px;"/>

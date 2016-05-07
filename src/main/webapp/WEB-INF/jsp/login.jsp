@@ -1,41 +1,47 @@
-<div style="margin:65px 0px 0px 170px;">
-    <p>User Login</p>
-</div>
-<div style="margin:0px 170px 0px 170px; background-color: #ffffff; border:1px solid #e7e7e7;height:100%;">
+<div style="margin:150px 170px 0px 170px;"> 
 
-    <div class="row">
-        <div class="container" style=" margin-left: 50px;margin-top: 30px;margin-bottom: 30px;">
-            <div class="row" ng-controller="LoginController">
+<center><img src="images/Tri_Logo.png" width="30%"/></center>
 
-                <div class="col-md-4">
-                    <div class="controls">
-                        <p style="color:red" ng-show="loginError"><span class="glyphicon glyphicon-exclamation-sign"></span>Invalid Username or Password</p>
-                    </div>
-                    <div>
-                        <p>Username</p>
-                        <div class="controls">
-                            <input type="text" id="username" name="username" ng-model="username" placeholder="" class="form-control" maxlength="10">
-                        </div>
-                    </div>
-
-                    <div style="margin-top: 5px;">
-                        <p>Password</p>
-                        <div class="controls">
-                            <input type="password" id="password" name="password" ng-model="password" placeholder="" class="form-control" maxlength="10">
-                        </div>
-                    </div>
-
-
-                    <div class="controls">
-                        <button class="btn" style=" margin-top:15px; width: 100px;" ng-click="login(username, password)">Login</button>
-
-                    </div>
-
+    <div class="row" style="margin:20px 0px 0px 0px;">
+        
+            <div ng-controller="LoginController">
+			
+				
+				
+                <div class="col-md-4 col-md-offset-4">
+				
+				
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+							<h3 class="panel-title">User Login</h3>
+						</div>
+						<div class="panel-body">
+							<div class="controls">
+								<p style="color:red" ng-show="loginError"><span class="glyphicon glyphicon-exclamation-sign"></span> Invalid Username or Password</p>
+							</div>
+							
+							<div class="input-group controls">
+							  <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></span>
+							  <input type="text" id="username" name="username" ng-model="username" placeholder="Username" class="form-control" maxlength="10">
+							</div>
+							
+							<div class="input-group controls" style="margin-top: 20px;">
+							  <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span></span>
+							  <input type="password" id="password" name="password" ng-model="password" placeholder="Password" class="form-control" maxlength="10">
+							</div>
+							
+							<div class="controls">
+								<button class="btn" style=" margin-top:15px; width: 100px;" ng-click="login(username, password)">Login</button>
+							</div>
+						</div>
+					</div>
+				
                 </div>
-                <div class="col-md-6" style="margin-left: 100px;">
-                    <img src="images/trinityCollegeKandy.jpg" width="300" height="150" align="right">
-                </div>
+				
             </div>
-        </div>
+        
     </div>
+	
+<center><img src="images/Badge.png" width="30%"/></center>
+	
 </div>

@@ -1,8 +1,6 @@
-<div  style="margin:65px 0px 0px 170px;">
-   <p>Add New Item</p>
-</div>
 <div  style="margin:0px 170px 30px 170px; background-color: #ffffff; border:1px solid #e7e7e7;height:100%;">
    <div class="row" ng-controller="newItemController">
+   <legend style="width:94%; margin-left:30px;"><h3><b style="color:#1D1F5A;">Add New Item</b></h3></legend>
       <div  style=" margin-left: 50px; margin-right: 50px;margin-top: 30px;margin-bottom: 30px;">
          <div class="row" >
             <div class="col-md-4">
@@ -75,7 +73,14 @@
                   <div>
                     <p>Select Item</p>
                        <div class="controls">
-                         <input type="file" file-model="uploadItem"/>
+						   <div style="position:relative;"> 
+								<a class='btn btn-primary' href='javascript:;'>
+								Choose File...
+									<input type="file" file-model="uploadItem" style='position:absolute;z-index:2;top:0;left:0;filter: alpha(opacity=0);-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";opacity:0;background-color:transparent;color:transparent;' name="file_source" size="40"  onchange='$("#upload-file-info").html($(this).val());'>
+								</a>
+								&nbsp;
+								<span class='label label-info' id="upload-file-info"></span>
+							</div>
                          </p>
                           <p style="color:red" ng-show="itemFileRequired"><span class="glyphicon glyphicon-exclamation-sign"></span> Please select file for upload</p>
                        </div>
@@ -102,3 +107,5 @@
       </div>
    </div>
 </div>
+
+<img src="images/Badge.png" width="10%" style="margin-left:170px;"/>
