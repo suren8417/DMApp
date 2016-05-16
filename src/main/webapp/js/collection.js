@@ -67,6 +67,7 @@ angular.module('tchaApp').controller('collectionController', function($scope, $h
     $scope.collectionGrid = {
         enableFullRowSelection: true,
         multiSelect: false,
+        enableFiltering: true,
         columnDefs: $scope.columns,
         onRegisterApi: function(gridApi) {
             $scope.gridApi = gridApi;
@@ -106,6 +107,7 @@ angular.module('tchaApp').controller('collectionController', function($scope, $h
 
         enableFullRowSelection: true,
         multiSelect: true,
+        enableFiltering: true,
         columnDefs: $scope.itemGridColumns,
         onRegisterApi: function(gridApi) {
             $scope.gridApi = gridApi;

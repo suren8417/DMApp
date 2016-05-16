@@ -1,16 +1,10 @@
-<div style="margin:150px 170px 0px 170px;"> 
+<div style="margin:150px 100px 0px 100px;">
 
 <center><img src="images/Tri_Logo.png" width="30%"/></center>
 
     <div class="row" style="margin:20px 0px 0px 0px;">
-        
             <div ng-controller="LoginController">
-			
-				
-				
                 <div class="col-md-4 col-md-offset-4">
-				
-				
 					<div class="panel panel-primary">
 						<div class="panel-heading">
 							<h3 class="panel-title">User Login</h3>
@@ -37,11 +31,7 @@
 					</div>
 				
                 </div>
-				
             </div>
-        
     </div>
-	
 <center><img src="images/Badge.png" width="30%"/></center>
-	
 </div>

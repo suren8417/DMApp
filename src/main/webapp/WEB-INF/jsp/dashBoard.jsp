@@ -53,14 +53,14 @@
                   </ul>
                </div> 
             </div>
-			<div class="progress">
-				<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+			<div class="progress" style="width:100%;height:2px;margin-bottom: 0px">
+				<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:100%;height:2px;"></div>
 			</div>
-			<div class="progress">
-				<div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+			<div class="progress" style="width:100%;height:2px;margin-bottom: 0px">
+				<div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:100%;height:2px;"></div>
 			</div>
-			<div class="progress">
-				<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+			<div class="progress" style="width:100%;height:2px;margin-bottom: 0px">
+				<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:100%;height:2px;"></div>
 			</div>
          </nav>
          <div id="main" style="margin-top: 100px;">

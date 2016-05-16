@@ -7,6 +7,7 @@ angular.module('tchaApp').controller('validateItemController', function($scope, 
     $scope.validateItemGridColumns = [{
             field: 'itemsSelectedType',
             displayName: 'Type',
+         headerCellClass: $scope.highlightFilteredHeader,
             width: 100
         }, {
             field: 'status',
@@ -63,6 +64,7 @@ angular.module('tchaApp').controller('validateItemController', function($scope, 
     $scope.validateItemGrid = {
         enableFullRowSelection: true,
         multiSelect: true,
+        enableFiltering: true,
         columnDefs: $scope.validateItemGridColumns,
         onRegisterApi: function(gridApi) {
             $scope.gridApi = gridApi;
@@ -118,6 +120,7 @@ angular.module('tchaApp').controller('validateItemController', function($scope, 
             });
         }
     };
+
 
     $http.get("/TCHA/validates").success(function(data) {
         $scope.validateItemGrid.data = data.itemDtos;

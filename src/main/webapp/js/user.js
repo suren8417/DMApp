@@ -60,6 +60,7 @@ angular.module('tchaApp').controller('userController', function($scope,$http) {
     $scope.gridOptions = {
         enableFullRowSelection: true,
         multiSelect: false,
+        enableFiltering: true,
         columnDefs: $scope.columns,
         onRegisterApi: function(gridApi) {
             $scope.gridApi = gridApi;

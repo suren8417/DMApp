@@ -36,4 +36,8 @@ body
 
 ::-webkit-scrollbar-corner{
 	background: #100149;
-} 
+}
+
+.ui-grid-filter-input {
+    color: black;
+}

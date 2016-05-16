@@ -1,4 +1,4 @@
-<div ng-controller="searchController"  style="margin:0px 170px 20px 170px; background-color: #ffffff; border:1px solid #e7e7e7;height:100%;">
+<div ng-controller="searchController"  style="margin:0px 100px 20px 100px; background-color: #ffffff; border:1px solid #e7e7e7;height:100%;">
             <div class="row">
 			<legend style="width:94%; margin-left:30px;"><h3><b style="color:#1D1F5A;">Search</b></h3></legend>
                <div class="col-md-2"></div>
@@ -97,4 +97,4 @@
 			  
  </div>
  
- <img src="images/Badge.png" width="10%" style="margin-left:170px;"/>
+ <img src="images/Badge.png" width="10%" style="margin-left:100px;"/>
