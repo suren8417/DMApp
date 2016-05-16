@@ -48,7 +48,7 @@
                      </li>
                   </ul>
                   <ul class="nav navbar-nav navbar-right" style="padding-right: 150px;">
-                     <li><a><span class="glyphicon glyphicon-user" ><span ng-bind="userType" style=" margin-left: 8px;"></span></span></a></li>
+<%--                     <li><span class="glyphicon glyphicon-user" ><span ng-bind="userType" style=" margin-left: 8px;"></span></span></li>--%>
                      <li><a href="#/login" ><span class="glyphicon glyphicon-log-in" ></span> Sign Out</a></li> 
                   </ul>
                </div> 
