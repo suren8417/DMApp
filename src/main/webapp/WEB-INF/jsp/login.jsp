@@ -21,11 +21,11 @@
 							
 							<div class="input-group controls" style="margin-top: 20px;">
 							  <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span></span>
-							  <input type="password" id="password" name="password" ng-model="password" placeholder="Password" class="form-control" maxlength="10">
+							  <input type="password" id="password" name="password" ng-model="password" placeholder="Password" class="form-control" maxlength="10" onkeydown="if (event.keyCode == 13) document.getElementById('loginBtn').click()">
 							</div>
 							
 							<div class="controls">
-								<button class="btn" style=" margin-top:15px; width: 100px;" ng-click="login(username, password)">Login</button>
+								<button class="btn" id="loginBtn" style=" margin-top:15px; width: 100px;" ng-click="login(username, password)">Login</button>
 							</div>
 						</div>
 					</div>

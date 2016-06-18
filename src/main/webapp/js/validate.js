@@ -64,6 +64,8 @@ angular.module('tchaApp').controller('validateItemController', function($scope, 
     $scope.validateItemGrid = {
         enableFullRowSelection: true,
         multiSelect: true,
+        enableSelectAll: false,
+        enableColumnMenus: false,
         enableFiltering: true,
         columnDefs: $scope.validateItemGridColumns,
         onRegisterApi: function(gridApi) {

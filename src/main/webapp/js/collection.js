@@ -68,6 +68,8 @@ angular.module('tchaApp').controller('collectionController', function($scope, $h
         enableFullRowSelection: true,
         multiSelect: false,
         enableFiltering: true,
+        enableSelectAll: false,
+        enableColumnMenus: false,
         columnDefs: $scope.columns,
         onRegisterApi: function(gridApi) {
             $scope.gridApi = gridApi;
@@ -108,6 +110,8 @@ angular.module('tchaApp').controller('collectionController', function($scope, $h
         enableFullRowSelection: true,
         multiSelect: true,
         enableFiltering: true,
+        enableSelectAll: false,
+        enableColumnMenus: false,
         columnDefs: $scope.itemGridColumns,
         onRegisterApi: function(gridApi) {
             $scope.gridApi = gridApi;
