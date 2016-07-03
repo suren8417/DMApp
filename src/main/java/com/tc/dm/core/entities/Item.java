@@ -16,6 +16,9 @@ public class Item {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
 
+    @Column(name = "item_code")
+    private String itemCode;
+
     @Column(name = "type")
     private String type;
 
@@ -34,9 +37,15 @@ public class Item {
     @Column(name = "date_added")
     private Date dateAdded;
 
+    @Column(name = "added_by")
+    private String addedBy;
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "date_validate")
     private Date dateValidated;
+
+    @Column(name = "validated_by")
+    private String validatedBy;
 
     @Column(name = "donor")
     private String donor;
@@ -70,6 +79,14 @@ public class Item {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getItemCode() {
+        return itemCode;
+    }
+
+    public void setItemCode(String itemCode) {
+        this.itemCode = itemCode;
     }
 
     public String getType() {
@@ -115,12 +132,28 @@ public class Item {
         this.dateAdded = dateAdded;
     }
 
+    public String getAddedBy() {
+        return addedBy;
+    }
+
+    public void setAddedBy(String addedBy) {
+        this.addedBy = addedBy;
+    }
+
     public Date getDateValidated() {
         return dateValidated;
     }
 
     public void setDateValidated(Date dateValidated) {
         this.dateValidated = dateValidated;
+    }
+
+    public String getValidatedBy() {
+        return validatedBy;
+    }
+
+    public void setValidatedBy(String validatedBy) {
+        this.validatedBy = validatedBy;
     }
 
     public String getDonor() {
@@ -178,12 +211,15 @@ public class Item {
 
         Item item = (Item) o;
 
+        if (itemCode != null ? !itemCode.equals(item.itemCode) : item.itemCode != null) return false;
         if (type != null ? !type.equals(item.type) : item.type != null) return false;
         if (title != null ? !title.equals(item.title) : item.title != null) return false;
         if (dateOfOrigin != null ? !dateOfOrigin.equals(item.dateOfOrigin) : item.dateOfOrigin != null) return false;
         if (dateAdded != null ? !dateAdded.equals(item.dateAdded) : item.dateAdded != null) return false;
+        if (addedBy != null ? !addedBy.equals(item.addedBy) : item.addedBy != null) return false;
         if (dateValidated != null ? !dateValidated.equals(item.dateValidated) : item.dateValidated != null)
             return false;
+        if (validatedBy != null ? !validatedBy.equals(item.validatedBy) : item.validatedBy != null) return false;
         if (donor != null ? !donor.equals(item.donor) : item.donor != null) return false;
         if (description != null ? !description.equals(item.description) : item.description != null) return false;
         if (keywords != null ? !keywords.equals(item.keywords) : item.keywords != null) return false;
@@ -194,11 +230,14 @@ public class Item {
 
     @Override
     public int hashCode() {
-        int result = type != null ? type.hashCode() : 0;
+        int result = itemCode != null ? itemCode.hashCode() : 0;
+        result = 31 * result + (type != null ? type.hashCode() : 0);
         result = 31 * result + (title != null ? title.hashCode() : 0);
         result = 31 * result + (dateOfOrigin != null ? dateOfOrigin.hashCode() : 0);
         result = 31 * result + (dateAdded != null ? dateAdded.hashCode() : 0);
+        result = 31 * result + (addedBy != null ? addedBy.hashCode() : 0);
         result = 31 * result + (dateValidated != null ? dateValidated.hashCode() : 0);
+        result = 31 * result + (validatedBy != null ? validatedBy.hashCode() : 0);
         result = 31 * result + (donor != null ? donor.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + (keywords != null ? keywords.hashCode() : 0);
@@ -211,11 +250,14 @@ public class Item {
     public String toString() {
         return "Item{" +
                 "id=" + id +
+                ", itemCode='" + itemCode + '\'' +
                 ", type='" + type + '\'' +
                 ", title='" + title + '\'' +
                 ", dateOfOrigin=" + dateOfOrigin +
                 ", dateAdded=" + dateAdded +
+                ", addedBy='" + addedBy + '\'' +
                 ", dateValidated=" + dateValidated +
+                ", validatedBy='" + validatedBy + '\'' +
                 ", donor='" + donor + '\'' +
                 ", description='" + description + '\'' +
                 ", keywords='" + keywords + '\'' +

@@ -1,0 +1,27 @@
+-- phpMyAdmin SQL Dump
+-- version 4.5.1
+-- http://www.phpmyadmin.net
+--
+-- Host: 127.0.0.1
+-- Generation Time: Jul 03, 2016 at 12:52 PM
+-- Server version: 10.1.13-MariaDB
+-- PHP Version: 5.6.21
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `tcdm`
+--
+
+-- --------------------------------------------------------
+ALTER TABLE `item` ADD `ITEM_CODE` VARCHAR(100) NOT NULL AFTER `ID`;
+ALTER TABLE `item` ADD `ADDED_BY` VARCHAR(250) NOT NULL AFTER `DATE_ADDED`;
+ALTER TABLE `item` ADD `VALIDATED_BY` VARCHAR(250) NULL AFTER `DATE_VALIDATE`;
+ALTER TABLE `item` CHANGE `DATE_ADDED` `DATE_ADDED` DATETIME NOT NULL;

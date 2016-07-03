@@ -29,6 +29,7 @@
         <property name="locations">
             <list>
                 <value>classpath:filestore.properties</value>
+                <value>classpath:common.properties</value>
                 <value>classpath:jdbc.properties</value>
             </list>
         </property>

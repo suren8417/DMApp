@@ -1,6 +1,7 @@
 package com.tc.dm.core.dao.impl;
 
 import com.tc.dm.core.dao.GenericDao;
+import org.springframework.util.StringUtils;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -60,10 +61,18 @@ public class GenericDaoJpaImpl<K extends Serializable, E> implements GenericDao<
     }
 
     @Override
-    public List<E> findPage(int startIndex, int pageSize) {
-        String query = "Select t from " + persistentClass.getSimpleName() + " t order by t.id";
+    public List<E> findPage(int startIndex, int pageSize, String order) {
+        order = (!StringUtils.isEmpty(order) && ("asc".equals(order) || "desc".equals(order)))?" ".concat(order):"";
+        String query = "Select t from " + persistentClass.getSimpleName() + " t order by t.id" + order;
         List<E> results = em.createQuery(query).setFirstResult(startIndex).setMaxResults(pageSize).getResultList();
         return (results==null)?new ArrayList<E>():results;
+    }
+
+    @Override
+    public E findLast() {
+        String query = "Select t from " + persistentClass.getSimpleName() + " t order by t.id desc";
+        List<E> results = em.createQuery(query).setMaxResults(1).getResultList();
+        return (results==null)?null:(E)results.get(0);
     }
 
     @Override

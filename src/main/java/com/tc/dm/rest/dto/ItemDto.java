@@ -13,6 +13,7 @@ import static com.tc.dm.rest.dto.ItemStatus.NEW;
 public class ItemDto {
 
     private Long id;
+    private String itemCode;
     private String itemsSelectedType;
     private String itemTitle;
     private String itemDonor;
@@ -22,6 +23,10 @@ public class ItemDto {
     private MultipartFile uploadItem;
     private String status;
     private String itemName;
+    private Date addedDate;
+    private String addedBy;
+    private Date validatedDate;
+    private String validatedBy;
 
     public String getItemContentPath() {
         return itemContentPath;
@@ -98,6 +103,14 @@ public class ItemDto {
         this.id = id;
     }
 
+    public String getItemCode() {
+        return  itemCode;
+    }
+
+    public void setItemCode(String itemCode) {
+        this.itemCode = itemCode;
+    }
+
     public String getStatus() {
         return status;
     }
@@ -114,9 +127,42 @@ public class ItemDto {
         this.itemName = itemName;
     }
 
+    public Date getAddedDate() {
+        return addedDate;
+    }
+
+    public void setAddedDate(Date addedDate) {
+        this.addedDate = addedDate;
+    }
+
+    public String getAddedBy() {
+        return addedBy;
+    }
+
+    public void setAddedBy(String addedBy) {
+        this.addedBy = addedBy;
+    }
+
+    public Date getValidatedDate() {
+        return validatedDate;
+    }
+
+    public void setValidatedDate(Date validatedDate) {
+        this.validatedDate = validatedDate;
+    }
+
+    public String getValidatedBy() {
+        return validatedBy;
+    }
+
+    public void setValidatedBy(String validatedBy) {
+        this.validatedBy = validatedBy;
+    }
+
     public Item toItem() {
         Item item = Item.getInstance();
         item.setId(id);
+        item.setItemCode(itemCode);
         item.setType(ItemType.fromString(itemsSelectedType)==null?null:ItemType.fromString(itemsSelectedType).toString());
         item.setTitle(itemTitle);
         item.setDonor(itemDonor);
@@ -126,6 +172,10 @@ public class ItemDto {
         item.setContent(uploadItem);
         item.setStatus(ItemStatus.fromString(status)==null?null:ItemStatus.fromString(status).toString());
         item.setContentPath(itemContentPath);
+        item.setDateAdded(addedDate);
+        item.setAddedBy(addedBy);
+        item.setDateValidated(validatedDate);
+        item.setValidatedBy(validatedBy);
         return item;
 
     }
@@ -133,6 +183,7 @@ public class ItemDto {
     public static ItemDto toDto(Item item) {
         ItemDto itemDto = new ItemDto();
         itemDto.setId(item.getId());
+        itemDto.setItemCode(item.getItemCode());
         itemDto.setItemTitle(item.getTitle());
         itemDto.setStatus(item.getStatus());
         itemDto.setItemsSelectedType(item.getType());
@@ -142,6 +193,10 @@ public class ItemDto {
         itemDto.setItemStartDate(item.getDateOfOrigin());
         itemDto.setItemName(extractFileName(item.getContentPath()));
         itemDto.setItemContentPath(item.getContentPath());
+        itemDto.setAddedDate(item.getDateAdded());
+        itemDto.setAddedBy(item.getAddedBy());
+        itemDto.setValidatedDate(item.getDateValidated());
+        itemDto.setValidatedBy(item.getValidatedBy());
         return itemDto;
     }
 

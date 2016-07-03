@@ -7,14 +7,26 @@ import com.tc.dm.core.services.ItemService;
 import com.tc.dm.rest.dto.ItemStatus;
 import com.tc.dm.rest.dto.SearchParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
+import java.lang.reflect.Field;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Transactional(rollbackFor = Exception.class)
 @Service
 public class ItemServiceImpl implements ItemService {
+
+    @Value("${recent.addition.item.count}")
+    private String recentAdditionItemCount;
+
+    @Value("${item.code.template}")
+    private String itemCodeTemplate;
 
     @Autowired
     ItemDaoImpl itemDao;
@@ -22,12 +34,23 @@ public class ItemServiceImpl implements ItemService {
     @Autowired
     FileService fileService;
 
+    public int getRecentAdditionItemCount() throws NumberFormatException {
+        return Integer.parseInt(this.recentAdditionItemCount);
+    }
+
+    public String getItemCodeTemplate() {
+        return StringUtils.isEmpty(this.itemCodeTemplate)?"ITEM_${id}_${dateAdded}":this.itemCodeTemplate;
+    }
+
     @Override
     public Item createItem(Item item) throws Exception {
         try {
             final String contentPath = fileService.storeFile(item.getContent());
             item.setContentPath(contentPath);
             fileService.copyToCache(contentPath);
+            item.setDateAdded(new Date());
+            item.setAddedBy("admin");
+            item.setItemCode("ITEM_"+ UUID.randomUUID()); //generateItemCode(item));
             return itemDao.create(item);
         } catch (Exception e) {
             throw new Exception("Item Creation Failed:", e);
@@ -98,7 +121,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public List<Item> findPageOfItems(int pageIndex, int pageSize, boolean withContent) {
-        List<Item> items = itemDao.findPage(pageIndex * pageSize - pageSize, pageSize);
+        List<Item> items = itemDao.findPage(pageIndex * pageSize - pageSize, pageSize, null);
         return items;
     }
 
@@ -106,5 +129,45 @@ public class ItemServiceImpl implements ItemService {
     public List<Item> searchItems(SearchParam searchParam) {
         List<Item> items = itemDao.search(searchParam.toMap());
         return items;
+    }
+
+    @Override
+    public List<Item> findRecentAdditions(int noOfItems) {
+        return itemDao.findPage(0, getRecentAdditionItemCount(), "desc");
+    }
+
+    @Override
+    public String generateItemCode(Item item) throws Exception {
+        StringBuilder itemCode = new StringBuilder();
+        String[] codes = this.getItemCodeTemplate().split("_");
+        for (String code : codes) {
+            if (code.startsWith("${")) {
+                itemCode.append(processToken(code, item));
+            }else{
+                itemCode.append(code);
+            }
+        }
+        return itemCode.toString();
+    }
+
+    private String processToken(String code, Item item) throws Exception {
+        SimpleDateFormat sdf = new SimpleDateFormat("ddMMyyyyHHmmss");
+        String processedCode = null;
+        try {
+            code = code.substring(2, code.length()-1);
+            Field field = item.getClass().getDeclaredField(code);
+            field.setAccessible(true);
+            Object value = field.get(item);
+            if(null == value) {
+                throw new Exception("ItemCode Template contains property:"+code+" with null");
+            } else if(field.getType().isAssignableFrom(String.class)){
+                processedCode = String.valueOf(value).toUpperCase();
+            } else if(field.getType().isAssignableFrom(Date.class)){
+                processedCode = sdf.format((Date)value);
+            }
+        } catch (NoSuchFieldException e) {
+            throw new Exception("ItemCode Template contains invalid property name:"+this.getItemCodeTemplate(), e);
+        }
+        return processedCode;
     }
 }
