@@ -16,7 +16,6 @@ import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 @Transactional(rollbackFor = Exception.class)
 @Service
@@ -27,6 +26,9 @@ public class ItemServiceImpl implements ItemService {
 
     @Value("${item.code.template}")
     private String itemCodeTemplate;
+
+    @Value("${item.code.date.format}")
+    private String itemCodeDateFormat;
 
     @Autowired
     ItemDaoImpl itemDao;
@@ -39,7 +41,11 @@ public class ItemServiceImpl implements ItemService {
     }
 
     public String getItemCodeTemplate() {
-        return StringUtils.isEmpty(this.itemCodeTemplate)?"ITEM_${id}_${dateAdded}":this.itemCodeTemplate;
+        return StringUtils.isEmpty(this.itemCodeTemplate)?"ITEM_$[id]":this.itemCodeTemplate;
+    }
+
+    public String getItemCodeDateFormat() {
+        return StringUtils.isEmpty(this.itemCodeDateFormat)?"ddMMyyyyHHmmss":this.itemCodeDateFormat;
     }
 
     @Override
@@ -48,9 +54,7 @@ public class ItemServiceImpl implements ItemService {
             final String contentPath = fileService.storeFile(item.getContent());
             item.setContentPath(contentPath);
             fileService.copyToCache(contentPath);
-            item.setDateAdded(new Date());
-            item.setAddedBy("admin");
-            item.setItemCode("ITEM_"+ UUID.randomUUID()); //generateItemCode(item));
+            item.setItemCode(generateItemCode(item));
             return itemDao.create(item);
         } catch (Exception e) {
             throw new Exception("Item Creation Failed:", e);
@@ -141,33 +145,45 @@ public class ItemServiceImpl implements ItemService {
         StringBuilder itemCode = new StringBuilder();
         String[] codes = this.getItemCodeTemplate().split("_");
         for (String code : codes) {
-            if (code.startsWith("${")) {
+            if (code.startsWith("$[")) {
                 itemCode.append(processToken(code, item));
             }else{
                 itemCode.append(code);
             }
+            itemCode.append("_");
         }
-        return itemCode.toString();
+        return itemCode.toString().substring(0, itemCode.length()-1);
     }
 
     private String processToken(String code, Item item) throws Exception {
-        SimpleDateFormat sdf = new SimpleDateFormat("ddMMyyyyHHmmss");
+        SimpleDateFormat sdf = new SimpleDateFormat(getItemCodeDateFormat());
         String processedCode = null;
         try {
             code = code.substring(2, code.length()-1);
             Field field = item.getClass().getDeclaredField(code);
             field.setAccessible(true);
             Object value = field.get(item);
+
+            if("id".equals(code) && value==null) {
+                value = getNextItemId();
+            }
+
             if(null == value) {
                 throw new Exception("ItemCode Template contains property:"+code+" with null");
             } else if(field.getType().isAssignableFrom(String.class)){
                 processedCode = String.valueOf(value).toUpperCase();
             } else if(field.getType().isAssignableFrom(Date.class)){
                 processedCode = sdf.format((Date)value);
+            } else if(field.getType().isAssignableFrom(Long.class)){
+                processedCode = String.valueOf(value);
             }
         } catch (NoSuchFieldException e) {
             throw new Exception("ItemCode Template contains invalid property name:"+this.getItemCodeTemplate(), e);
         }
         return processedCode;
+    }
+
+    private Long getNextItemId() {
+        return itemDao.findLast().getId()+1;
     }
 }

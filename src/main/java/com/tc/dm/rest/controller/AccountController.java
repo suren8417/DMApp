@@ -85,7 +85,9 @@ public class AccountController {
     }
 
     @RequestMapping(value = "/account", method = RequestMethod.GET)
-    public ResponseEntity<LoginDto> getAccount(@RequestParam("userName") String userName, @RequestParam("password") String password) {
+    public ResponseEntity<LoginDto> getAccount(HttpServletRequest request,
+                                               @RequestParam("userName") String userName,
+                                               @RequestParam("password") String password) {
         try {
             LoginDto loginDto = new LoginDto();
             List<PrivilegeDto> privileges = new ArrayList<PrivilegeDto>();
@@ -126,6 +128,7 @@ public class AccountController {
                         privileges.add(privilegeDto4);
                     }
                     //break;
+                    request.getSession().setAttribute("currentUser", correctUser.getName());
                 }
             //}
 

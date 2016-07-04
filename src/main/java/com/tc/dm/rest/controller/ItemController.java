@@ -3,6 +3,7 @@ package com.tc.dm.rest.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tc.dm.core.entities.Item;
 import com.tc.dm.core.services.ItemService;
+import com.tc.dm.core.util.CommonUtil;
 import com.tc.dm.rest.dto.ItemDto;
 import com.tc.dm.rest.dto.ItemResponseDto;
 import com.tc.dm.rest.dto.ItemStatus;
@@ -15,11 +16,13 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -37,7 +40,9 @@ public class ItemController {
     }
 
     @RequestMapping(value = "/item", method = RequestMethod.POST)
-    public ResponseEntity addItem(@RequestParam("file") MultipartFile file, @RequestParam("itemDto") String itemDtoString) {
+    public ResponseEntity addItem(HttpServletRequest request,
+                                  @RequestParam("file") MultipartFile file,
+                                  @RequestParam("itemDto") String itemDtoString) {
 
         ItemResponseDto itemResponseDto = new ItemResponseDto();
         if (!file.isEmpty()) {
@@ -49,7 +54,10 @@ public class ItemController {
                     itemDto.setStatus(ItemStatus.EDITED.toString());
                     itemService.updateItem(itemDto.toItem());
                 } else {
+                    Object currentUser = request.getSession().getAttribute("currentUser");
                     itemDto.setStatus(ItemStatus.NEW.toString());
+                    itemDto.setAddedBy(CommonUtil.isNullOrEmpty(currentUser)?"ANONYMOUS":String.valueOf(currentUser));
+                    itemDto.setAddedDate(new Date());
                     itemService.createItem(itemDto.toItem());
                 }
 
