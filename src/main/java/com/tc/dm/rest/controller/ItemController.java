@@ -12,14 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -52,6 +46,7 @@ public class ItemController {
                 itemDto.setUploadItem(file);
                 if (itemDto.getId() != null) {
                     itemDto.setStatus(ItemStatus.EDITED.toString());
+                    populateDefaultsDuringEdit(itemDto);
                     itemService.updateItem(itemDto.toItem());
                 } else {
                     Object currentUser = request.getSession().getAttribute("currentUser");
@@ -86,6 +81,7 @@ public class ItemController {
             ItemDto itemDto = mapper.readValue(itemDtoString, ItemDto.class);
             itemDto.setStatus(ItemStatus.EDITED.toString());
             if (itemDto.getId() != null) {
+                populateDefaultsDuringEdit(itemDto);
                 itemService.updateItem(itemDto.toItem());
             }
             List<ItemDto> itemDtos = itemDto.toItemDtos(itemService.findItemsByStatus(ItemStatus.NEW, ItemStatus.EDITED, ItemStatus.PENDING));
@@ -185,5 +181,14 @@ public class ItemController {
 
     }
 
+    private void populateDefaultsDuringEdit(ItemDto itemDto) throws Exception {
+        Item item = itemService.findItemById(itemDto.getId());
+        itemDto.setAddedBy(item.getAddedBy());
+        itemDto.setAddedDate(item.getDateAdded());
+        itemDto.setItemCode(item.getItemCode());
+        if(CommonUtil.isNullOrEmpty(itemDto.getItemContentPath())) {
+            itemDto.setItemContentPath(item.getContentPath());
+        }
+    }
 
 }
