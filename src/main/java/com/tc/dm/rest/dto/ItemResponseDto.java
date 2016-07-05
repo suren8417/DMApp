@@ -10,6 +10,7 @@ public class ItemResponseDto {
     private String status;
     private String message;
     private List<ItemDto> itemDtos;
+    private List<CollectionDto> collectionDtos;
 
     public String getStatus() {
         return status;
@@ -33,5 +34,13 @@ public class ItemResponseDto {
 
     public void setItemDtos(List<ItemDto> itemDtos) {
         this.itemDtos = itemDtos;
+    }
+
+    public List<CollectionDto> getCollectionDtos() {
+        return collectionDtos;
+    }
+
+    public void setCollectionDtos(List<CollectionDto> collectionDtos) {
+        this.collectionDtos = collectionDtos;
     }
 }

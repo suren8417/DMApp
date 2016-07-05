@@ -1,5 +1,6 @@
 package com.tc.dm.rest.dto;
 
+import com.tc.dm.core.entities.Collection;
 import com.tc.dm.core.entities.Item;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -27,6 +28,7 @@ public class ItemDto {
     private String addedBy;
     private Date validatedDate;
     private String validatedBy;
+    private List<Long> selectedCollection = new ArrayList<>();
 
     public String getItemContentPath() {
         return itemContentPath;
@@ -70,6 +72,9 @@ public class ItemDto {
         return uploadItem;
     }
 
+    public List<Long> getSelectedCollection() {
+        return selectedCollection;
+    }
 
     public void setItemsSelectedType(String itemsSelectedType) {
         this.itemsSelectedType = itemsSelectedType;
@@ -159,6 +164,10 @@ public class ItemDto {
         this.validatedBy = validatedBy;
     }
 
+    public void setSelectedCollection(List<Long> selectedCollection) {
+        this.selectedCollection = selectedCollection;
+    }
+
     public Item toItem() {
         Item item = Item.getInstance();
         item.setId(id);
@@ -197,6 +206,12 @@ public class ItemDto {
         itemDto.setAddedBy(item.getAddedBy());
         itemDto.setValidatedDate(item.getDateValidated());
         itemDto.setValidatedBy(item.getValidatedBy());
+        item.getCollections();
+  /*      for(Collection collection : item.getCollections()){
+               itemDto.getSelectedCollection().add(collection.getId());
+        }*/
+        itemDto.getSelectedCollection().add(Long.parseLong("7"));
+        itemDto.getSelectedCollection().add(Long.parseLong("8"));
         return itemDto;
     }
 

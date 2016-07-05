@@ -33,6 +33,35 @@ angular.module('tchaApp').controller('newItemController', function($scope, $http
         value: 'Video'
     }];
 
+    $scope.collectionGridColumns = [{
+        field: 'name',
+        displayName: 'Collection Name',
+        width: 260
+    }, {
+        field: 'description',
+        displayName: 'Collection Description',
+        width: 400
+    }, {
+        field: 'id',
+        displayName: 'Id',
+        visible: false
+    }
+    ];
+
+    $scope.collectionGrid = {
+        enableFullRowSelection: true,
+        multiSelect: true,
+        enableFiltering: true,
+        enableSelectAll: false,
+        enableColumnMenus: false,
+        columnDefs: $scope.collectionGridColumns,
+        onRegisterApi: function(gridApi) {
+            $scope.collectionGridApi = gridApi;
+            gridApi.selection.on.rowSelectionChanged($scope, function(row) {
+            });
+        }
+    };
+
     $scope.itemGridColumns = [{
             field: 'itemsSelectedType',
             displayName: 'Type',
@@ -76,6 +105,8 @@ angular.module('tchaApp').controller('newItemController', function($scope, $http
 
     $http.get("/TCHA/items").success(function(data) {
         $scope.itemGrid.data = data.itemDtos;
+        $scope.collectionGrid.data = data.collectionDtos;
+
     });
 
     $scope.itemGrid = {
@@ -96,6 +127,17 @@ angular.module('tchaApp').controller('newItemController', function($scope, $http
                 $scope.itemStartDate = row.entity.itemStartDate;
                 $scope.id = row.entity.id;
                 $scope.uploadItem = null;
+
+                var selectedCollections = row.entity.selectedCollection;
+                var index = 0;
+                angular.forEach(selectedCollections, function(selectedCollectionId) {
+                    angular.forEach($scope.collectionGrid.data, function(collection) {
+                        if (collection.id === selectedCollectionId) {
+                            $scope.collectionGridApi.selection.selectRow($scope.collectionGrid.data[index]);
+                        }
+                    });
+                    index++;
+                });
 
         var myHTML1 = "";
         if (row.entity.itemsSelectedType === 'Video') {
@@ -159,6 +201,9 @@ angular.module('tchaApp').controller('newItemController', function($scope, $http
         $scope.itemStartDate = null;
         $scope.uploadItem = null;
         $scope.id = null;
+
+        $scope.gridApi.selection.clearSelectedRows();
+        $scope.collectionGridApi.selection.clearSelectedRows();
 
         $scope.itemTypeRequired=false;
         $scope.itemTitleRequired=false;
@@ -232,6 +277,15 @@ angular.module('tchaApp').controller('newItemController', function($scope, $http
     $scope.createItem = function() {
      $scope.deleteMessage=false;
       if(validateForm()){
+
+          var selectedCollection = [];
+          var selectedAddRows = $scope.collectionGridApi.selection.getSelectedRows();
+          if (selectedAddRows != null) {
+              angular.forEach(selectedAddRows, function (selectedAddRow) {
+                  selectedCollection.push(selectedAddRow.id)
+              });
+          }
+
         var dataObj = {
             id: $scope.id,
             itemsSelectedType: $scope.itemsSelectedType,
@@ -239,7 +293,8 @@ angular.module('tchaApp').controller('newItemController', function($scope, $http
             itemDonor: $scope.itemDonor,
             itemDescription: $scope.itemDescription,
             itemKeyWords: $scope.itemKeyWords,
-            itemStartDate: $scope.itemStartDate
+            itemStartDate: $scope.itemStartDate,
+            selectedCollection:selectedCollection
         };
         var fd = new FormData();
         fd.append('itemDto', JSON.stringify(dataObj));
@@ -253,6 +308,7 @@ angular.module('tchaApp').controller('newItemController', function($scope, $http
             });
             res.success(function(data, status, headers, config) {
                 $scope.itemGrid.data = data.itemDtos;
+                $scope.collectionGrid.data = data.collectionDtos;
                 $scope.successMessage=true;
                 $scope.clearItem();
             });
@@ -268,6 +324,7 @@ angular.module('tchaApp').controller('newItemController', function($scope, $http
             });
             res.success(function(data, status, headers, config) {
                 $scope.itemGrid.data = data.itemDtos;
+                $scope.collectionGrid.data = data.collectionDtos;
                 $scope.successMessage=true;
                 $scope.clearItem();
             });
@@ -285,6 +342,7 @@ angular.module('tchaApp').controller('newItemController', function($scope, $http
             var res = $http.delete("/TCHA/items/item?deleteItem=" + $scope.id);
             res.success(function(data, status, headers, config) {
                 $scope.itemGrid.data = data.itemDtos;
+                $scope.collectionGrid.data = data.collectionDtos;
                  $scope.deleteMessage=true;
                  $scope.clearItem();
             });

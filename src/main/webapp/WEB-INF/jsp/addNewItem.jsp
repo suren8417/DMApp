@@ -5,8 +5,8 @@
          <div class="row" >
             <div class="col-md-4">
                   <div>
-                    <p style="color:green" ng-show="successMessage"><span class="glyphicon glyphicon-ok"></span> Successfully save</p>
-                    <p style="color:green" ng-show="deleteMessage"><span class="glyphicon glyphicon-ok"></span> Successfully remove</p>
+                    <p style="color:green;font-size: 25px;" ng-show="successMessage"><span class="glyphicon glyphicon-ok"></span> Successfully save</p>
+                    <p style="color:green;font-size: 25px;" ng-show="deleteMessage"><span class="glyphicon glyphicon-ok"></span> Successfully remove</p>
                   </div>
                   <div>
                      <p>Item Type</p>
@@ -86,21 +86,27 @@
                        </div>
                       </p>
                   </div>
-
-                  <div class="controls">
-                     <button class="btn" style=" margin-top:15px;width: 100px;" ng-click="createItem()">Save</button>
-                     <button class="btn" style=" margin-top:15px;width: 100px;" ng-click="removeItem()">Remove</button>
-                     <button class="btn" style=" margin-top:15px;width: 100px;" ng-click="formClear()">Clear</button>
-                  </div>
-
             </div>
             <div class="col-md-8">
-               <div style=" width: 100%; height:625px;margin-top: 25px;">
-                  <div id="grid1" ui-grid="itemGrid" ui-grid-selection class="grid" style="height: 625px;" ></div>
-               </div>
+                <div style=" width: 100%; height:575px;margin-top: 25px;">
+                    <div id="grid2" ui-grid="collectionGrid" ui-grid-selection class="grid" style="height: 575px;" ></div>
+                </div>
             </div>
          </div>
-
+          <div class="row">
+            <div class="col-md-12">
+                <div style=" width: 100%;margin-top: 25px;">
+                    <div id="grid1" ui-grid="itemGrid" ui-grid-selection class="grid" style="height: 400px;" ></div>
+                </div>
+            </div>
+          </div>
+          <div class="row">
+              <div class="controls">
+                  <button class="btn" style=" margin-top:15px;width: 100px;" ng-click="createItem()">Save</button>
+                  <button class="btn" style=" margin-top:15px;width: 100px;" ng-click="removeItem()">Remove</button>
+                  <button class="btn" style=" margin-top:15px;width: 100px;" ng-click="formClear()">Clear</button>
+              </div>
+          </div>
          <div ng-bind-html="myHTML" style=" margin-top: 20px;">
          </div>
 
