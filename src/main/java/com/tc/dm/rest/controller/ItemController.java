@@ -2,12 +2,10 @@ package com.tc.dm.rest.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tc.dm.core.entities.Item;
+import com.tc.dm.core.services.CollectionService;
 import com.tc.dm.core.services.ItemService;
 import com.tc.dm.core.util.CommonUtil;
-import com.tc.dm.rest.dto.ItemDto;
-import com.tc.dm.rest.dto.ItemResponseDto;
-import com.tc.dm.rest.dto.ItemStatus;
-import com.tc.dm.rest.dto.UserDto;
+import com.tc.dm.rest.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,9 +31,11 @@ import java.util.List;
 public class ItemController {
 
     private ItemService itemService;
+    private CollectionService collectionService;
 
     @Autowired
-    public ItemController(ItemService itemService) {
+    public ItemController(ItemService itemService,CollectionService collectionService) {
+        this.collectionService = collectionService;
         this.itemService = itemService;
     }
 
@@ -62,7 +62,9 @@ public class ItemController {
                 }
 
                 List<ItemDto> itemDtos = itemDto.toItemDtos(itemService.findItemsByStatus(ItemStatus.NEW, ItemStatus.EDITED, ItemStatus.PENDING));
+                List<CollectionDto> collectionDtos = CollectionDto.toDtos(collectionService.findAllCollections());
                 itemResponseDto.setItemDtos(itemDtos);
+                itemResponseDto.setCollectionDtos(collectionDtos);
                 itemResponseDto.setStatus("OK");
                 return new ResponseEntity(itemResponseDto, HttpStatus.OK);
             } catch (Exception e) {
@@ -87,7 +89,9 @@ public class ItemController {
                 itemService.updateItem(itemDto.toItem());
             }
             List<ItemDto> itemDtos = itemDto.toItemDtos(itemService.findItemsByStatus(ItemStatus.NEW, ItemStatus.EDITED, ItemStatus.PENDING));
+            List<CollectionDto> collectionDtos = CollectionDto.toDtos(collectionService.findAllCollections());
             itemResponseDto.setItemDtos(itemDtos);
+            itemResponseDto.setCollectionDtos(collectionDtos);
             itemResponseDto.setStatus("OK");
             return new ResponseEntity(itemResponseDto, HttpStatus.OK);
         } catch (Exception e) {
@@ -150,8 +154,10 @@ public class ItemController {
         try {
             ItemDto userDto = new ItemDto();
             List<ItemDto> itemDtos = userDto.toItemDtos(itemService.findItemsByStatus(ItemStatus.NEW, ItemStatus.EDITED, ItemStatus.PENDING));
+            List<CollectionDto> collectionDtos = CollectionDto.toDtos(collectionService.findAllCollections());
             ItemResponseDto itemResponseDto = new ItemResponseDto();
             itemResponseDto.setItemDtos(itemDtos);
+            itemResponseDto.setCollectionDtos(collectionDtos);
             itemResponseDto.setStatus("OK");
             return new ResponseEntity(itemResponseDto, HttpStatus.OK);
         } catch (Exception exception) {

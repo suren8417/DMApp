@@ -5,9 +5,9 @@
             <div class="row" >
                 <div class="col-md-12">
                       <div>
-                           <p style="color:green" ng-show="successMessage"><span class="glyphicon glyphicon-ok"></span> Successfully validate</p>
-                           <p style="color:green" ng-show="rejectMessage"><span class="glyphicon glyphicon-ok"></span> Successfully rejected</p>
-                           <p style="color:red" ng-show="itemRequired"><span class="glyphicon glyphicon-exclamation-sign"></span> Please select items</p>
+                           <p style="color:green;font-size: 25px;" ng-show="successMessage"><span class="glyphicon glyphicon-ok"></span> Successfully validate</p>
+                           <p style="color:green;font-size: 25px;" ng-show="rejectMessage"><span class="glyphicon glyphicon-ok"></span> Successfully rejected</p>
+                           <p style="color:red;font-size: 25px;" ng-show="itemRequired"><span class="glyphicon glyphicon-exclamation-sign"></span> Please select items</p>
                        </div>
                         <div>
                             <p>Please select items for validation</p>

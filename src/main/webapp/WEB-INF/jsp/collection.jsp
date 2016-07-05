@@ -5,8 +5,8 @@
             <div class="row" >
                 <div class="col-md-4">
                    <div>
-                    <p style="color:green" ng-show="successMessage"><span class="glyphicon glyphicon-ok"></span> Successfully save</p>
-                    <p style="color:green" ng-show="deleteMessage"><span class="glyphicon glyphicon-ok"></span> Successfully remove</p>
+                    <p style="color:green;font-size: 25px;" ng-show="successMessage"><span class="glyphicon glyphicon-ok"></span> Successfully save</p>
+                    <p style="color:green;font-size: 25px;" ng-show="deleteMessage"><span class="glyphicon glyphicon-ok"></span> Successfully remove</p>
                    </div>
                         <div>
                             <p>Name</p>
