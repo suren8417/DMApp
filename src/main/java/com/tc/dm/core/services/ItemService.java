@@ -24,7 +24,7 @@ public interface ItemService {
 
     public List<Item> searchItems(SearchParam searchParam);
 
-    public List<Item> findRecentAdditions(int noOfItems);
+    public List<Item> findRecentAdditions();
 
     public String generateItemCode(Item item) throws Exception;
 }

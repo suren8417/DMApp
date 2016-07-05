@@ -136,7 +136,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public List<Item> findRecentAdditions(int noOfItems) {
+    public List<Item> findRecentAdditions() {
         return itemDao.findPage(0, getRecentAdditionItemCount(), "desc");
     }
 
@@ -184,6 +184,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     private Long getNextItemId() {
-        return itemDao.findLast().getId()+1;
+        Item last = itemDao.findLast();
+        return ((null==last)?0:last.getId())+1;
     }
 }
