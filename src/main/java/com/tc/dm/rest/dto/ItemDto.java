@@ -73,6 +73,9 @@ public class ItemDto {
     }
 
     public List<Long> getSelectedCollection() {
+        if(this.selectedCollection == null) {
+            this.selectedCollection = new ArrayList<>();
+        }
         return selectedCollection;
     }
 
@@ -185,6 +188,10 @@ public class ItemDto {
         item.setAddedBy(addedBy);
         item.setDateValidated(validatedDate);
         item.setValidatedBy(validatedBy);
+        for(Long collectionId : getSelectedCollection()) {
+            Collection collection = Collection.getInstance(collectionId, null, null);
+            item.getCollections().add(collection);
+        }
         return item;
 
     }
@@ -207,11 +214,9 @@ public class ItemDto {
         itemDto.setValidatedDate(item.getDateValidated());
         itemDto.setValidatedBy(item.getValidatedBy());
         item.getCollections();
-  /*      for(Collection collection : item.getCollections()){
+        for(Collection collection : item.getCollections()){
                itemDto.getSelectedCollection().add(collection.getId());
-        }*/
-        itemDto.getSelectedCollection().add(Long.parseLong("7"));
-        itemDto.getSelectedCollection().add(Long.parseLong("8"));
+        }
         return itemDto;
     }
 
