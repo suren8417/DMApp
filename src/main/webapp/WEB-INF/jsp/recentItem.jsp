@@ -3,6 +3,9 @@
         <legend style="width:94%; margin-left:30px;"><h3><b style="color:#1D1F5A;">Recent Items</b></h3></legend>
         <div style=" margin-left: 50px;margin-right: 50px;margin-top: 30px;margin-bottom: 30px;">
             <div class="row" >
+                <div style="margin:20px 80px 10px 80px; border:1px solid #e7e7e7;" ng-bind-html="myHTML" >
+
+                </div>
             </div>
         </div>
     </div>

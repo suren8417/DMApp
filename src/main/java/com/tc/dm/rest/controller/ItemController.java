@@ -144,6 +144,22 @@ public class ItemController {
 
     }
 
+    @RequestMapping(value = "/recentItem",method = RequestMethod.GET)
+    public ResponseEntity getRecentItems() {
+
+        try {
+            ItemDto userDto = new ItemDto();
+            List<ItemDto> itemDtos = userDto.toItemDtos(itemService.findRecentAdditions());
+            ItemResponseDto itemResponseDto = new ItemResponseDto();
+            itemResponseDto.setItemDtos(itemDtos);
+            itemResponseDto.setStatus("OK");
+            return new ResponseEntity(itemResponseDto, HttpStatus.OK);
+        } catch (Exception exception) {
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
+
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity getItems() {
 
