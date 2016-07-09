@@ -33,6 +33,17 @@ angular.module('tchaApp',[
              templateUrl: '/TCHA/validate',
         })
 
+        .when('/deleteItem', {
+            controller: 'deleteItemController',
+            templateUrl: '/TCHA/deleteItem',
+        })
+
+
+        .when('/recentItem', {
+            controller: 'recentItemController',
+            templateUrl: '/TCHA/recentItem',
+        })
+
         .when('/search', {
             controller: 'searchController',
             templateUrl: '/TCHA/search',

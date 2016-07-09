@@ -110,17 +110,27 @@ public class AccountController {
                         privileges.add(privilegeDto1);
 
                         PrivilegeDto privilegeDto2 = new PrivilegeDto();
-                        privilegeDto2.setDisplayText("Manage Collection");
+                        privilegeDto2.setDisplayText("Manage Collections");
                         privilegeDto2.setRout("manageCollection");
                         privileges.add(privilegeDto2);
+
+                        PrivilegeDto privilegeDto5 = new PrivilegeDto();
+                        privilegeDto5.setDisplayText("Recent Items");
+                        privilegeDto5.setRout("recentItem");
+                        privileges.add(privilegeDto5);
                     }
                     if ("Administrator".equals(correctUser.getRole().getName()) | "Curator".equals(correctUser.getRole().getName())) {
                         PrivilegeDto privilegeDto3 = new PrivilegeDto();
-                        privilegeDto3.setDisplayText("Validate Item");
+                        privilegeDto3.setDisplayText("Validate Items");
                         privilegeDto3.setRout("validateItem");
                         privileges.add(privilegeDto3);
                     }
                     if ("Administrator".equals(correctUser.getRole().getName())) {
+
+                        PrivilegeDto privilegeDto6 = new PrivilegeDto();
+                        privilegeDto6.setDisplayText("Delete Items");
+                        privilegeDto6.setRout("deleteItem");
+                        privileges.add(privilegeDto6);
 
                         PrivilegeDto privilegeDto4 = new PrivilegeDto();
                         privilegeDto4.setDisplayText("Users");

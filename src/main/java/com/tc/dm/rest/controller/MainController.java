@@ -45,4 +45,15 @@ public class MainController {
     public String validate() {
         return "validate";
     }
+
+    @RequestMapping(value = "/recentItem", method = RequestMethod.GET)
+    public String recentItem() {
+        return "recentItem";
+    }
+
+    @RequestMapping(value = "/deleteItem", method = RequestMethod.GET)
+    public String deleteItem() {
+        return "deleteItem";
+    }
+
 }

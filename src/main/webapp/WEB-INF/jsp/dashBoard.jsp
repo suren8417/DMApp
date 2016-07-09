@@ -23,6 +23,8 @@
       <script src="js/addNewItem.js"></script>
       <script src="js/collection.js"></script>
       <script src="js/validate.js"></script>
+      <script src="js/recentItem.js"></script>
+      <script src="js/deleteItem.js"></script>
    </head>
 
    <body> 
@@ -48,7 +50,7 @@
                      </li>
                   </ul>
                   <ul class="nav navbar-nav navbar-right" style="padding-right: 150px;">
-<%--                     <li><span class="glyphicon glyphicon-user" ><span ng-bind="userType" style=" margin-left: 8px;"></span></span></li>--%>
+                     <li><span class="glyphicon glyphicon-user" style="padding-top: 15px"><span ng-bind="userType" style=" margin-left: 8px;"></span></span ></li>
                      <li><a href="#/login" ><span class="glyphicon glyphicon-log-in" ></span> Sign Out</a></li> 
                   </ul>
                </div> 
