@@ -1,6 +1,8 @@
 package com.tc.dm.core.services.impl;
 
+import com.tc.dm.core.dao.impl.CollectionDaoImpl;
 import com.tc.dm.core.dao.impl.ItemDaoImpl;
+import com.tc.dm.core.entities.Collection;
 import com.tc.dm.core.entities.Item;
 import com.tc.dm.core.services.FileService;
 import com.tc.dm.core.services.ItemService;
@@ -15,7 +17,9 @@ import org.springframework.util.StringUtils;
 import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Transactional(rollbackFor = Exception.class)
 @Service
@@ -32,6 +36,9 @@ public class ItemServiceImpl implements ItemService {
 
     @Autowired
     ItemDaoImpl itemDao;
+
+    @Autowired
+    CollectionDaoImpl collectionDao;
 
     @Autowired
     FileService fileService;
@@ -55,6 +62,7 @@ public class ItemServiceImpl implements ItemService {
             item.setContentPath(contentPath);
             fileService.copyToCache(contentPath);
             item.setItemCode(generateItemCode(item));
+            rePopulateCollections(item);
             return itemDao.create(item);
         } catch (Exception e) {
             throw new Exception("Item Creation Failed:", e);
@@ -70,6 +78,7 @@ public class ItemServiceImpl implements ItemService {
                 contentPath = fileService.storeFile(item.getContent());
             }
             item.setContentPath(contentPath);
+            rePopulateCollections(item);
             item = itemDao.update(item);
             return item;
         } catch (Exception e) {
@@ -186,5 +195,18 @@ public class ItemServiceImpl implements ItemService {
     private Long getNextItemId() {
         Item last = itemDao.findLast();
         return ((null==last)?0:last.getId())+1;
+    }
+
+    private void rePopulateCollections(Item item){
+        Set<Collection> collections = new HashSet<>();
+        for(Collection collection : item.getCollections()) {
+            if(null == collection.getId()) {
+                collections.add(collection);
+            } else {
+                collections.add(collectionDao.find(Collection.class, collection.getId()));
+            }
+        }
+        item.getCollections().clear();
+        item.getCollections().addAll(collections);
     }
 }
