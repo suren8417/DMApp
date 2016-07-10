@@ -4,7 +4,7 @@
 angular.module('tchaApp').controller('recentItemController', function($scope, $http, $timeout, $sce) {
 
     $http.get("/TCHA/items/recentItem").success(function(data) {
-
+        $scope.myHTML = $sce.trustAsHtml("");
            var myHTML1 = "";
            var  items = data.itemDtos;
 
