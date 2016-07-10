@@ -115,7 +115,7 @@ public class AccountController {
                         privileges.add(privilegeDto2);
 
                         PrivilegeDto privilegeDto5 = new PrivilegeDto();
-                        privilegeDto5.setDisplayText("Recent Items");
+                        privilegeDto5.setDisplayText("Recent Addition");
                         privilegeDto5.setRout("recentItem");
                         privileges.add(privilegeDto5);
                     }

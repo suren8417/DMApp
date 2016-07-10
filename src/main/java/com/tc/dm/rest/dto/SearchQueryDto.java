@@ -15,6 +15,8 @@ public class SearchQueryDto {
     private String collection;
     private Date startDate;
     private Date endDate;
+    private Date addedStartDate;
+    private Date addedEndDate;
 
     public String getSearchText() {
         return searchText;
@@ -48,6 +50,14 @@ public class SearchQueryDto {
         return collection;
     }
 
+    public Date getAddedStartDate() {
+        return addedStartDate;
+    }
+
+    public Date getAddedEndDate() {
+        return addedEndDate;
+    }
+
     public void setSearchText(String searchText) {
         this.searchText = searchText;
     }
@@ -55,7 +65,6 @@ public class SearchQueryDto {
     public void setImage(String image) {
         this.image = image;
     }
-
 
     public void setDocument(String document) {
         this.document = document;
@@ -79,5 +88,13 @@ public class SearchQueryDto {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+
+    public void setAddedEndDate(Date addedEndDate) {
+        this.addedEndDate = addedEndDate;
+    }
+
+    public void setAddedStartDate(Date addedStartDate) {
+        this.addedStartDate = addedStartDate;
     }
 }

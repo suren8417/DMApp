@@ -44,9 +44,9 @@
                <div class="col-md-2"></div>
             </div>
             <div class="row" style="margin-bottom:20px">
-               <div class="col-md-2"></div>
                <div class="col-md-1"></div>
-               <div class="col-md-2">
+               <div class="col-md-2"><p style="margin-top: 10px;text-align: right;">Date of origin</p></div>
+               <div class="col-md-3">
                       <p class="input-group">
                         <input id="2322" onkeydown="return false" max-date="dtmax" show-button-bar="false" type="text" class="form-control" datepicker-popup="{{format}}" ng-model="startDate" is-open="opened"  datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
                         <span class="input-group-btn">
@@ -55,7 +55,7 @@
                       </p>
                </div>
                <div class="col-md-1"></div>
-                  <div class="col-md-2">
+                  <div class="col-md-3">
                       <p class="input-group">
                        <input id="23dd22" onkeydown="return false" max-date="dtmax" show-button-bar="false" type="text" class="form-control" datepicker-popup="{{format}}" ng-model="endDate" is-open="opened1"  datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
                         <span class="input-group-btn">
@@ -64,6 +64,29 @@
                       </p>
                   </div>
                <div class="col-md-2"></div>
+            </div>
+
+            <div class="row" style="margin-bottom:20px">
+                <div class="col-md-1"></div>
+                <div class="col-md-2"><p style="margin-top: 10px;text-align: right;">Date added</p></div>
+                <div class="col-md-3">
+                    <p class="input-group">
+                        <input id="2325" onkeydown="return false" max-date="dtmax" show-button-bar="false" type="text" class="form-control" datepicker-popup="{{format}}" ng-model="addedStartDate" is-open="opened2"  datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+                                <span class="input-group-btn">
+                                  <button type="button" class="btn btn-default" ng-click="toggleOpenDatePicker($event,'opened2')"> From <i class="glyphicon glyphicon-calendar"></i></button>
+                                </span>
+                    </p>
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col-md-3">
+                    <p class="input-group">
+                        <input id="23dd28" onkeydown="return false" max-date="dtmax" show-button-bar="false" type="text" class="form-control" datepicker-popup="{{format}}" ng-model="addedEndDate" is-open="opened3"  datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+                                <span class="input-group-btn">
+                                  <button type="button" class="btn btn-default" ng-click="toggleOpenDatePicker($event,'opened3')"> To <i class="glyphicon glyphicon-calendar"></i></button>
+                                </span>
+                    </p>
+                </div>
+                <div class="col-md-2"></div>
             </div>
 
             <div style="margin:10px 80px 10px 80px; border:1px solid #e7e7e7;" ng-show="searchSummary" id="searchSummaryId">

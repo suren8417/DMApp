@@ -40,7 +40,9 @@ $scope.search = function(searchText, image, document, audio, video, collection, 
             video: video,
             collection:collection,
             startDate: startDate,
-            endDate: endDate
+            endDate: endDate,
+            addedStartDate: addedStartDate,
+            addedEndDate: addedEndDate
         };
 
     $http.get("/TCHA/searches?searchQuery=" + JSON.stringify(dataObj))

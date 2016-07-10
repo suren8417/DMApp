@@ -8,7 +8,7 @@
                     <p style="color:red;font-size: 25px;" ng-show="itemRequired"><span class="glyphicon glyphicon-exclamation-sign"></span> Please select items</p>
                 </div>
                 <div>
-                    <p>Please select items for validation</p>
+                    <p>Please select items to delete</p>
                     <div style=" width: 100%; height: 560px;margin-top:5px;">
                         <div id="grid1" ui-grid="deleteItemGrid" ui-grid-selection class="grid" style="height: 550px;"></div>
                     </div>
