@@ -51,6 +51,10 @@ angular.module('tchaApp').controller('collectionController', function($scope, $h
             displayName: 'DateOfOrigin',
             width: 150
         }, {
+            field: 'itemCode',
+            displayName: 'Item Code',
+            width: 200
+        },{
             field: 'id',
             displayName: 'Id',
             visible: false

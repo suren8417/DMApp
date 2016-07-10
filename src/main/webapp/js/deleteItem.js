@@ -36,6 +36,19 @@ angular.module('tchaApp').controller('deleteItemController', function($scope, $h
         displayName: 'DateOfOrigin',
         width: 150
     }, {
+        field: 'itemCode',
+        displayName: 'Item Code',
+        width: 200
+    },{
+            field: 'addedBy',
+            displayName: 'Added By',
+            width: 100
+    },{
+            field: 'validatedBy',
+            displayName: 'Validated By',
+            width: 100
+      }
+    ,{
         field: 'id',
         displayName: 'Id',
         visible: false

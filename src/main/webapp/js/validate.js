@@ -34,6 +34,14 @@ angular.module('tchaApp').controller('validateItemController', function($scope, 
             displayName: 'DateOfOrigin',
             width: 150
         }, {
+            field: 'itemCode',
+            displayName: 'Item Code',
+            width: 200
+        }, {
+            field: 'addedBy',
+            displayName: 'Added By',
+            width: 100
+        },{
             field: 'id',
             displayName: 'Id',
             visible: false
