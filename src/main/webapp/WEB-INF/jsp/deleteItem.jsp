@@ -4,14 +4,14 @@
         <div class="row" >
             <div class="col-md-12">
                 <div>
-                    <p style="color:green;font-size: 25px;" ng-show="deleteMessage"><span class="glyphicon glyphicon-ok"></span> Successfully Deleted</p>
-                    <p style="color:red;font-size: 25px;" ng-show="itemRequired"><span class="glyphicon glyphicon-exclamation-sign"></span> Please select items</p>
-                </div>
-                <div>
                     <p>Please select items to delete</p>
                     <div style=" width: 100%; height: 560px;margin-top:5px;">
                         <div id="grid1" ui-grid="deleteItemGrid" ui-grid-selection class="grid" style="height: 550px;"></div>
                     </div>
+                </div>
+                <div>
+                    <p style="color:green;font-size: 25px;" ng-show="deleteMessage"><span class="glyphicon glyphicon-ok"></span> Successfully Deleted</p>
+                    <p style="color:red;font-size: 25px;" ng-show="itemRequired"><span class="glyphicon glyphicon-exclamation-sign"></span> Please select items</p>
                 </div>
                 <div class="controls">
                     <button class="btn" style=" margin-top:15px;width: 100px;" ng-click="deleteItem()">Delete</button>

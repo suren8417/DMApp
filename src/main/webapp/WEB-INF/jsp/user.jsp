@@ -4,10 +4,7 @@
         <div class="container" style=" margin-left: 50px;margin-top: 30px;margin-bottom: 30px;">
             <div class="row" ng-controller="userController">
                 <div class="col-md-5">
-                     <div>
-                       <p style="color:green;font-size: 25px;" ng-show="successMessage"><span class="glyphicon glyphicon-ok"></span> Successfully save</p>
-                        <p style="color:green;font-size: 25px;" ng-show="deleteMessage"><span class="glyphicon glyphicon-ok"></span> Successfully remove</p>
-                    </div>
+
                   <form name="userForm">
                         <div>
                             <p>Username</p>
@@ -46,6 +43,10 @@
                                  <p style="color:red" ng-show="roleRequired"><span class="glyphicon glyphicon-exclamation-sign"></span> Please select role</p>
                             </div>
                         </div>
+                      <div>
+                          <p style="color:green;font-size: 25px;" ng-show="successMessage"><span class="glyphicon glyphicon-ok"></span> Successfully save</p>
+                          <p style="color:green;font-size: 25px;" ng-show="deleteMessage"><span class="glyphicon glyphicon-ok"></span> Successfully remove</p>
+                      </div>
                         <div class="controls">
                             <button class="btn" style=" margin-top:15px;width: 100px;" ng-click="createOrUpdateUser()">Save</button>
                             <button class="btn" style=" margin-top:15px;width: 100px;" ng-click="removeUser()">Remove</button>

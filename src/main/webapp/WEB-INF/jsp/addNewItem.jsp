@@ -4,10 +4,7 @@
       <div  style=" margin-left: 50px; margin-right: 50px;margin-top: 30px;margin-bottom: 30px;">
          <div class="row" >
             <div class="col-md-4">
-                  <div>
-                    <p style="color:green;font-size: 25px;" ng-show="successMessage"><span class="glyphicon glyphicon-ok"></span> Successfully save</p>
-                    <p style="color:green;font-size: 25px;" ng-show="deleteMessage"><span class="glyphicon glyphicon-ok"></span> Successfully remove</p>
-                  </div>
+
                   <div>
                      <p>Item Type</p>
                      <div class="controls">
@@ -101,6 +98,10 @@
             </div>
           </div>
           <div class="row">
+              <div>
+                  <p style="color:green;font-size: 25px;" ng-show="successMessage"><span class="glyphicon glyphicon-ok"></span> Successfully save</p>
+                  <p style="color:green;font-size: 25px;" ng-show="deleteMessage"><span class="glyphicon glyphicon-ok"></span> Successfully remove</p>
+              </div>
               <div class="controls">
                   <button class="btn" style=" margin-top:15px;width: 100px;" ng-click="createItem()">Save</button>
                   <button class="btn" style=" margin-top:15px;width: 100px;" ng-click="removeItem()">Remove</button>
