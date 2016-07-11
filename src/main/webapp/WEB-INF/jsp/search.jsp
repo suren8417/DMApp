@@ -7,7 +7,7 @@
                   <div class="input-group">
                      <input type="text" class="form-control" ng-model="searchText" placeholder="Search for..." onkeydown="if (event.keyCode == 13) document.getElementById('idSearchbtn').click()">
                      <span class="input-group-btn">
-                     <button class="btn btn-default" id="idSearchbtn" type="button" ng-click="search(searchText,image,document,audio,video,collection,startDate,endDate)">search <span class="glyphicon glyphicon-search"></span></button>
+                     <button class="btn btn-default" id="idSearchbtn" type="button" ng-click="search(searchText,image,document,audio,video,collection,startDate,endDate, addedStartDate, addedEndDate)">search <span class="glyphicon glyphicon-search"></span></button>
                      </span>
                   </div>
                </div>

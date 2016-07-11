@@ -72,7 +72,7 @@ public class GenericDaoJpaImpl<K extends Serializable, E> implements GenericDao<
     public E findLast() {
         String query = "Select t from " + persistentClass.getSimpleName() + " t order by t.id desc";
         List<E> results = em.createQuery(query).setMaxResults(1).getResultList();
-        return (results==null)?null:(E)results.get(0);
+        return (results==null || results.isEmpty())?null:(E)results.get(0);
     }
 
     @Override

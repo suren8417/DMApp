@@ -23,6 +23,8 @@ public class SearchParam {
     private List<ItemStatus> status;
     private Date dateOfOriginFrom;
     private Date dateOfOriginTo;
+    private Date dateAddedFrom;
+    private Date dateAddedTo;
     private boolean caseSensitive;
     private boolean matchWhole;
 
@@ -88,6 +90,22 @@ public class SearchParam {
         this.dateOfOriginTo = dateOfOriginTo;
     }
 
+    public Date getDateAddedFrom() {
+        return dateAddedFrom;
+    }
+
+    public void setDateAddedFrom(Date dateAddedFrom) {
+        this.dateAddedFrom = dateAddedFrom;
+    }
+
+    public Date getDateAddedTo() {
+        return dateAddedTo;
+    }
+
+    public void setDateAddedTo(Date dateAddedTo) {
+        this.dateAddedTo = dateAddedTo;
+    }
+
     public boolean isCaseSensitive() {
         return caseSensitive;
     }
@@ -111,6 +129,8 @@ public class SearchParam {
         params.put("status", isNullOrEmpty(status)?null:StringUtils.collectionToDelimitedString(this.status, ","));
         params.put("dateOfOriginFrom", isNullOrEmpty(dateOfOriginFrom)?null:sdf.format(dateOfOriginFrom));
         params.put("dateOfOriginTo", isNullOrEmpty(dateOfOriginTo)?null:sdf.format(dateOfOriginTo));
+        params.put("dateAddedFrom", isNullOrEmpty(dateAddedFrom)?null:sdf.format(dateAddedFrom));
+        params.put("dateAddedTo", isNullOrEmpty(dateAddedTo)?null:sdf.format(dateAddedTo));
         params.put("caseSensitive", String.valueOf(caseSensitive));
         params.put("matchWhole", String.valueOf(matchWhole));
         return params;
@@ -140,6 +160,18 @@ public class SearchParam {
         try {
             searchParam.setDateOfOriginTo(isNullOrEmpty(params.get("dateOfOriginTo"))?null:sdf.parse(
                     params.get("dateOfOriginTo")));
+        } catch (ParseException e) {
+            //Default null will be set
+        }
+        try {
+            searchParam.setDateAddedFrom(isNullOrEmpty(params.get("dateAddedFrom"))?null:sdf.parse(
+                    params.get("dateAddedFrom")));
+        } catch (ParseException e) {
+            //Default null will be set
+        }
+        try {
+            searchParam.setDateOfOriginTo(isNullOrEmpty(params.get("dateAddedTo"))?null:sdf.parse(
+                    params.get("dateAddedTo")));
         } catch (ParseException e) {
             //Default null will be set
         }

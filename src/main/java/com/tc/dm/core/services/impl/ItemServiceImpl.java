@@ -61,9 +61,11 @@ public class ItemServiceImpl implements ItemService {
             final String contentPath = fileService.storeFile(item.getContent());
             item.setContentPath(contentPath);
             fileService.copyToCache(contentPath);
-            item.setItemCode(generateItemCode(item));
+            //item.setItemCode(generateItemCode(item));
             rePopulateCollections(item);
-            return itemDao.create(item);
+            item = itemDao.create(item);
+            item.setItemCode(generateItemCode(item));
+            return itemDao.update(item);
         } catch (Exception e) {
             throw new Exception("Item Creation Failed:", e);
         }

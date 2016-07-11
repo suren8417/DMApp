@@ -7,6 +7,7 @@ import com.tc.dm.core.entities.Item;
 import com.tc.dm.core.services.FileService;
 import com.tc.dm.core.services.SearchService;
 import com.tc.dm.rest.dto.ItemDto;
+import com.tc.dm.rest.dto.ItemStatus;
 import com.tc.dm.rest.dto.SearchParam;
 import com.tc.dm.rest.dto.SearchResultDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -97,9 +98,19 @@ public class SearchServiceImpl implements SearchService {
                 dto.setTitle(collection.getName());
                 dto.setDescription(collection.getDescription());
                 dto.setType(COLLECTION.toString());
-                dto.setItemDtos(ItemDto.toItemDtos(collection.getItems()));
+                dto.setItemDtos(getApprovdItemDtos(collection));
                 result.add(dto);
             }
         }
+    }
+
+    private List<ItemDto> getApprovdItemDtos(Collection collection) {
+        List<ItemDto> itemDtos = new ArrayList<>();
+        for(Item item : collection.getItems()) {
+            if(ItemStatus.fromString(item.getStatus()).equals(ItemStatus.APPROVED)) {
+                itemDtos.add(ItemDto.toDto(item));
+            }
+        }
+        return itemDtos;
     }
 }

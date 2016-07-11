@@ -47,6 +47,8 @@ public class SearchController {
 
             searchParam.setDateOfOriginFrom(searchQueryDto.getStartDate());
             searchParam.setDateOfOriginTo(searchQueryDto.getEndDate());
+            searchParam.setDateAddedFrom(searchQueryDto.getAddedStartDate());
+            searchParam.setDateAddedTo(searchQueryDto.getAddedEndDate());
             searchParam.setStatus(Arrays.asList(ItemStatus.APPROVED));
 
             List<SearchResultDto> resultDtoList = searchService.search(searchParam);

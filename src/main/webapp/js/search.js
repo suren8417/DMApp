@@ -8,7 +8,7 @@ angular.module('tchaApp').controller('searchController', function($scope,$http,$
  $scope.searchInDetail= false;
  var items =null;
 
-$scope.search = function(searchText, image, document, audio, video, collection, startDate, endDate) {
+$scope.search = function(searchText, image, document, audio, video, collection, startDate, endDate, addedStartDate, addedEndDate) {
 
     $scope.myHTML = $sce.trustAsHtml("");
 

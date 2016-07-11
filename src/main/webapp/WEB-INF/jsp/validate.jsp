@@ -11,7 +11,7 @@
                             </div>
                          </div>
                     <div>
-                        <p style="color:green;font-size: 25px;" ng-show="successMessage"><span class="glyphicon glyphicon-ok"></span> Successfully validate</p>
+                        <p style="color:green;font-size: 25px;" ng-show="successMessage"><span class="glyphicon glyphicon-ok"></span> Successfully validated</p>
                         <p style="color:green;font-size: 25px;" ng-show="rejectMessage"><span class="glyphicon glyphicon-ok"></span> Successfully rejected</p>
                         <p style="color:red;font-size: 25px;" ng-show="itemRequired"><span class="glyphicon glyphicon-exclamation-sign"></span> Please select items</p>
                     </div>

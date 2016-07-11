@@ -48,6 +48,12 @@ public class ItemDaoImpl extends GenericDaoJpaImpl<Long, Item> {
         if(!isNullOrEmpty(searchParam.getDateOfOriginTo())) {
             predicates.add(cb.lessThanOrEqualTo(rootItem.<Date>get("dateOfOrigin"), searchParam.getDateOfOriginTo()));
         }
+        if(!isNullOrEmpty(searchParam.getDateAddedFrom())) {
+            predicates.add(cb.greaterThanOrEqualTo(rootItem.<Date>get("dateAdded"), searchParam.getDateAddedFrom()));
+        }
+        if(!isNullOrEmpty(searchParam.getDateAddedTo())) {
+            predicates.add(cb.lessThanOrEqualTo(rootItem.<Date>get("dateAdded"), searchParam.getDateAddedTo()));
+        }
         cq.where(predicates.toArray(new Predicate[predicates.size()]));
 
         TypedQuery<Item> tq = em.createQuery(cq);

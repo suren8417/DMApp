@@ -39,8 +39,8 @@
                      </div>
                </div>
                  <div>
-                     <p style="color:green;font-size: 25px;" ng-show="successMessage"><span class="glyphicon glyphicon-ok"></span> Successfully save</p>
-                     <p style="color:green;font-size: 25px;" ng-show="deleteMessage"><span class="glyphicon glyphicon-ok"></span> Successfully remove</p>
+                     <p style="color:green;font-size: 25px;" ng-show="successMessage"><span class="glyphicon glyphicon-ok"></span> Successfully saved</p>
+                     <p style="color:green;font-size: 25px;" ng-show="deleteMessage"><span class="glyphicon glyphicon-ok"></span> Successfully removed</p>
                  </div>
                <div class="controls">
                  <button class="btn" style=" margin-top:15px;width: 100px;" ng-click="createAndUpdateCollection()">Save</button>
