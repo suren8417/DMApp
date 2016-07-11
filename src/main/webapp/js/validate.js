@@ -60,9 +60,7 @@ angular.module('tchaApp').controller('validateItemController', function($scope, 
         $scope.successMessage = false;
         $scope.rejectMessage = false;
         $scope.itemRequired = false
-        $http.get("/TCHA/validates").success(function(data) {
-            $scope.validateItemGrid.data = data.itemDtos;
-        });
+        $scope.gridApi.selection.clearSelectedRows();
     }
 
     $scope.clearValidate = function() {

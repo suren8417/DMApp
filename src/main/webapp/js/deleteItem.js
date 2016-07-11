@@ -66,6 +66,7 @@ angular.module('tchaApp').controller('deleteItemController', function($scope, $h
         $scope.myHTML = $sce.trustAsHtml("");
         $scope.deleteMessage = false;
         $scope.itemRequired = false
+        $scope.gridApi.selection.clearSelectedRows();
     }
 
     $scope.clearValidate = function() {
