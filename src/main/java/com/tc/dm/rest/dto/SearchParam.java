@@ -152,26 +152,22 @@ public class SearchParam {
             }
         }
         try {
-            searchParam.setDateOfOriginFrom(isNullOrEmpty(params.get("dateOfOriginFrom"))?null:sdf.parse(
-                    params.get("dateOfOriginFrom")));
+            searchParam.setDateOfOriginFrom(isNullOrEmpty(params.get("dateOfOriginFrom"))?null:sdf.parse(params.get("dateOfOriginFrom")));
         } catch (ParseException e) {
             //Default null will be set
         }
         try {
-            searchParam.setDateOfOriginTo(isNullOrEmpty(params.get("dateOfOriginTo"))?null:sdf.parse(
-                    params.get("dateOfOriginTo")));
+            searchParam.setDateOfOriginTo(isNullOrEmpty(params.get("dateOfOriginTo"))?null:sdf.parse(params.get("dateOfOriginTo")));
         } catch (ParseException e) {
             //Default null will be set
         }
         try {
-            searchParam.setDateAddedFrom(isNullOrEmpty(params.get("dateAddedFrom"))?null:sdf.parse(
-                    params.get("dateAddedFrom")));
+            searchParam.setDateAddedFrom(isNullOrEmpty(params.get("dateAddedFrom"))?null:sdf.parse(params.get("dateAddedFrom")));
         } catch (ParseException e) {
             //Default null will be set
         }
         try {
-            searchParam.setDateOfOriginTo(isNullOrEmpty(params.get("dateAddedTo"))?null:sdf.parse(
-                    params.get("dateAddedTo")));
+            searchParam.setDateAddedTo(isNullOrEmpty(params.get("dateAddedTo"))?null:sdf.parse(params.get("dateAddedTo")));
         } catch (ParseException e) {
             //Default null will be set
         }

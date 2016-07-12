@@ -132,6 +132,7 @@ angular.module('tchaApp').controller('newItemController', function($scope, $http
                 $scope.id = row.entity.id;
                 $scope.uploadItem = null;
 
+                $scope.collectionGridApi.selection.clearSelectedRows();
                 var selectedCollections = row.entity.selectedCollection;
                 var index = 0;
                 angular.forEach(selectedCollections, function(selectedCollectionId) {
@@ -139,8 +140,8 @@ angular.module('tchaApp').controller('newItemController', function($scope, $http
                         if (collection.id === selectedCollectionId) {
                             $scope.collectionGridApi.selection.selectRow($scope.collectionGrid.data[index]);
                         }
+                        index++;
                     });
-                    index++;
                 });
 
         var myHTML1 = "";
