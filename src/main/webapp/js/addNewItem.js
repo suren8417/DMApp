@@ -9,6 +9,7 @@ angular.module('tchaApp').controller('newItemController', function($scope, $http
     $scope.uploadItem;
     $scope.id;
 
+    $scope.showLodaing=false;
     $scope.successMessage=false;
     $scope.deleteMessage=false;
     $scope.itemTypeRequired=false;
@@ -305,6 +306,7 @@ angular.module('tchaApp').controller('newItemController', function($scope, $http
         fd.append('itemDto', JSON.stringify(dataObj));
         if ($scope.uploadItem !== null) {
             fd.append('file', $scope.uploadItem);
+            $scope.showLodaing=true;
             var res = $http.post("/TCHA/items/item", fd, {
                 transformRequest: angular.identity,
                 headers: {
@@ -316,6 +318,7 @@ angular.module('tchaApp').controller('newItemController', function($scope, $http
                 $scope.collectionGrid.data = data.collectionDtos;
                 $scope.successMessage=true;
                 $scope.clearItem();
+                $scope.showLodaing=false;
             });
             res.error(function(data, status, headers, config) {
                 //alert( "failure message: " + JSON.stringify({data: data}));
@@ -332,6 +335,7 @@ angular.module('tchaApp').controller('newItemController', function($scope, $http
                 $scope.collectionGrid.data = data.collectionDtos;
                 $scope.successMessage=true;
                 $scope.clearItem();
+                $scope.showLodaing=false;
             });
             res.error(function(data, status, headers, config) {
                 //alert( "failure message: " + JSON.stringify({data: data}));
