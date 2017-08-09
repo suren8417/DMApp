@@ -1,6 +1,7 @@
 package com.tc.dm.core.entities;
 
 import com.tc.dm.rest.dto.ItemContent;
+import org.hibernate.envers.Audited;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
@@ -10,6 +11,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "item")
+@Audited
 public class Item {
     @Id
     @Column(name = "id")

@@ -1,6 +1,7 @@
 package com.tc.dm.rest.controller;
 
 import com.tc.dm.core.entities.User;
+import com.tc.dm.core.revision.CustomRevisionListener;
 import com.tc.dm.core.services.UserService;
 import com.tc.dm.rest.dto.LoginDto;
 import com.tc.dm.rest.dto.PrivilegeDto;
@@ -139,6 +140,7 @@ public class AccountController {
                     }
                     //break;
                     request.getSession().setAttribute("currentUser", correctUser.getName());
+                    CustomRevisionListener.user = correctUser.getName();
                 }
             //}
 

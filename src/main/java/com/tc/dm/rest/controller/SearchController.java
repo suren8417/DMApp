@@ -1,6 +1,7 @@
 package com.tc.dm.rest.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.tc.dm.core.services.AuditService;
 import com.tc.dm.core.services.SearchService;
 import com.tc.dm.rest.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +22,12 @@ import static com.tc.dm.core.util.CommonUtil.*;
 public class SearchController {
 
     private SearchService searchService;
+    private AuditService auditService;
 
     @Autowired
-    public SearchController(SearchService searchService) {
+    public SearchController(SearchService searchService, AuditService auditService) {
         this.searchService = searchService;
+        this.auditService = auditService;
     }
 
     @RequestMapping(method = RequestMethod.GET)
