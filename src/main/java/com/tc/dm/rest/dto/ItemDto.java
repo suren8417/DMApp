@@ -30,6 +30,8 @@ public class ItemDto {
     private String validatedBy;
     private List<Long> selectedCollection = new ArrayList<>();
 
+    public AuditRevisionDto auditInfo = new AuditRevisionDto();
+
     public String getItemContentPath() {
         return itemContentPath;
     }
@@ -169,6 +171,14 @@ public class ItemDto {
 
     public void setSelectedCollection(List<Long> selectedCollection) {
         this.selectedCollection = selectedCollection;
+    }
+
+    public AuditRevisionDto getAuditInfo() {
+        return auditInfo;
+    }
+
+    public void setAuditInfo(AuditRevisionDto auditInfo) {
+        this.auditInfo = auditInfo;
     }
 
     public Item toItem() {

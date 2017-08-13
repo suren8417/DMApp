@@ -15,6 +15,8 @@ public class CollectionDto {
     private String description;
     private List<ItemDto> itemDtos;
 
+    public AuditRevisionDto auditInfo = new AuditRevisionDto();
+
     public Long getId() {
         return id;
     }
@@ -48,6 +50,14 @@ public class CollectionDto {
 
     public void setItemDtos(List<ItemDto> itemDtos) {
         this.itemDtos = itemDtos;
+    }
+
+    public AuditRevisionDto getAuditInfo() {
+        return auditInfo;
+    }
+
+    public void setAuditInfo(AuditRevisionDto auditInfo) {
+        this.auditInfo = auditInfo;
     }
 
     public Collection toCollection() {

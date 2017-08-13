@@ -16,7 +16,7 @@ public class CommonUtil {
     }
 
     public static String extractFileName(String path) {
-        return path.substring(path.lastIndexOf(File.separator) + 1);
+        return null==path?"":path.substring(path.lastIndexOf(File.separator) + 1);
     }
 
     public static String extractFileExt(String path) {
