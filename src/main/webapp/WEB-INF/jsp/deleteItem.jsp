@@ -11,10 +11,12 @@
                 </div>
                 <div>
                     <p style="color:green;font-size: 25px;" ng-show="deleteMessage"><span class="glyphicon glyphicon-ok"></span> Successfully Deleted</p>
+                    <p style="color:green;font-size: 25px;" ng-show="rectifyMessage"><span class="glyphicon glyphicon-ok"></span> Successfully send for Rectification</p>
                     <p style="color:red;font-size: 25px;" ng-show="itemRequired"><span class="glyphicon glyphicon-exclamation-sign"></span> Please select items</p>
                 </div>
                 <div class="controls">
                     <button class="btn" style=" margin-top:15px;width: 100px;" ng-click="deleteItem()">Delete</button>
+                    <button class="btn" style=" margin-top:15px;width: 100px;" ng-click="rectifyItem()">Rectify</button>
                     <button class="btn" style=" margin-top:15px;width: 100px;" ng-click="formClear()">Clear</button>
                 </div>
 

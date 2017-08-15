@@ -4,6 +4,7 @@
 angular.module('tchaApp').controller('deleteItemController', function($scope, $http, $timeout, $sce) {
 
     $scope.deleteMessage = false;
+    $scope.rectifyMessage = false;
     $scope.selectItems = [];
     $scope.itemRequired = false;
     $scope.deleteItemGridColumns = [{
@@ -65,6 +66,7 @@ angular.module('tchaApp').controller('deleteItemController', function($scope, $h
 
         $scope.myHTML = $sce.trustAsHtml("");
         $scope.deleteMessage = false;
+        $scope.rectifyMessage = false;
         $scope.itemRequired = false
         $scope.gridApi.selection.clearSelectedRows();
     }
@@ -172,6 +174,27 @@ angular.module('tchaApp').controller('deleteItemController', function($scope, $h
             });
         }
     };
-    
+
+    $scope.rectifyItem = function() {
+        $scope.formClear();
+        if (validateForm()) {
+            var fd = new FormData();
+            fd.append('itemArray', JSON.stringify($scope.selectItems));
+            var res = $http.post("/TCHA/validates/rejectItem", fd, {
+                transformRequest: angular.identity,
+                headers: {
+                    'Content-Type': undefined
+                }
+            });
+            res.success(function(data, status, headers, config) {
+                $scope.deleteItemGrid.data = data.itemDtos;;
+                $scope.rectifyMessage = true;;
+                $scope.selectItems = [];
+            });
+            res.error(function(data, status, headers, config) {
+                console.log( "failure message: " + JSON.stringify({data: data}));
+            });
+        }
+    };
 
 });
