@@ -48,10 +48,10 @@ public class AuditServiceImpl implements AuditService {
         return collectionAudits;
     }
 
-    public UserAuditDto getUserAuditInfo(String userName) {
+    public UserAuditDto getUserAuditInfo(String userName, RevisionType revisionType, Date from, Date to) {
         UserAuditDto userAudits = UserAuditDto.getInstance();
-        userAudits.getCollectionDtos().addAll(getCollectionAuditInfo(null, userName, null, null, null));
-        userAudits.getItemDtos().addAll(getItemAuditInfo(null, userName, null, null, null));
+        userAudits.getCollectionDtos().addAll(getCollectionAuditInfo(null, userName, revisionType, from, to));
+        userAudits.getItemDtos().addAll(getItemAuditInfo(null, userName, revisionType, from, to));
         return userAudits;
     }
 

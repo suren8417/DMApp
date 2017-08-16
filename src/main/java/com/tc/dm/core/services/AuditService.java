@@ -15,5 +15,5 @@ public interface AuditService {
 
     List<CollectionDto> getCollectionAuditInfo(Long collectionId, String auditorName, RevisionType revisionType, Date from, Date to);
 
-    UserAuditDto getUserAuditInfo(String userName);
+    UserAuditDto getUserAuditInfo(String userName, RevisionType revisionType, Date from, Date to);
 }

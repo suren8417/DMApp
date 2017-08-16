@@ -136,7 +136,7 @@ public class AccountController {
                         privileges.add(privilegeDto4);
 
                         PrivilegeDto privilegeDto5 = new PrivilegeDto();
-                        privilegeDto5.setDisplayText("Audit Item");
+                        privilegeDto5.setDisplayText("Audit Log");
                         privilegeDto5.setRout("audit");
                         privileges.add(privilegeDto5);
 

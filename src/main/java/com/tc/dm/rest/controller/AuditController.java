@@ -41,7 +41,7 @@ private AuditService auditService;
             ObjectMapper mapper = new ObjectMapper();
             AuditQueryDto auditQueryDto = mapper.readValue(searchQueryString, AuditQueryDto.class);
             if(auditQueryDto.getUserName() != null && auditQueryDto.getUserName() !=""){
-                UserAuditDto  userAuditDto= auditService.getUserAuditInfo(auditQueryDto.getUserName());
+                UserAuditDto  userAuditDto= auditService.getUserAuditInfo(auditQueryDto.getUserName(), null, null, null);
 
                 for(ItemDto itemDto : userAuditDto.getItemDtos()){
                     if(itemDto.getAuditInfo() != null) {
