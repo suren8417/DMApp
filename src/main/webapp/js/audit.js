@@ -4,6 +4,8 @@ angular.module('tchaApp').controller('auditController', function($scope, $http, 
     $scope.collectionName;
     $scope.selectedUser = null;
     $scope.users = [];
+    $scope.items = [];
+    $scope.collections = [];
     $scope.showAuditby = true;
     $scope.showCollectinby = false;
     $http.get("/TCHA/accounts").success(function(data) {
@@ -13,6 +15,20 @@ angular.module('tchaApp').controller('auditController', function($scope, $http, 
         });
     });
 
+
+    $http.get("/TCHA/items/audit").success(function(data) {
+        angular.forEach(data.itemDtos, function(item) {
+            var user ={"label":item.itemTitle,"id":item.id}
+            $scope.items .push(user);
+        });
+    });
+
+    $http.get("/TCHA/collections").success(function(data) {
+        angular.forEach(data.collectionDto, function(collection) {
+            var user ={"label":collection.name,"id":collection.id}
+            $scope.collections .push(user);
+        });
+    });
     $scope.auditItemGridColumns = [
 
         {

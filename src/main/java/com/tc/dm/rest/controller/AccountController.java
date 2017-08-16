@@ -142,6 +142,7 @@ public class AccountController {
 
                     }
                     request.getSession().setAttribute("currentUser", correctUser.getName());
+                    request.getSession().setAttribute("currentUserId", correctUser.getId());
                     CustomRevisionListener.user = correctUser.getName();
                 }
 

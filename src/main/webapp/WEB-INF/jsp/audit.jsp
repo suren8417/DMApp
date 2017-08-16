@@ -29,8 +29,11 @@
                 <div ng-show="!showCollectinby">
                     <div class="col-md-1"><p style="margin-top: 10px;text-align: left;">Item</p></div>
                     <div class="col-md-7">
-                        <input type="text" id="itemName" name="itemName" placeholder="" ng-model="itemName"
-                               class="form-control" maxlength="250">
+                    <%--    <input type="text" id="itemName" name="itemName" placeholder="" ng-model="itemName"
+                               class="form-control" maxlength="250">--%>
+                        <select ng-model="itemName" class="form-control">
+                            <option ng-repeat="item in items" ng-value={{item.id}} >{{item.label}}</option>
+                        </select>
                     </div>
                     <div class="col-md-2">
                         <div class="checkbox">
@@ -41,7 +44,10 @@
                 <div ng-show="showCollectinby">
                     <div class="col-md-1"><p style="margin-top: 10px;text-align: left;">Collection</p></div>
                     <div class="col-md-7">
-                        <input type="text"  placeholder="" ng-model="collectionName" class="form-control" maxlength="250">
+                      <%--  <input type="text"  placeholder="" ng-model="collectionName" class="form-control" maxlength="250">--%>
+                        <select ng-model="collectionName" class="form-control">
+                            <option ng-repeat="collection in collections" ng-value={{collection.id}} >{{collection.label}}</option>
+                        </select>
                     </div>
                     <div class="col-md-2">
                         <div class="checkbox">

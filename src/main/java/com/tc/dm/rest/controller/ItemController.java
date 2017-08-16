@@ -178,6 +178,24 @@ public class ItemController {
 
     }
 
+    @RequestMapping(value = "/audit",method = RequestMethod.GET)
+    public ResponseEntity getItemsforAudit() {
+
+        try {
+            ItemDto userDto = new ItemDto();
+            List<ItemDto> itemDtos = userDto.toItemDtos(itemService.findItemsByStatus(ItemStatus.NEW, ItemStatus.EDITED, ItemStatus.PENDING,ItemStatus.APPROVED));
+            List<CollectionDto> collectionDtos = CollectionDto.toDtos(collectionService.findAllCollections());
+            ItemResponseDto itemResponseDto = new ItemResponseDto();
+            itemResponseDto.setItemDtos(itemDtos);
+            itemResponseDto.setCollectionDtos(collectionDtos);
+            itemResponseDto.setStatus("OK");
+            return new ResponseEntity(itemResponseDto, HttpStatus.OK);
+        } catch (Exception exception) {
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
+
     @RequestMapping(value = "/item", method = RequestMethod.DELETE)
     public ResponseEntity deleteAccount(@RequestParam("deleteItem") Long deleteItemId) {
 
