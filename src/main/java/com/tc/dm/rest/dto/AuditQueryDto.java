@@ -7,14 +7,11 @@ import java.util.Date;
  */
 public class AuditQueryDto {
 
-    private String name;
+    private String item;
+    private String collection;
     private  String userName;
     private Date startDate;
     private Date endDate;
-
-    public String getName() {
-        return name;
-    }
 
     public Date getEndDate() {
         return endDate;
@@ -22,10 +19,6 @@ public class AuditQueryDto {
 
     public Date getStartDate() {
         return startDate;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public void setStartDate(Date startDate) {
@@ -42,5 +35,21 @@ public class AuditQueryDto {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getItem() {
+        return item;
+    }
+
+    public String getCollection() {
+        return collection;
+    }
+
+    public void setItem(String item) {
+        this.item = item;
+    }
+
+    public void setCollection(String collection) {
+        this.collection = collection;
     }
 }

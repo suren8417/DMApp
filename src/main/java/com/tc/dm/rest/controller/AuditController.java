@@ -68,7 +68,16 @@ private AuditService auditService;
                 }
 
 
+            }else{
+
+                if(auditQueryDto.getItem() != null && auditQueryDto.getItem() !=""){
+                    //UserAuditDto  userAuditDto= auditService.getCollectionAuditInfo();
+                }
+                if(auditQueryDto.getCollection() != null && auditQueryDto.getCollection() !=""){
+                    //UserAuditDto  userAuditDto= auditService.getCollectionAuditInfo();
+                }
             }
+
             return new ResponseEntity(auditResponseDtos, HttpStatus.OK);
         } catch (Exception exception) {
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);

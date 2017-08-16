@@ -1,9 +1,11 @@
 angular.module('tchaApp').controller('auditController', function($scope, $http, $timeout, $sce) {
 
     $scope.itemName;
+    $scope.collectionName;
     $scope.selectedUser = null;
     $scope.users = [];
-
+    $scope.showAuditby = true;
+    $scope.showCollectinby = false;
     $http.get("/TCHA/accounts").success(function(data) {
         angular.forEach(data, function(user) {
             var user ={"label":user.name,"id":user.id}
@@ -53,10 +55,30 @@ angular.module('tchaApp').controller('auditController', function($scope, $http, 
         }
     };
 
-    $scope.search = function(itemName,selectedUser,startDate,endDate) {
+    $scope.showByItem = function() {
+        $scope.showAuditby = false;
+    };
+
+    $scope.showByUser = function() {
+        $scope.showAuditby = true;
+    };
+
+    $scope.showByCollection= function() {
+        if($scope.showCollectinby){
+            $scope.showCollectinby = false;
+            $scope.collectionName = null;
+
+        }else{
+            $scope.showCollectinby = true;
+            $scope.itemName = null;
+        }
+    };
+
+    $scope.search = function(itemName,collectionName,selectedUser,startDate,endDate) {
 
         var dataObj = {
-            name: itemName,
+            item: itemName,
+            collection: collectionName,
             userName : selectedUser,
             startDate: startDate,
             endDate: endDate
