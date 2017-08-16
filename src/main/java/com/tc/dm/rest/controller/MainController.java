@@ -56,4 +56,9 @@ public class MainController {
         return "deleteItem";
     }
 
+    @RequestMapping(value = "/audit", method = RequestMethod.GET)
+    public String audit() {
+        return "audit";
+    }
+
 }

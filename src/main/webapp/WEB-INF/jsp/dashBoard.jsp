@@ -25,6 +25,7 @@
       <script src="js/validate.js"></script>
       <script src="js/recentItem.js"></script>
       <script src="js/deleteItem.js"></script>
+      <script src="js/audit.js"></script>
    </head>
 
    <body> 

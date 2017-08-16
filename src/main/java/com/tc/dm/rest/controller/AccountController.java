@@ -94,11 +94,8 @@ public class AccountController {
             List<PrivilegeDto> privileges = new ArrayList<PrivilegeDto>();
             List<User> users = userService.findByName(userName);
             User correctUser = userService.authenticate(userName, password);
-            //for (User user : users) {
                 if (correctUser != null) {
-                    //correctUser = user;
                     loginDto.setUserType(correctUser.getRole().getName());
-
                     PrivilegeDto privilegeDto = new PrivilegeDto();
                     privilegeDto.setDisplayText("Search");
                     privilegeDto.setRout("search");
@@ -137,12 +134,16 @@ public class AccountController {
                         privilegeDto4.setDisplayText("Users");
                         privilegeDto4.setRout("users");
                         privileges.add(privilegeDto4);
+
+                        PrivilegeDto privilegeDto5 = new PrivilegeDto();
+                        privilegeDto5.setDisplayText("Audit Item");
+                        privilegeDto5.setRout("audit");
+                        privileges.add(privilegeDto5);
+
                     }
-                    //break;
                     request.getSession().setAttribute("currentUser", correctUser.getName());
                     CustomRevisionListener.user = correctUser.getName();
                 }
-            //}
 
             loginDto.setPrivilegeTasks(privileges);
             return new ResponseEntity<LoginDto>(loginDto, HttpStatus.OK);

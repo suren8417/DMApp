@@ -37,8 +37,12 @@ angular.module('tchaApp',[
             controller: 'deleteItemController',
             templateUrl: '/TCHA/deleteItem',
         })
-
-
+        
+        .when('/audit', {
+            controller: 'auditController',
+            templateUrl: '/TCHA/audit',
+        })
+        
         .when('/recentItem', {
             controller: 'recentItemController',
             templateUrl: '/TCHA/recentItem',
