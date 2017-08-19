@@ -12,6 +12,7 @@ public class AuditQueryDto {
     private  String userName;
     private Date startDate;
     private Date endDate;
+    private String selectedSearch;
 
     public Date getEndDate() {
         return endDate;
@@ -51,5 +52,13 @@ public class AuditQueryDto {
 
     public void setCollection(String collection) {
         this.collection = collection;
+    }
+
+    public String getSelectedSearch() {
+        return selectedSearch;
+    }
+
+    public void setSelectedSearch(String selectedSearch) {
+        this.selectedSearch = selectedSearch;
     }
 }

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -23,9 +24,9 @@ import java.util.List;
 @RequestMapping("/audits")
 public class AuditController {
 
-DateFormat df = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss aaa");
+    DateFormat df = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss aaa");
 
-private AuditService auditService;
+    private AuditService auditService;
 
     @Autowired
     public AuditController(AuditService auditService) {
@@ -37,51 +38,122 @@ private AuditService auditService;
     public ResponseEntity getItems(@RequestParam("searchQuery") String searchQueryString) {
 
         try {
-            List<AuditResponseDto> auditResponseDtos = new ArrayList<>();
+            AuditResponseDto auditResponseDto = new AuditResponseDto();
             ObjectMapper mapper = new ObjectMapper();
             AuditQueryDto auditQueryDto = mapper.readValue(searchQueryString, AuditQueryDto.class);
-            if(auditQueryDto.getUserName() != null && auditQueryDto.getUserName() !=""){
-                UserAuditDto  userAuditDto= auditService.getUserAuditInfo(auditQueryDto.getUserName(), null, null, null);
 
-                for(ItemDto itemDto : userAuditDto.getItemDtos()){
-                    if(itemDto.getAuditInfo() != null) {
-                        AuditResponseDto auditResponseDto = new AuditResponseDto();
-                        auditResponseDto.setName(itemDto.getItemTitle());
-                        auditResponseDto.setAuditorName(itemDto.getAuditInfo().getAuditorName());;
-                        auditResponseDto.setAuditTime(df.format(itemDto.getAuditInfo().getAuditTime()));
-                        auditResponseDto.setOperation(itemDto.getAuditInfo().getType().toUpperCase());
-                        auditResponseDto.setType("ITEM");
-                        auditResponseDtos.add(auditResponseDto);
-                    }
-                }
+            Long itemId = null;
+            Long collectionId = null;
+            String userName = null;
+            Date startDate = null;
+            Date endDate = null;
 
-                for(CollectionDto collectionDto : userAuditDto.getCollectionDtos()){
-                    if(collectionDto.getAuditInfo() != null) {
-                        AuditResponseDto auditResponseDto = new AuditResponseDto();
-                        auditResponseDto.setName(collectionDto.getName());
-                        auditResponseDto.setAuditorName(collectionDto.getAuditInfo().getAuditorName());
-                        auditResponseDto.setAuditTime(df.format(collectionDto.getAuditInfo().getAuditTime()));
-                        auditResponseDto.setOperation(collectionDto.getAuditInfo().getType().toUpperCase());
-                        auditResponseDto.setType("COLLECTION");
-                        auditResponseDtos.add(auditResponseDto);
-                    }
-                }
-
-
-            }else{
-
-                if(auditQueryDto.getItem() != null && auditQueryDto.getItem() !=""){
-                    //UserAuditDto  userAuditDto= auditService.getCollectionAuditInfo();
-                }
-                if(auditQueryDto.getCollection() != null && auditQueryDto.getCollection() !=""){
-                    //UserAuditDto  userAuditDto= auditService.getCollectionAuditInfo();
-                }
+            if (auditQueryDto.getItem() != null) {
+                itemId = Long.parseLong(auditQueryDto.getItem());
+            }
+            if (auditQueryDto.getCollection() != null) {
+                collectionId = Long.parseLong(auditQueryDto.getCollection());
+            }
+            if (auditQueryDto.getUserName() != null) {
+                userName = auditQueryDto.getUserName();
+            }
+            if (auditQueryDto.getStartDate() != null) {
+                startDate = auditQueryDto.getStartDate();
+            }
+            if (auditQueryDto.getEndDate() != null) {
+                endDate = auditQueryDto.getEndDate();
             }
 
-            return new ResponseEntity(auditResponseDtos, HttpStatus.OK);
+            if ("user".endsWith(auditQueryDto.getSelectedSearch())) {
+                UserAuditDto userAuditDto = auditService.getUserAuditInfo(userName, null, startDate, endDate);
+                auditResponseDto.setAuditItemDtos(arrangeAuditItem(userAuditDto.getItemDtos()));
+                auditResponseDto.setAuditCollectionDtos(arrangeAuditCollection(userAuditDto.getCollectionDtos()));
+                return new ResponseEntity(auditResponseDto, HttpStatus.OK);
+            } else if ("item".endsWith(auditQueryDto.getSelectedSearch())) {
+                List<ItemDto> itemDtos = auditService.getItemAuditInfo(itemId, userName, null, startDate, endDate);
+                auditResponseDto.setAuditItemDtos(arrangeAuditItem(itemDtos));
+                return new ResponseEntity(auditResponseDto, HttpStatus.OK);
+            } else if ("collection".endsWith(auditQueryDto.getSelectedSearch())) {
+                List<CollectionDto> collectionDtos = auditService.getCollectionAuditInfo(collectionId, userName, null, startDate, endDate);
+                auditResponseDto.setAuditCollectionDtos(arrangeAuditCollection(collectionDtos));
+                return new ResponseEntity(auditResponseDto, HttpStatus.OK);
+            }
+            return null;
         } catch (Exception exception) {
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
     }
+
+
+    private List<AuditCollectionDto> arrangeAuditCollection(List<CollectionDto> collectionDtos) {
+
+        List<AuditCollectionDto> auditCollectionDtos = new ArrayList<>();
+        if (collectionDtos != null) {
+            for (CollectionDto collectionDto : collectionDtos) {
+                if (collectionDto.getAuditInfo() != null) {
+                    AuditCollectionDto auditCollectionDto = new AuditCollectionDto();
+                    auditCollectionDto.setName(collectionDto.getName());
+                    auditCollectionDto.setDescription(collectionDto.getDescription());
+                    if (collectionDto.getAuditInfo() != null) {
+                        auditCollectionDto.setAuditorName(collectionDto.getAuditInfo().getAuditorName());
+                        auditCollectionDto.setAuditTime(df.format(collectionDto.getAuditInfo().getAuditTime()));
+                        auditCollectionDto.setOperation(collectionDto.getAuditInfo().getType());
+                    }
+                    auditCollectionDtos.add(auditCollectionDto);
+                }
+            }
+        }
+        return auditCollectionDtos;
+
+    }
+
+
+    private List<AuditItemDto> arrangeAuditItem(List<ItemDto> itemDtos) {
+
+        List<AuditItemDto> auditItemDtos = new ArrayList<>();
+        if (itemDtos != null) {
+            for (ItemDto itemDto : itemDtos) {
+                if (itemDto.getAuditInfo() != null) {
+                    AuditItemDto auditItemDto = new AuditItemDto();
+                    auditItemDto.setItemCode(itemDto.getItemCode());
+                    auditItemDto.setType(itemDto.getItemsSelectedType());
+                    auditItemDto.setTitle(itemDto.getItemTitle());
+                    auditItemDto.setDateAdded(df.format(itemDto.getAddedDate()));
+                    auditItemDto.setAddedBy(itemDto.getAddedBy());
+                    if(itemDto.getValidatedDate() != null) {
+                        auditItemDto.setDateValidated(df.format(itemDto.getValidatedDate()));
+                    }
+                    auditItemDto.setDonor(itemDto.getItemDonor());
+                    auditItemDto.setDescription(itemDto.getItemDescription());
+                    auditItemDto.setKeywords(itemDto.getItemKeyWords());
+                    if (itemDto.getAuditInfo() != null) {
+                        auditItemDto.setAuditorName(itemDto.getAuditInfo().getAuditorName());
+                        auditItemDto.setAuditTime(df.format(itemDto.getAuditInfo().getAuditTime()));
+                        auditItemDto.setOperation(itemDto.getAuditInfo().getType());
+                    }
+                    auditItemDtos.add(auditItemDto);
+                }
+            }
+        }
+        return auditItemDtos;
+    }
 }
+
+
+
+
+                  /*      private String itemCode;
+                        private String type;
+                        private String title;
+                        private String dateOfOrigin;
+                        private String dateAdded;
+                        private String addedBy;
+                        private String dateValidated;
+                        private String validatedBy;
+                        private String donor;
+                        private String description;
+                        private String keywords;
+                        private String auditorName;
+                        private String  auditTime;
+                        private String operation;*/

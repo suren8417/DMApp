@@ -2,12 +2,13 @@ angular.module('tchaApp').controller('auditController', function($scope, $http, 
 
     $scope.itemName;
     $scope.collectionName;
-    $scope.selectedUser = null;
+    $scope.selectedUser;
     $scope.users = [];
     $scope.items = [];
     $scope.collections = [];
-    $scope.showAuditby = true;
-    $scope.showCollectinby = false;
+    $scope.searchBy = "user";
+
+
     $http.get("/TCHA/accounts").success(function(data) {
         angular.forEach(data, function(user) {
             var user ={"label":user.name,"id":user.id}
@@ -32,32 +33,89 @@ angular.module('tchaApp').controller('auditController', function($scope, $http, 
     $scope.auditItemGridColumns = [
 
         {
-            field: 'name',
-            displayName: 'Name',
-            width: 500
+            field: 'itemCode',
+            displayName: 'Item Code',
+            width: 200
 
         },
         {
-            field: 'auditorName',
-            displayName: 'Auditor Name'
-
-        }, {
             field: 'type',
-            displayName: 'Type'
-
-        }
-        , {
-            field: 'auditTime',
-            displayName: 'Audit Time',
+            displayName: 'Type',
             width: 200
 
         }, {
-            field: 'operation',
-            displayName: 'Operation'
+            field: 'title',
+            displayName: 'Title',
+            width: 200
 
+        }
+        , {
+            field: 'dateAdded',
+            displayName: 'Date Added',
+            width: 200
+        }, {
+            field: 'addedBy',
+            displayName: 'Added By',
+            width: 200
+        }, {
+            field: 'dateValidated',
+            displayName: 'Date Validated',
+            width: 200
+        }, {
+            field: 'validatedBy',
+            displayName: 'Validated By',
+            width: 200
+        }, {
+            field: 'donor',
+            displayName: 'Donor',
+            width: 200
+        }, {
+            field: 'description',
+            displayName: 'Description',
+            width: 500
+        }, {
+            field: 'keywords',
+            displayName: 'Key words',
+            width: 500
+        }, {
+            field: 'auditorName',
+            displayName: 'auditorName',
+            width: 200
+        }, {
+            field: 'auditTime',
+            displayName: 'Audit Time',
+            width: 200
+        }, {
+            field: 'operation',
+            displayName: 'Operation',
+            width: 200
         }
     ];
 
+
+    $scope.auditCollectionGridColumns = [
+        {
+            field: 'name',
+            displayName: 'Name',
+            width: 250
+        }, {
+            field: 'description',
+            displayName: 'Description',
+            width: 500
+        }, {
+            field: 'auditorName',
+            displayName: 'auditorName',
+            width: 200
+        }, {
+            field: 'auditTime',
+            displayName: 'Audit Time',
+            width: 200
+        }, {
+            field: 'operation',
+            displayName: 'Operation',
+            width: 200
+        }
+    ];
 
     $scope.auditItemGrid = {
         enableFullRowSelection: true,
@@ -71,31 +129,26 @@ angular.module('tchaApp').controller('auditController', function($scope, $http, 
         }
     };
 
-    $scope.showByItem = function() {
-        $scope.showAuditby = false;
-    };
 
-    $scope.showByUser = function() {
-        $scope.showAuditby = true;
-    };
-
-    $scope.showByCollection= function() {
-        if($scope.showCollectinby){
-            $scope.showCollectinby = false;
-            $scope.collectionName = null;
-
-        }else{
-            $scope.showCollectinby = true;
-            $scope.itemName = null;
+    $scope.auditCollectionGrid = {
+        enableFullRowSelection: true,
+        multiSelect: false,
+        enableFiltering: true,
+        enableSelectAll: false,
+        enableColumnMenus: false,
+        columnDefs: $scope.auditCollectionGridColumns,
+        onRegisterApi: function(gridApi) {
+            $scope.gridApi = gridApi;
         }
     };
 
-    $scope.search = function(itemName,collectionName,selectedUser,startDate,endDate) {
+    $scope.search = function(startDate,endDate) {
 
         var dataObj = {
-            item: itemName,
-            collection: collectionName,
-            userName : selectedUser,
+            item: $scope.itemName,
+            selectedSearch:$scope.searchBy,
+            collection: $scope.collectionName,
+            userName : $scope.selectedUser,
             startDate: startDate,
             endDate: endDate
 
@@ -103,7 +156,8 @@ angular.module('tchaApp').controller('auditController', function($scope, $http, 
 
         $http.get("/TCHA/audits?searchQuery=" + JSON.stringify(dataObj))
             .success(function(data) {
-                $scope.auditItemGrid.data = data;
+                $scope.auditItemGrid.data = data.auditItemDtos;
+                $scope.auditCollectionGrid.data = data.auditCollectionDtos;
             });
 
     };

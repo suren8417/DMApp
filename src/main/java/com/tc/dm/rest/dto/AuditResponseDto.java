@@ -1,55 +1,26 @@
 package com.tc.dm.rest.dto;
 
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 
-/**
- * Created by suren on 16/08/17.
- */
 public class AuditResponseDto {
 
-    private String type;
-    private String operation;
-    private String auditorName;
-    private String  auditTime;
-    private String name;
+    private List<AuditCollectionDto> auditCollectionDtos = new ArrayList<>();
+    private List<AuditItemDto> auditItemDtos = new ArrayList<>();
 
-    public void setType(String type) {
-        this.type = type;
+    public List<AuditCollectionDto> getAuditCollectionDtos() {
+        return auditCollectionDtos;
     }
 
-    public void setAuditorName(String auditorName) {
-        this.auditorName = auditorName;
+    public List<AuditItemDto> getAuditItemDtos() {
+        return auditItemDtos;
     }
 
-    public String getAuditTime() {
-        return auditTime;
+    public void setAuditCollectionDtos(List<AuditCollectionDto> auditCollectionDtos) {
+        this.auditCollectionDtos = auditCollectionDtos;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public void setAuditTime(String auditTime) {
-        this.auditTime = auditTime;
-    }
-
-    public String getAuditorName() {
-        return auditorName;
-    }
-
-    public String getOperation() {
-        return operation;
-    }
-
-    public void setOperation(String operation) {
-        this.operation = operation;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public void setAuditItemDtos(List<AuditItemDto> auditItemDtos) {
+        this.auditItemDtos = auditItemDtos;
     }
 }
