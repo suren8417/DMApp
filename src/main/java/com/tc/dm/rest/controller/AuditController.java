@@ -119,7 +119,9 @@ public class AuditController {
                     auditItemDto.setItemCode(itemDto.getItemCode());
                     auditItemDto.setType(itemDto.getItemsSelectedType());
                     auditItemDto.setTitle(itemDto.getItemTitle());
-                    auditItemDto.setDateAdded(df.format(itemDto.getAddedDate()));
+                    if(itemDto.getAddedDate() != null){
+                        auditItemDto.setDateAdded(df.format(itemDto.getAddedDate()));
+                    }
                     auditItemDto.setAddedBy(itemDto.getAddedBy());
                     if(itemDto.getValidatedDate() != null) {
                         auditItemDto.setDateValidated(df.format(itemDto.getValidatedDate()));
