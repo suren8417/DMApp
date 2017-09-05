@@ -126,7 +126,7 @@ public class AccountController {
                     if ("Administrator".equals(correctUser.getRole().getName())) {
 
                         PrivilegeDto privilegeDto6 = new PrivilegeDto();
-                        privilegeDto6.setDisplayText("Delete Items");
+                        privilegeDto6.setDisplayText("Manage Items");
                         privilegeDto6.setRout("deleteItem");
                         privileges.add(privilegeDto6);
 
