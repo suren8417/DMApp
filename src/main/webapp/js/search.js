@@ -105,7 +105,7 @@ $scope.showSearchInDetail = function(id) {
             "  <p style=\"margin:0px 0px 5px 0px;\"> Donor : " + item.itemDonor + "</p>" +
             "  <p style=\"margin:0px 0px 5px 0px;\">KeyWords : " + item.itemKeyWords + "</p>" +
             "  <p style=\"margin:0px 0px 25px 0px;\">Origin Date : " + item.itemStartDate + "</p>" +
-            "  <p style=\"margin:0px 0px 25px 0px;\">Note : " + item.itemNote + "</p>";
+            "  <div style=\"max-height: 600px; overflow-y: auto;\"><p style=\"margin:10px 10px 25px 0px;\">Note : " + item.itemNote + "</p></div>";
 
         if (item.itemsSelectedType === 'Video') {
 
