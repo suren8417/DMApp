@@ -2,6 +2,7 @@ package com.tc.dm.rest.dto;
 
 import com.tc.dm.core.entities.Collection;
 import com.tc.dm.core.entities.Item;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ public class ItemDto {
     private String itemDonor;
     private String itemDescription;
     private String itemKeyWords;
+    private String itemNote;
     private Date itemStartDate;
     private MultipartFile uploadItem;
     private String status;
@@ -66,6 +68,10 @@ public class ItemDto {
         return itemKeyWords;
     }
 
+    public String getItemNote() {
+        return itemNote;
+    }
+
     public Date getItemStartDate() {
         return itemStartDate;
     }
@@ -99,6 +105,10 @@ public class ItemDto {
 
     public void setItemKeyWords(String itemKeyWords) {
         this.itemKeyWords = itemKeyWords;
+    }
+
+    public void setItemNote(String itemNote) {
+        this.itemNote = itemNote;
     }
 
     public void setItemStartDate(Date itemStartDate) {
@@ -190,6 +200,7 @@ public class ItemDto {
         item.setDonor(itemDonor);
         item.setDescription(itemDescription);
         item.setKeywords(itemKeyWords);
+        item.setNote(itemNote);
         item.setDateOfOrigin(itemStartDate);
         item.setContent(uploadItem);
         item.setStatus(ItemStatus.fromString(status)==null?null:ItemStatus.fromString(status).toString());
@@ -216,6 +227,7 @@ public class ItemDto {
         itemDto.setItemDonor(item.getDonor());
         itemDto.setItemDescription(item.getDescription());
         itemDto.setItemKeyWords(item.getKeywords());
+        itemDto.setItemNote(StringUtils.isEmpty(item.getNote())?"":item.getNote());
         itemDto.setItemStartDate(item.getDateOfOrigin());
         itemDto.setItemName(extractFileName(item.getContentPath()));
         itemDto.setItemContentPath(item.getContentPath());

@@ -54,6 +54,15 @@
                      </div>
                      </p>
                   </div>
+                <div>
+                    <p>Note</p>
+                    <div class="controls">
+                        <textarea rows="3" cols="50" id="itemNote" name="itemNote" ng-model="itemNote" class="form-control" maxlength="1000000"></textarea>
+                        </p>
+                        <p style="color:red" ng-show="itemNoteRequired"><span class="glyphicon glyphicon-exclamation-sign"></span> Please enter Note</p>
+                    </div>
+                    </p>
+                </div>
 
                   <div>
                      <p>Date Of Origin</p>

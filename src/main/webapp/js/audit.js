@@ -30,9 +30,15 @@ angular.module('tchaApp').controller('auditController', function($scope, $http, 
             $scope.collections .push(user);
         });
     });
-    $scope.auditItemGridColumns = [
-
-        {
+    $scope.auditItemGridColumns = [{
+            field: 'operation',
+            displayName: 'Operation',
+            width: 100
+        }, {
+            field: 'auditorName',
+            displayName: 'Auditor',
+            width: 200
+        }, {
             field: 'itemCode',
             displayName: 'Item Code',
             width: 200
@@ -78,23 +84,27 @@ angular.module('tchaApp').controller('auditController', function($scope, $http, 
             displayName: 'Key words',
             width: 500
         }, {
-            field: 'auditorName',
-            displayName: 'auditorName',
-            width: 200
-        }, {
             field: 'auditTime',
             displayName: 'Audit Time',
             width: 200
         }, {
-            field: 'operation',
-            displayName: 'Operation',
-            width: 200
+            field: 'note',
+            displayName: 'Note',
+            width: 500
         }
     ];
 
 
     $scope.auditCollectionGridColumns = [
         {
+            field: 'operation',
+            displayName: 'Operation',
+            width: 200
+        }, {
+            field: 'auditorName',
+            displayName: 'Auditor',
+            width: 200
+        }, {
             field: 'name',
             displayName: 'Name',
             width: 250
@@ -103,16 +113,8 @@ angular.module('tchaApp').controller('auditController', function($scope, $http, 
             displayName: 'Description',
             width: 500
         }, {
-            field: 'auditorName',
-            displayName: 'auditorName',
-            width: 200
-        }, {
             field: 'auditTime',
             displayName: 'Audit Time',
-            width: 200
-        }, {
-            field: 'operation',
-            displayName: 'Operation',
             width: 200
         }
     ];

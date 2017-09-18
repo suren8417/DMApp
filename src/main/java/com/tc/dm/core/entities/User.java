@@ -1,9 +1,12 @@
 package com.tc.dm.core.entities;
 
+import org.hibernate.envers.Audited;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "user")
+@Audited
 public class User {
 
     @Id

@@ -77,13 +77,15 @@ $scope.showSearchInDetail = function(id) {
     items = $scope.searchData[id].itemDtos;
 
   if ($scope.searchData[id].type === 'Collection') {
+      myHTML1 += "<div style=\"box-shadow: 8px 8px 20px #aaa; border: 4px solid #1D1F5A; padding: 15px;\">";
    myHTML1 = myHTML1 + "<span class=\"glyphicon glyphicon-tags\" style=\"margin-right: 10px;\"></span>";
                 myHTML1 = myHTML1 + "<p style=\" font-size:18px;margin:0px 0px 0px 0px;\"  >" + $scope.searchData[id].title + "</p>" +
-                        "  <p style=\"margin:0px 0px 25px 0px;\">" + $scope.searchData[id].description + "</p>";
+                        "  <p style=\"margin:0px 0px 25px 0px;\">" + $scope.searchData[id].description + "</p></div><br/>";
         }
 
 
     angular.forEach(items, function(item) {
+        myHTML1 += "<div style=\"box-shadow: 8px 8px 20px #aaa; border: 4px solid #1D1F5A; padding: 15px;\">";
         if (item.itemsSelectedType === 'Video') {
             myHTML1 = myHTML1 + "<span class=\"glyphicon glyphicon-film\" style=\"margin-right: 10px;\"></span>";
         }
@@ -102,7 +104,8 @@ $scope.showSearchInDetail = function(id) {
             "  <p style=\"margin:0px 0px 25px 0px;\">" + item.itemDescription + "</p>" +
             "  <p style=\"margin:0px 0px 5px 0px;\"> Donor : " + item.itemDonor + "</p>" +
             "  <p style=\"margin:0px 0px 5px 0px;\">KeyWords : " + item.itemKeyWords + "</p>" +
-            "  <p style=\"margin:0px 0px 25px 0px;\">Origin Date : " + item.itemStartDate + "</p>";
+            "  <p style=\"margin:0px 0px 25px 0px;\">Origin Date : " + item.itemStartDate + "</p>" +
+            "  <p style=\"margin:0px 0px 25px 0px;\">Note : " + item.itemNote + "</p>";
 
         if (item.itemsSelectedType === 'Video') {
 
@@ -140,7 +143,7 @@ $scope.showSearchInDetail = function(id) {
 
             }
         }
-        myHTML1 = myHTML1 + "</p> <hr style=\"margin-bottom: 20px;\"></p> ";
+        myHTML1 = myHTML1 + "</div><br/>";
 
     });
 

@@ -5,6 +5,7 @@ angular.module('tchaApp').controller('newItemController', function($scope, $http
     $scope.itemDonor;
     $scope.itemDescription;
     $scope.itemKeyWords;
+    $scope.itemNote;
     $scope.itemStartDate;
     $scope.uploadItem;
     $scope.id;
@@ -17,6 +18,7 @@ angular.module('tchaApp').controller('newItemController', function($scope, $http
     $scope.itemDonorRequired=false;
     $scope.itemDescriptionRequired=false;
     $scope.itemKeyWordsRequired=false;
+    $scope.itemNoteRequired=false;
     $scope.itemOriginDateRequired=false;
     $scope.itemFileRequired=false;
 
@@ -95,6 +97,10 @@ angular.module('tchaApp').controller('newItemController', function($scope, $http
             field: 'itemCode',
             displayName: 'Item Code',
             width: 200
+        }, {
+            field: 'itemNote',
+            displayName: 'Note',
+            width: 500
         }, {
             field: 'id',
             displayName: 'Id',
@@ -204,6 +210,7 @@ angular.module('tchaApp').controller('newItemController', function($scope, $http
         $scope.itemDonor = null;
         $scope.itemDescription = null;
         $scope.itemKeyWords = null;
+        $scope.itemNote = null;
         $scope.itemStartDate = null;
         $scope.uploadItem = null;
         $scope.id = null;
@@ -299,6 +306,7 @@ angular.module('tchaApp').controller('newItemController', function($scope, $http
             itemDonor: $scope.itemDonor,
             itemDescription: $scope.itemDescription,
             itemKeyWords: $scope.itemKeyWords,
+            itemNote: $scope.itemNote,
             itemStartDate: $scope.itemStartDate,
             selectedCollection:selectedCollection
         };

@@ -72,6 +72,8 @@ public class FileServiceImpl implements FileService {
                     sfos.flush();
                     sfos.close();
                 } else {
+                    File dir = new File(getFilestorePath());
+                    if (!dir.isDirectory()) dir.mkdirs();
                     filePath = getFilestorePath() + File.separator + fileUniqueName;
                     file.transferTo(new File(filePath));
                 }

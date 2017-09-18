@@ -129,6 +129,7 @@ public class AuditController {
                     auditItemDto.setDonor(itemDto.getItemDonor());
                     auditItemDto.setDescription(itemDto.getItemDescription());
                     auditItemDto.setKeywords(itemDto.getItemKeyWords());
+                    auditItemDto.setNote(itemDto.getItemNote());
                     if (itemDto.getAuditInfo() != null) {
                         auditItemDto.setAuditorName(itemDto.getAuditInfo().getAuditorName());
                         auditItemDto.setAuditTime(df.format(itemDto.getAuditInfo().getAuditTime()));
@@ -141,21 +142,3 @@ public class AuditController {
         return auditItemDtos;
     }
 }
-
-
-
-
-                  /*      private String itemCode;
-                        private String type;
-                        private String title;
-                        private String dateOfOrigin;
-                        private String dateAdded;
-                        private String addedBy;
-                        private String dateValidated;
-                        private String validatedBy;
-                        private String donor;
-                        private String description;
-                        private String keywords;
-                        private String auditorName;
-                        private String  auditTime;
-                        private String operation;*/

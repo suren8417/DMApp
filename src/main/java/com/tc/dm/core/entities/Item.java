@@ -1,6 +1,7 @@
 package com.tc.dm.core.entities;
 
 import com.tc.dm.rest.dto.ItemContent;
+import org.hibernate.annotations.Type;
 import org.hibernate.envers.Audited;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -63,6 +64,10 @@ public class Item {
 
     @Column(name = "content_path")
     private String contentPath;
+
+    @Column(name = "note")
+    @Type(type="text")
+    private String note;
 
     @Transient
     private MultipartFile content;
@@ -198,6 +203,14 @@ public class Item {
         this.contentPath = contentPath;
     }
 
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
     public static Item getInstance(){
         return new Item();
     }
@@ -226,6 +239,7 @@ public class Item {
         if (description != null ? !description.equals(item.description) : item.description != null) return false;
         if (keywords != null ? !keywords.equals(item.keywords) : item.keywords != null) return false;
         if (status != null ? !status.equals(item.status) : item.status != null) return false;
+        if (note != null ? !note.equals(item.note) : item.note != null) return false;
         return !(contentPath != null ? !contentPath.equals(item.contentPath) : item.contentPath != null);
 
     }
@@ -244,6 +258,7 @@ public class Item {
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + (keywords != null ? keywords.hashCode() : 0);
         result = 31 * result + (status != null ? status.hashCode() : 0);
+        result = 31 * result + (note != null ? note.hashCode() : 0);
         result = 31 * result + (contentPath != null ? contentPath.hashCode() : 0);
         return result;
     }
@@ -264,6 +279,7 @@ public class Item {
                 ", description='" + description + '\'' +
                 ", keywords='" + keywords + '\'' +
                 ", status='" + status + '\'' +
+                ", note='" + note!=null?note.substring(0, 100)+"...":"" + '\'' +
                 ", contentPath='" + contentPath + '\'' +
                 '}';
     }

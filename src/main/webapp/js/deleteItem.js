@@ -48,8 +48,11 @@ angular.module('tchaApp').controller('deleteItemController', function($scope, $h
             field: 'validatedBy',
             displayName: 'Validated By',
             width: 100
-      }
-    ,{
+    }, {
+        field: 'itemNote',
+        displayName: 'Note',
+        width: 500
+    }, {
         field: 'id',
         displayName: 'Id',
         visible: false

@@ -9,6 +9,7 @@ angular.module('tchaApp').controller('recentItemController', function($scope, $h
            var  items = data.itemDtos;
 
             angular.forEach(items, function(item) {
+                myHTML1 += "<div style=\"box-shadow: 8px 8px 20px #aaa; border: 4px solid #1D1F5A; padding: 15px;\">";
                 if (item.itemsSelectedType === 'Video') {
                     myHTML1 = myHTML1 + "<span class=\"glyphicon glyphicon-film\" style=\"margin-right: 10px;\"></span>";
                 }
@@ -27,7 +28,8 @@ angular.module('tchaApp').controller('recentItemController', function($scope, $h
                     "  <p style=\"margin:0px 0px 25px 0px;\">" + item.itemDescription + "</p>" +
                     "  <p style=\"margin:0px 0px 5px 0px;\"> Donor : " + item.itemDonor + "</p>" +
                     "  <p style=\"margin:0px 0px 5px 0px;\">KeyWords : " + item.itemKeyWords + "</p>" +
-                    "  <p style=\"margin:0px 0px 25px 0px;\">Origin Date : " + item.itemStartDate + "</p>";
+                    "  <p style=\"margin:0px 0px 25px 0px;\">Origin Date : " + item.itemStartDate + "</p>" +
+                    "  <div style=\"max-height: 600px; overflow-y: auto;\"><p style=\"margin:10px 10px 25px 0px;\">Note : " + item.itemNote + "</p></div>";
 
                 if (item.itemsSelectedType === 'Video') {
 
@@ -65,7 +67,7 @@ angular.module('tchaApp').controller('recentItemController', function($scope, $h
 
                     }
                 }
-                myHTML1 = myHTML1 + "</p> <hr style=\"margin-bottom: 20px;\"></p> ";
+                myHTML1 = myHTML1 + "</div><br/>";
 
             });
 

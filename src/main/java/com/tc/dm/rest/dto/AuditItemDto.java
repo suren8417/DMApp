@@ -15,6 +15,7 @@ public class AuditItemDto {
     private String donor;
     private String description;
     private String keywords;
+    private String note;
     private String auditorName;
     private String  auditTime;
     private String operation;
@@ -57,6 +58,14 @@ public class AuditItemDto {
 
     public void setKeywords(String keywords) {
         this.keywords = keywords;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 
     public String getDescription() {

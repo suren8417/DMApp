@@ -1,10 +1,13 @@
 package com.tc.dm.core.entities;
 
+import org.hibernate.envers.Audited;
+
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity
 @Table(name = "role")
+@Audited
 public class Role {
 
     @Id
