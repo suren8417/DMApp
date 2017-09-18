@@ -135,6 +135,7 @@ angular.module('tchaApp').controller('newItemController', function($scope, $http
                 $scope.itemDonor = row.entity.itemDonor;
                 $scope.itemDescription = row.entity.itemDescription;
                 $scope.itemKeyWords = row.entity.itemKeyWords;
+                $scope.itemNote = row.entity.itemNote;
                 $scope.itemStartDate = row.entity.itemStartDate;
                 $scope.id = row.entity.id;
                 $scope.uploadItem = null;
