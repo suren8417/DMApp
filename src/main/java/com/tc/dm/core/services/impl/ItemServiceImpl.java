@@ -78,6 +78,7 @@ public class ItemServiceImpl implements ItemService {
             if (item.getContent() != null) {
                 fileService.deleteFile(contentPath);
                 contentPath = fileService.storeFile(item.getContent());
+                fileService.copyToCache(contentPath);
             }
             item.setContentPath(contentPath);
             rePopulateCollections(item);
